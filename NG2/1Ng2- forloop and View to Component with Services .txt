@@ -1,0 +1,72 @@
+Ng2- forloop and View to Component with Services  
+================================================
+Data render from Componet service
+----------------------------------
+
+Datatemplate.html
+--------------
+<div class="panel-body">
+	<div *ngFor="let item of allData" routerLinkActive="active">
+			<a routerLink="allData/{{item.displayName}}">{{item.displayName}}</a>
+	</div>
+</div>
+
+Datacomponent.ts
+-----------------
+
+import {Component,ViewContainerRef,ViewEncapsulation, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DataService} from './asupDetailsSideBar.service';
+
+export class DataComponet{
+
+	public allData: any;
+
+	constructor(private route:ActivatedRoute,private dataService:DataService, private router: Router){
+	
+	this.dataService.getData(Key)
+	.subscribe(
+		(data:any)=>{
+			this.allData = data.Data;
+		},
+		(error:any)=>{
+		console.log("error");
+		}
+	);
+	}
+}
+
+DataService.ts
+---------------
+
+import {Injectable} from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+
+@Injectable()
+export class AsupDetailsSideBarService {
+
+	constructor(private http: Http) {
+
+	  }
+    getData(...args): Observable<any>{
+
+    var argslength=args[0].length;
+    let serialNumber=args[0][argslength-3];
+   
+    let staticUrl=`http://domain/api/serviceCall(key)`;    
+   
+    return this.http.get(this.staticUrl).map(this.extractData).catch(this.handleError);
+	}
+
+	private extractData(res: Response) {
+    let body = res.json();
+    return body || { };
+  }
+
+   private handleError (error: any) {
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
+ }

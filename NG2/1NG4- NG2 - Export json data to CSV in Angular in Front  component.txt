@@ -1,0 +1,221 @@
+NG4/2 - Export json data to CSV in Angular in Front End/ component.ts
+================================================================
+compose CSV from Component from JSON multi array and print data information one by one with 
+corresponding header also one empty row Gap
+Based on json response make the CSV file. Multi level json response object Iteration and Export to CSV
+exportCSV_data.json
+-------------------
+{
+	"sections": {
+		"table1": [{
+          			"table1column1": "t1c1",
+          			"table1coloumn2": "t1c2"			
+          		},
+          		{
+          			"table1column1": "t12c1",
+          			"table1coloumn2": "t12c2"			
+          		}],
+		"table2": [{
+        			"table2column1": "t2c1",
+        			"table2column2": "t2c2",
+        			"table2column3": "t2c3",
+        			"table2column4": "t2c4"
+        			
+        		},
+        		{
+        			"table2column1": "t22c1",
+        			"table2column2": "t22c2",
+        			"table2column3": "t22c3",
+        			"table2column4": "t22c4"
+			
+		          },
+		          {
+          			"table2column1": "t22c1",
+          			"table2column2": "t22c2",
+          			"table2column3": "t22c3",
+          			"table2column4": "t22c4"
+          			
+          		}],
+		"table3": [{
+          			"table3column1": "t3c1",
+          			"table3column2": "t3c2",
+          			"table3column3": "t3c3"
+          			
+          		},
+          		{
+          			"table3column1": "t32c1",
+          			"table3column2": "t32c2",
+          			"table3column3": "t33c3"
+          		}]
+	}
+}
+
+
+REf: https://stackoverflow.com/questions/8847766/how-to-convert-json-to-csv-format-and-store-in-a-variable
+
+
+app.template.html
+------------------
+
+<div (click)="downloadCSVfromJSON()"> Download CSV file from JSON API response </div>
+
+
+app.service.ts
+---------------
+import {Injectable} from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
+
+
+@Injectable()
+export class AppService {
+
+
+  constructor( private http: Http) { }	
+  getJSONresponse(...agrs)Observable<any> {
+let url =domainURL;
+var argslength=args[0].length;
+let itemName=args[0][argslength-2];
+let itemId=args[0][argslength-1];
+//return this.http.get(url+`${itemName}/${itemId}`)
+return this.http.get(url+itemId)
+.map(this.extractData)
+.catch(this.handleError);
+//.map(res => res.json());
+
+}
+
+ private extractData(res: Response) {
+    let body = res.json();
+    return body || { };
+  }
+
+   private handleError (error: any) {
+    let errMsg = (error.message) ? error.message :
+    error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
+}
+
+app.component.ts
+------------------
+import { Component, NgModule, ViewContainerRef, ViewEncapsulation, ElementRef} from '@angular/core';
+@component({
+'selector':'app',
+'styleUrls:['app.style.css'],
+'templateUrl:['app.template.html']
+})
+
+export class Appcomponet {
+
+JSON_API_Response:any;
+url;  // router url 
+	constructor(private _servcie:appService){
+		this._servcie.getJSONresponse(this.url).subscribe( (data => any) =>{ 
+			if(data.success){
+				this.JSON_API_Response = data.JSONValue;				
+			}else{
+			console.lgo('API Response Fail')
+			}
+		});
+	}
+		
+		downloadCSVfromJSON(){
+			if(this.JSON_API_Response){
+			let jsonData = this.JSON_API_Response;
+			
+			let Table1Key = ['table1column1', 'table1column2'];
+			let Table1Header = ['Table1 Column1', ' Table1 column 2'];
+			let Table1JSON = jsonData.section.table1;
+			
+			let Table2Key = ['table2column1', 'table2column2','table2column3', 'table2column4'];
+			let Table1Header = ['Table1 Column1', ' Table1 column 2','Table2 column3', 'Table2 column4'];
+			let Table2JSON = jsonData.section.table2;
+			
+			let Table3Key = ['table3column1', 'table3column2', 'table3column3'];
+			let Table3Header = ['Table3 Column1', ' Table3 column 2',, 'Table3 Column3'];
+			let Table3JSON = jsonData.section.table3;
+
+
+			let filteredData = this.getCSV(Table1Key,Table1Header,Table1JSON, Table2Key,Table2Header,Table2JSON, Table3Key,Table3Header,Table3JSON);
+			let ReportTitle = filename+ " " +level+" "+id;
+			let ShowLabel = true;
+			var arrData = typeof filteredData != 'object' ? JSON.parse(filteredData) : filteredData;
+			var CSV = '';
+			//below commnad retric first line of table 1 column 
+			
+			// if (ShowLabel) {
+			//   var row = "";
+			//   for (let index=0;index<Table1Header.length;index++) {
+			//     row += Table1Header[index] + ',';
+			//   }
+			//   row = row.slice(0, -1);
+			//   CSV += row + '\r\n';
+			// }
+			for (var i = 0; i < arrData.length; i++) {
+			  var row = "";
+			  for (var index in arrData[i]) {
+				row += '"' + arrData[i][index] + '",';
+			  }
+			  row.slice(0, row.length - 1);
+			  CSV += row + '\r\n';
+			}
+
+			if (CSV == '') {
+			  console.log("Invalid data");
+			  return;
+			}
+			var fileName = ReportTitle.replace(/ /g, "_");
+			var uri = 'data:text/csv;charset=utf-8,' + encodeURI(CSV);
+			var link = document.createElement("a");
+			link.href = uri;
+			link.download = fileName + ".csv";
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		  }			
+		}
+		
+		getCSV(Table1Key,Table1Header,Table1JSON, Table2Key,Table2Header,Table2JSON, Table3Key,Table3Header,Table3JSON){
+		
+		 let k=[];  let newlineItem = {}
+              let title=['Table 1 Information '];
+              k.push(title)
+              k.push(Table1Header)
+			  for(let i=0;i<Table1JSON.length;i++){
+				  let item = {};
+				  for(let m=0;m<Table1Key.length;m++){
+				  item[Table1Key[m]]=Table1JSON[i][Table1Key[m]];
+				  }
+				  k.push(item);
+			  }
+			  
+				k.push(newlineItem); k.push(newlineItem)
+				title =['table 2 information in single line'];
+				k.push(title)
+				k.push(Table2Header)
+				for(let i=0;i<Table2JSON.length;i++){
+					  let item = {};
+					  for(let m=0;m<Table2Key.length;m++){
+					  item[Table2Key[m]]=Table2JSON[i][Table2Key[m]];
+					  }
+					  k.push(item);
+				  }
+            
+				k.push(newlineItem); k.push(newlineItem)
+				title =['table 3 information in single line'];
+				k.push(title)
+				k.push(Table3Header)
+				for(let i=0;i<Table3JSON.length;i++){
+					  let item = {};
+					  for(let m=0;m<Table3Key.length;m++){
+					  item[Table3Key[m]]=Table3JSON[i][Table3Key[m]];
+					  }
+					  k.push(item);
+				  }
+            	
+		}
+
+}

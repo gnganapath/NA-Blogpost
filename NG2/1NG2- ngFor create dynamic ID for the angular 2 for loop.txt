@@ -1,0 +1,13 @@
+NG2- ngFor create dynamic ID for the angular 2 for loop attribute based
+======================================================================
+
+You have to access label's attribute like this : [attr.for]="'ques-' + i"
+
+and you have a bug in your ngFor, u lack of :
+
+<div *ngFor="let question of questions; let i = index;">
+	<span [attr.id]="'ques-' + i">question </span>
+</div>
+
+Ref:
+http://stackoverflow.com/questions/40239028/angular-2-dynamic-for-attribute-in-ngfor

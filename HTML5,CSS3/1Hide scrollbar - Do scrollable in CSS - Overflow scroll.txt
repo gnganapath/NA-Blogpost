@@ -1,0 +1,8 @@
+Hide scroll bar, but still being able to scroll
+------------------------------------------------
+
+#element::-webkit-scrollbar { 
+   height: 42px;
+   overflow: hidden; 
+   display: none; 
+}

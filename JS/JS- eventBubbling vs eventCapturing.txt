@@ -1,0 +1,20 @@
+Event Bubbling:
+---------------
+
+<div class="styleClass" onClick="alert('Div click handler')"> Div Element
+    <span class="styleClass" onClick="alert('span click handler')"> span element
+	<input type="button" value="clic" onClick="alert('button click halder')" /> 
+ 	</span>
+</div>
+ 
+<script type="text/javascript">
+var divElement = document.getElementByTagName('div');
+
+for(var i=0; i < divElement.lenght; i++ ){
+ divElement[i].onclick = function(){
+	this.style.borderColor = 'green';
+	alert(this.getAttribute("id")+ "border color chnage");
+}
+}
+
+</script>

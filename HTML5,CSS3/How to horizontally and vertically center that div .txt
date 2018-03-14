@@ -1,0 +1,95 @@
+How to horizontally and vertically centre that div ?
+
+only for horizontal center:
+--------------------
+ <div style="width:800px; margin:0 auto;">
+        centered content
+ </div>
+	
+this is for horizontal and vertical centre;
+------------------------------------------	
+<div class="wrap">
+    <div class="element"></div>
+</div>
+1. Using Flexbox
+------------------
+Here is how you can center elements using flexbox:
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+2. Using Position
+------------------
+.wrap { /* nothing here */}
+.element {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 156px;
+}
+
+/* using calc() with 50% minus half the element's defined width and height */
+.calc div {
+  width: 12em;
+  height: 3.5em;
+  top: calc(50% - 3.5em/2);
+  left: calc(50% - 12em/2);
+}
+
+/* using a negative margin equal to half the element's defined width and height */
+.margin div {
+  width: 12em;
+  height: 3.5em;
+  top: 50%;
+  left: 50%;
+  margin-top: -1.75em;
+  margin-left: -6em;
+}
+
+/* using translate() to shift by 50% of the element's defined width and height */
+.translate div {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%)
+             translateY(-50%);
+}
+
+/* using flexbox */
+.flexbox {
+  display: flex;
+  flex-flow: row wrap;
+}
+.flexbox p {
+  position: absolute;
+}
+.flexbox div {
+  position: static;
+  margin: auto;
+}
+
+/* using EQCSS & scoped styles to center the element by its rendered width */
+@element '.eqcss div' {
+  $this {
+    top: calc(50% - eval('offsetHeight/2')px);
+    left: calc(50% - eval('offsetWidth/2')px);
+  }
+}
+/* using JavaScript to center the element by its rendered width */
+window.addEventListener('resize',center)
+center()
+
+function center() {
+  var tag = document.querySelectorAll('.js div')
+  for (var i=0; i<tag.length; i++) {
+    var div = tag[i]
+    div.style.top = 'calc(50% - '+(div.offsetHeight/2)+'px)'
+    div.style.left = 'calc(50% - '+(div.offsetWidth/2)+'px)'
+  }
+}
+And for horizontal centering? Nothing beats:
+
+div {
+  text-align: center;
+}

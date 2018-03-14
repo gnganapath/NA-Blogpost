@@ -1,0 +1,64 @@
+NG4- Move Input search while enter/non empty text box - Like google search
+========================================================
+
+template.html
+-------------
+   <form [ngClass]="{'googleSearchForm':emptyText,'googleSearchFormtextenter':!emptyText}">
+   
+   <input id="googleSearchFormChange"  name="googleSearchFormChange" [(ngModel)]="googleSearchFormChange"
+        #box (keyup)="onKey(box.value)" type="text" [formControl]="term" autocomplete="off">
+		
+	</form>
+
+<SearchValuesResult> </SearchValuesResult>  //<-------so result will come top of page
+component.ts
+------------
+
+import { component } from '@angular/core'
+import { FormControl } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { Http, Response, Headers } from '@angular/http';
+
+
+@compoent({
+
+selector: '<searchbar',
+templateUrl: ['template.html'],
+stylrUrl:['templateStyle.css']
+
+})
+
+@Injectable()
+
+export class SearchComponent {
+
+emptyText = true;
+
+constructor( private http: Http,){}
+
+  onKey(value: string) {
+    this.emptyText = false;
+
+    if(this.term.value == ''){
+      this.emptyText = true;
+    }
+	
+}  // c;ass end
+
+templateStyle.css
+------------------
+
+.googleSearchForm {
+    width: 80%;
+    position: relative;
+    margin: auto auto 0 15%;
+    padding-top: 26%;                      // ------> Empty while textbox is empty
+    transition: 1s;
+}
+.googleSearchFormtextenter{
+    padding-top: 13%;
+    width: 80%;
+   padding-top:10%;
+    position: relative;                                  // not mentioned area of text box will display
+    margin: auto auto 0 15%;
+}

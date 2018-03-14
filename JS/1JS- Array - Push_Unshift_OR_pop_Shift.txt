@@ -1,0 +1,17 @@
+push the value to end of an array element, unshift push the element at beginning of array
+
+pop remove the last element of an array, shift remove the first element of an array. 
+<script type="text/javascript">
+
+var myArr = [2,3];
+document.write("Orginal Arr "+myArr+"<br>")
+myArr.push(4);
+myArr.unshift(1)
+document.write("unshift 1 and push 4 "+myArr+"<br>")
+
+myArr.pop();
+myArr.shift();
+document.write("shift and pop "+ myArr+"<br>")
+
+document.write(myArr.length)
+</script>

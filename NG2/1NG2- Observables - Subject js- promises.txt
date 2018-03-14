@@ -1,0 +1,34 @@
+NG2- Observables - Subject js- promises
+=======================================
+components.ts
+--------------
+import { Subject } from 'rxjs';
+
+export class Mycomponents {
+
+postCall = new Subject();
+
+this.checkPostisTrue(getChecklist);   // once it returns true
+this.postCustomGroup(postdata);        // then it should execute. wait until $ deffered
+
+
+	checkPostisTrue(data){
+
+		this._MyService.checkPost(data).subscribe( (data:any) => {   // get service method
+			if(data == true){   					//someother condition
+			this.postCall.next(true);  			// true is passing data. May be array any,string type
+			
+			}
+		}
+	}
+	
+	postCustomGroup(post){
+	this._MyService.PostPromiseData(data).subscribe( (data:any) => { 
+	
+	}
+	
+	
+	}
+	
+	
+}

@@ -1,0 +1,61 @@
+NG2- Post data as Form Data control method 
+NG2- Post data as Payload format 
+===========================================
+
+myform.compoent.ts
+===================
+import { Component } from '@angular/core'
+import { FormControl, NgForm, Validator, Validators } from '@angular/forms';
+import { PasswordResetService } from './PasswordResetService.service'
+
+@component({
+selector: 'password-reset-form',
+styles: [require('./Style.css')],
+template: require('./myform.template.html')
+
+})
+
+export class PasswordResetComponent{
+
+oldPasswordCtrl = new FormControl();
+construtor(service: PasswordResetService){
+
+}
+PostFormData(){
+let postData = { postDataKey : oldPasswordCtrl }  // Make JSON format for form-data
+
+this.service.postFormData(postData).subscribe ( (data => any) {
+	if(data.status){ 'true' } else { 'false '}
+	}
+}
+PostPayLoad(){
+let postData = `postDataKey=oldPasswordCtrl`  // Make string format for payload
+				//`key1=value1&key2=value2`
+
+this.service.postPayload(postData).subscribe ( (data => any) {
+	if(data.status){ 'true' } else { 'false '}
+	}
+}
+
+}
+
+import {Injectable} from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+
+@Injectable()
+export class PasswordResetService {
+  constructor(private http: Http) {
+  }
+  PostUrl = 'http://mydomain/postAPI';
+  
+  postFormData(data){
+	return this.http.post(PostUrl, data).map( response => response.json())
+  }
+  postPayload(data){
+  return this.http.post(PostUrl, data).map( response => response.json())
+  }
+  
+
+tempalte.html
+---------------
+<input  [formControl]="oldPasswordCtrl" >

@@ -1,0 +1,49 @@
+AngularJs- Toggle div show ng-click - 
+===================================
+View:
+=====
+<div ng-controller="MyCtrl">
+ <button ng-click="showDiv = !showDiv">test </button>
+<div ng-show="!showDiv" >
+    hello test
+</div>
+</div>
+
+
+Controller:
+------------
+
+var myApp = angular.module('myApp',[]);
+
+function MyCtrl($scope) {
+ 
+}
+
+Used for dropdown list and other thinks
+
+
+---- Soln2:
+========== using contoller
+
+ 
+ view:
+-----
+  
+    <div ng-app="MyApp" ng-controller="MyController">
+        <input type="button" value="Show Hide DIV" ng-click="ShowHide()" />
+        <br />
+        <br />
+        <div 
+
+contoller:
+-----------
+
+var app = angular.module('MyApp', [])
+        app.controller('MyController', function ($scope) {
+            //This will hide the DIV by default.
+            $scope.IsVisible = false;
+            $scope.ShowHide = function () {
+                //If DIV is visible it will be hidden and vice versa.
+                $scope.IsVisible = $scope.IsVisible ? false : true;
+            }
+        });

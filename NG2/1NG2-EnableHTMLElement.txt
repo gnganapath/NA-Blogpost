@@ -1,0 +1,25 @@
+NG2- Disable HTML Element by default change elable on (click)
+==============================================================
+@component({
+	selector : 'app',
+	tempalte : `<h1 class="disable"> Header Title (click)="popup()" <h1>
+				<button (click)="enableHeader()"`,
+	styles : `.disable{
+		pointer-events: none;
+		opacity: 0.5;
+	}`
+})
+
+export class EnaleComponet {
+
+	enableHeader(){
+	document.getElementbyTag('h1).removeClass.disable;
+	}
+	
+	popup(){
+	alert(click also enable);
+	}
+}
+
+
+I have tried with NG2 & jQuery

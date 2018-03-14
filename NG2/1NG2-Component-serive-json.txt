@@ -1,0 +1,72 @@
+mycomponent.component.ts
+========================
+import { Component,ViewEncapsulation, OnInit } from '@angular/core'
+import { Router } from '@angular/router';
+import { mycomponentService } from './MycomponentService.service'
+ @component({
+ ....
+ .....})
+ 
+ export class MycomponentComponent implements OnInit {
+ 
+ this.urldetails = this.router.parseUrl(this.router.url);
+    this.url = router.url.split('/');
+	
+	
+	constructor( private)
+	
+	 this._mycomponentService.getList(this.url).subscribe(
+      (data: any) => {
+	  if(data.success == true){
+	  console.log("sucess", data.rows.);
+	  }
+	  esle{
+	  console.log("Fail response",)
+	  }
+	  
+	  },(error:any) => {
+      console.log("Error HTTP GET Service",error)
+      });
+  
+	  
+	  
+	  }
+mycomponent.service.ts
+======================
+
+import {Injectable} from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
+
+
+
+@Injectable()
+export class ConfigurationService {
+  constructor(private http: Http) {
+  }
+  url = "http://mydomain.com/serviceAPI/"
+  
+  getList(...args){
+  var argslength=args[0].length;
+  var argID = args[0][argslength-2]
+  
+  
+  return this.http.get(this.url+"/argID")
+  .map(this.extractData)
+  .catch(this.handleError);
+  }
+  
+   private extractData(res: Response) {
+    let body = res.json();
+    return body || { };
+  }
+
+   private handleError (error: any) {
+    let errMsg = (error.message) ? error.message :
+    error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
+  
+  }

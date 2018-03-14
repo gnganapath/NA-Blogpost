@@ -1,0 +1,7 @@
+Text encode format for multi language support in text feild:
+------------------------------------------------------------
+
+Frong End -> encodeURIComponent(encodeURIComponent(searchKey))
+
+Backend -> text=java.net.URLDecoder.decode(text, "UTF-8");
+

@@ -1,0 +1,46 @@
+Morris.js - chart Angular js Morris.js chart - donut option select level
+
+include js:
+----------
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-morris-chart/1.2.0/angular-morris-chart.min.js"></script>
+
+<div ng-controller="donutchart">
+<div id="health" donut-chart donut-data='health'  ng-click="healthepopup()"></div>
+</div>
+
+
+Inject dependency
+------------------
+
+Make sure you injected angular.morris into your angular project
+
+angular.module('my.app', [
+    'angular.morris'
+]).controller(controller="donutchart")({
+
+// data from controle
+
+$scope.health = [
+           {label: "total", value: 40},
+          {label: "Impacted",value: 38}
+        ];
+
+
+
+// or Option first 25 is selected by default
+
+var health= Morris.Donut({
+  element: 'health',
+  data: [
+    {label: "Impacted", value: 25},
+    {label: "Remaining", value: 75}
+  ],
+  colors: ["#FF5252","#64B5F6","#455A64"],
+  select :0   
+});
+health.select(0);
+
+});

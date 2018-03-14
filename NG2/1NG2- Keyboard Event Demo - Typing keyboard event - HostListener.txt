@@ -1,0 +1,101 @@
+NG2- Keyboard Event Demo - Typing keyboard event - HostListener
+================================================================
+//our root app component
+import {Component, HostListener} from 'angular2/core';
+
+window.focus(); // make sure we are on this page before we start typing
+
+@Component({
+  selector: 'my-app',
+ template: `
+    <div>
+      <h2>Keyboard Event demo</h2>
+      Start typing to see KeyboardEvent values
+    </div>
+    <hr />
+    KeyboardEvent
+    <ul>
+      <li>altKey: {{altKey}}</li>
+      <li>charCode: {{charCode}}</li>
+      <li>code: {{code}}</li>
+      <li>ctrlKey: {{ctrlKey}}</li>
+      <li>keyCode: {{keyCode}}</li>
+      <li>keyIdentifier: {{keyIdentifier}}</li>
+      <li>metaKey: {{metaKey}}</li>
+      <li>shiftKey: {{shiftKey}}</li>
+      <li>timeStamp: {{timeStamp}}</li>
+      <li>type: {{type}}</li>
+      <li>which: {{which}}</li>
+    </ul>`
+})
+export class App {
+  
+  /* a few examples */
+  keyboardEvent: any;
+  altKey: boolean;
+  charCode: number;
+  code: string;
+  ctrlKey: boolean;
+  keyCode: number;
+  keyIdentifier: string;
+  metaKey: boolean;
+  shiftKey: boolean;
+  timeStamp: number;
+  type: string;
+  which: number;
+  
+  @HostListener('window:keydown', ['$event'])
+  keyboardInput(event: any) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    this.keyboardEvent = event;
+    this.altKey = event.altKey;
+    this.charCode = event.charCode;
+    this.code = event.code;
+    this.ctrlKey = event.ctrlKey;
+    this.keyCode = event.keyCode;
+    this.keyIdentifier = event.keyIdentifier;
+    this.metaKey = event.metaKey;
+    this.shiftKey = event.shiftKey;
+    this.timeStamp = event.timeStamp;
+    this.type = event.type;
+    this.which = event.which;
+  }
+  
+}
+
+/**
+a list of values available via KeyboardEvent
+  altKey: boolean
+  bubbles: boolean
+  cancelBubble: boolean
+  cancelable: boolean
+  charCode: number
+  code: string
+  ctrlKey: boolean
+  currentTarget: null
+  defaultPrevented: boolean
+  detail: number
+  eventPhase: number
+  isTrusted: boolean
+  isTrusted: boolean
+  keyCode: number
+  keyIdentifier: string
+  keyLocation: number
+  location: number
+  metaKey: boolean
+  path: array
+  repeat: boolean
+  returnValue: boolean
+  shiftKey: boolean
+  sourceCapabilities: string
+  srcElement: any
+  target: any
+  timeStamp: number
+  type: string
+  view: string
+  which: number
+*/
+
+REf: https://plnkr.co/edit/Aubybjbkp7p8FPxqM0zx?p=preview

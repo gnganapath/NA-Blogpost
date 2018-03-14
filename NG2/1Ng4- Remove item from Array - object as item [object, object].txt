@@ -1,0 +1,10 @@
+Ng4- Remove item from Array - indetails  object as one item [object, object] 
+---------------------------------------------------------------
+
+removeArrayItem(objectitem){
+	
+	this.totalArrayData = this.totalArrayData.filter(item => item.Id !== objectitem.id);
+	  console.log( this.totalArrayData)
+}
+
+

@@ -1,0 +1,2129 @@
+Sr.UI Developer Interview Question and Answer - Rough copy -1
+=============================================================
+#1. Different data types in Javascript
+Ans:1
+Boolean
+Null
+Undefined
+Number
+String
+Symbol (new in ECMAScript 6)
+and Object
+
+Data types
+The latest ECMAScript standard defines seven data types:
+
+Six data types that are primitives:
+Boolean => Booleans can only have two values: true or false.
+
+Null => In JavaScript null is "nothing". It is supposed to be something that doesn't exist.
+		Unfortunately, in JavaScript, the data type of null is an object.
+		You can consider it a bug in JavaScript that type of null is an object. It should be null.
+Undefined => var c;
+Number  => 2, -10, 0.45
+String  => 'abc', "abc"  'abc' === "abc"
+Symbol (new in ECMAScript 6)
+and Object
+JavaScript primitive data types
+There are five types of primitive data types in JavaScript. They are as follows:
+
+Ans:2
+
+Data Type	Description
+String	represents sequence of characters e.g. "hello"
+Number	represents numeric values e.g. 100
+Boolean	represents boolean value either false or true
+Undefined	represents undefined value
+Null	represents null i.e. no value at allow
+var a = null;
+if(a === null)
+    console.log("a is null");
+if(a === undefined)
+    console.log("a is undefined");
+if(a == null && a == undefined)
+    console.log("but a is loosely both!");
+
+a is null
+55 but a is loosely both!
+
+Data Type	Description
+Object	represents instance through which we can access members
+Array	represents group of similar values
+RegExp	represents regular expression
+
+Ans:3
+Primary Data Types
+The primary (primitive) data types are:
+
+String
+
+Number
+
+Boolean
+
+Composite Data Types
+The composite (reference) data types are:
+
+Object
+
+Array
+
+Special Data Types
+The special data types are:
+
+Null
+
+Undefined
+
+Symbol
+This is new in ECMAScript 6; check the browser support before you use it.
+
+Symbols allow for private(ish) properties on objects. Before ECMAScript 6 all properties for an object could be accessed through for in, like this:
+
+var dog = { bark: true }
+
+for (var property in dog) {
+  if (dog.hasOwnProperty(property)) {
+    console.log(property); // logs "bark"
+  }
+}
+
+Since symbols are not enumerable they cannot be accessed in this way. However, the symbolised properties are not truly private since they can be accessed directly.
+
+
+var breed = Symbol("breed");
+var dog = { bark: true };
+dog[breed] = "Corgi";
+
+for (var property in dog) {
+  if (dog.hasOwnProperty(property)) {
+    console.log(property); // logs "bark", but not "breed"
+  }
+}
+console.log(dog[breed]); // logs "Corgi"
+
+Diff b/w null and undefined
+typeof undefined           // undefined
+typeof null                // object
+
+null === undefined         // false
+null == undefined          // true
+
+var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+person = null;        // Now value is null, but type is still an object
+
+var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+person = undefined;   // Now both value and type is undefined
+
+typeof {name:'John', age:34} // Returns "object"
+typeof [1,2,3,4]             // Returns "object" (not "array", see note below)
+typeof null                  // Returns "object"
+typeof function myFunc(){}   // Returns "function"
+
+***The typeof operator returns "object" for arrays because in JavaScript arrays are objects
+
+
+var car;                // Value is undefined, type is undefined
+car = undefined;        // Value is undefined, type is undefined
+car = 'undefined';        // Value is undefined, type is string
+var car = "";              // The value is "", the typeof is "string"
+
+
+#2. How may ways to define array in JS
+
+
+JavaScript arrays are used to store multiple values in a single variable.
+The JavaScript Array object is a global object that is used in the construction of arrays.
+
+var cars = ["Saab", "Volvo", "BMW"];
+var array_name = [item1, item2, ...];  -> creating array in literal method
+
+hint: Putting a comma after the last element (like "item-N",)  is inconsistent across browsers.
+IE 8 and earlier will fail.
+
+Using the JavaScript Keyword new
+var cars = new Array("Saab", "Volvo", "BMW");  creating an array with new operator (instance of )
+
+hint : The two examples above do exactly the same. There is no need to use new Array().
+For simplicity, readability and execution speed, use the first one (the array literal method).
+
+array index: [0] is the first element in an array. [1] is the second. Array indexes start with 0.
+Arrays are Objects
+Arrays are a special type of objects. The typeof operator in JavaScript returns "object" for arrays.
+
+But, JavaScript arrays are best described as arrays.
+Array Elements Can Be Objects
+JavaScript variables can be objects. Arrays are special kinds of objects.
+Because of this, you can have variables of different types in the same Array.
+
+You can have objects in an Array. You can have functions in an Array. You can have arrays in an Array:
+myArray[0] = Date.now;
+myArray[1] = myFunction;
+myArray[2] = myCars;
+
+var points = [ 10, "ganapathi" ];
+var f = function() { console.log(2); }
+var o = { 'k1': 'v1' };
+points.push(f);
+points.push(o);
+ document.getElementById("demo").innerHTML = points;  => 10,ganapathi,function () { console.log(2); },[object Object]
+
+
+lenght: The length property is always one more than the highest array index.
+
+Associative Arrays
+Many programming languages support arrays with named indexes.
+Arrays with named indexes are called associative arrays (or hashes).
+JavaScript does not support arrays with named indexes.
+In JavaScript, arrays always use numbered indexes.
+
+var person = [];
+person[0] = "John";
+person[1] = "Doe";
+person[2] = 46;
+var x = person.length;         // person.length will return 3
+var y = person[0];             // person[0] will return "John"
+
+WARNING !!
+If you use named indexes, JavaScript will redefine the array to a standard object.
+After that, some array methods and properties will produce incorrect results.
+
+var person = [];
+person["firstName"] = "John";
+person["lastName"] = "Doe";
+person["age"] = 46;
+var x = person.length;         // person.length will return 0
+var y = person[0];             // person[0] will return undefined
+Try it Yourself »
+
+The Difference Between Arrays and Objects
+In JavaScript, arrays use numbered indexes.  
+
+In JavaScript, objects use named indexes.
+Arrays are a special kind of objects, with numbered indexes.
+When to Use Arrays. When to use Objects.
+JavaScript does not support associative arrays.
+You should use objects when you want the element names to be strings (text).
+You should use arrays when you want the element names to be numbers.
+
+Avoid new Array()
+
+var points = new Array();         // Bad
+var points = [];                  // Good 
+
+var points = new Array(40, 100, 1, 5, 25, 10); // Bad
+var points = [40, 100, 1, 5, 25, 10];          // Good
+
+The new keyword only complicates the code. It can also produce some unexpected results:
+var points = new Array(40, 100);  // Creates an array with two elements (40 and 100)
+What if I remove one of the elements?
+
+var points = new Array(40);       // Creates an array with 40 undefined elements !!!!!
+
+How to Recognize an Array
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+typeof fruits;             // returns object
+Q: 
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+typeof fruits;             // returns object
+
+Soln:1 
+Array.isArray(fruits);     // returns true
+soln:2 
+function isArray(x) {
+    return x.constructor.toString().indexOf("Array") > -1;   ==> true
+}
+soln:3
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits instanceof Array     // returns true
+
+Converting Arrays to Strings
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+document.getElementById("demo").innerHTML = fruits.toString(); => Banana,Orange,Apple,Mango
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+document.getElementById("demo").innerHTML = fruits.join(" * "); => Banana * Orange * Apple * Mango
+
+Create an Array
+
+var fruits = ['Apple', 'Banana']; console.log(fruits.length); // 2
+
+Access (index into) an Array item var first = fruits[0];  // Apple
+
+var last = fruits[fruits.length - 1];  //  Banana    relation between length and index
+
+Loop over an Array
+
+fruits.forEach(function(item, index, array) {
+  console.log(item, index); // Apple 0  Banana 1
+  });
+
+Add to the end of an Array => var newLength = fruits.push('Orange'); // ["Apple", "Banana", "Orange"] 
+
+Remove from the end of an Array =>var last = fruits.pop(); // remove Orange (from the end) // ["Apple", "Banana"];
+
+Remove from the front of an Array => var first = fruits.shift(); // remove Apple from the front // ["Banana"];
+
+Add to the front of an Array  => var newLength = fruits.unshift('Strawberry') // add to the front // ["Strawberry", "Banana"];
+
+Find the index of an item in the Array
+fruits.push('Mango');
+// ["Strawberry", "Banana", "Mango"]
+var pos = fruits.indexOf('Banana'); // 1
+
+Remove an item by index position
+var removedItem = fruits.splice(pos, 1); // this is how to remove an item                                    
+// ["Strawberry", "Mango"]
+Remove items from an index position
+
+var vegetables = ['Cabbage', 'Turnip', 'Radish', 'Carrot'];
+console.log(vegetables); 
+// ["Cabbage", "Turnip", "Radish", "Carrot"]
+var pos = 1, n = 2;
+var removedItems = vegetables.splice(pos, n); 
+// this is how to remove items, n defines the number of items to be removed,
+// from that position(pos) onward to the end of array.
+console.log(vegetables);  // ["Cabbage", "Carrot"] (the original array is changed)
+console.log(removedItems);  // ["Turnip", "Radish"]
+Copy an Array
+var shallowCopy = fruits.slice(); // this is how to make a copy // ["Strawberry", "Mango"]
+
+*** array Methods:
+array Map
+var array1 = [1, 4, 9, 16];
+// pass a function to map
+const map1 = array1.map(x => x * 2);
+console.log(map1);
+// expected output: Array [2, 8, 18, 32]
+
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.sort();            // Sorts the elements of fruits
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.sort();            // Sorts the elements of fruits 
+fruits.reverse();         // Reverses the order of the elements
+
+Numeric Sort
+By default, the sort() function sorts values as strings.
+This works well for strings ("Apple" comes before "Banana").
+However, if numbers are sorted as strings, "25" is bigger than "100", because "2" is bigger than "1".
+Because of this, the sort() method will produce incorrect result when sorting numbers.
+You can fix this by providing a compare function:
+
+asc order sort
+var points = [40, 100, 1, 5, 25, 10];
+points.sort(function(a, b){return a - b});
+
+desc order sort
+var points = [40, 100, 1, 5, 25, 10];
+points.sort(function(a, b){return b - a});
+
+random sort an array
+var points = [40, 100, 1, 5, 25, 10];
+points.sort(function(a, b){return 0.5 - Math.random()});
+
+Find max and min value from an array 
+var points = [40, 100, 1, 5, 25, 10];
+points.sort(function(a, b){return a - b});
+// now points[0] contains the lowest value
+// and points[points.length-1] contains the highest value
+Sorting a whole array is a very inefficient method if you only want to find the highest (or lowest) value.
+Soln:2 function myArrayMax(arr) {
+    return Math.max.apply(null, arr);
+}
+Math.max.apply([1, 2, 3]) is equivalent to Math.max(1, 2, 3).
+function myArrayMin(arr) {
+    return Math.min.apply(null, arr);
+}
+
+Example (Find Max)
+function myArrayMax(arr) {
+    var len = arr.length
+    var max = -Infinity;
+    while (len--) {
+        if (arr[len] > max) {
+            max = arr[len];
+        }
+    }
+    return max;
+}
+
+Sorting Object Arrays
+var cars = [ {type:"Volvo", year:2016}, {type:"Saab", year:2001}, {type:"BMW", year:2010}];
+soln: cars.sort(function(a, b){return a.year - b.year})
+*** Comparing string properties is a little more complex:
+cars.sort(function(a, b){
+    var x = a.type.toLowerCase();
+    var y = b.type.toLowerCase();
+    if (x < y) {return -1;}
+    if (x > y) {return 1;}
+    return 0;
+});
+
+Ref: 
+https://www.w3schools.com/js/js_arrays.asp
+
+#2.2 how to define functions in javascript
+
+Overview: different ways of declaring functions
+1: Function declarations: function A(){};
+2: Function expressions: var B = function(){};
+3: Function expressions with grouping operators: var C = (function(){});
+4: Named function expression: var D = function foo(){};
+5: Immediately-invoked function expressions (IIFE): var E = (function(){return function(){}})();
+6: Function constructor: var F = new Function();
+7: Special case - object constructor: var G = new function foo(){};
+8: Arrow functions
+
+Overview: different ways of declaring functions
+function A(){};             // function declaration
+var B = function(){};       // function expression
+var C = (function(){});     // function expression with grouping operators
+var D = function foo(){};   // named function expression
+var E = (function(){        // IIFE that returns a function
+  return function(){}
+})();
+var F = new Function();     // Function constructor
+var G = new function(){};   // special case: object constructor
+var H = x => x * 2;         // ES6 arrow function
+
+A JavaScript function is a block of code designed to perform a particular task.
+JavaScript Function Syntax
+A JavaScript function is defined with the function keyword, followed by a name, followed by parentheses ().
+
+Function names can contain letters, digits, underscores, and dollar signs (same rules as variables).
+
+The parentheses may include parameter names separated by commas:(parameter1, parameter2, ...)
+The code to be executed, by the function, is placed inside curly brackets: {}
+function name(parameter1, parameter2, parameter3) {
+    code to be executed
+}
+Function parameters are listed inside the parentheses () in the function definition.
+Function arguments are the values received by the function when it is invoked.
+Inside the function, the arguments (the parameters) behave as local variables.
+A Function is much the same as a Procedure or a Subroutine, in other program lang
+hint: Return function : When JavaScript reaches a return statement, the function will stop executing.
+If the function was invoked from a statement, JavaScript will "return" to execute the code after the invoking statement.
+Functions often compute a return value. The return value is "returned" back to the "caller":
+
+pass by value / pass by reference
+------------------------------------
+Primitive parameters (such as a number) are passed to functions by value; the value is passed to the function, but if the function changes the value of the parameter, this change is does not reflected globally or in the calling function.
+
+If you pass an object (i.e. a non-primitive value, such as Array or a user-defined object) as a parameter and the function changes the object's properties, that change is visible outside the function, as shown in the following example:
+
+function myFunc(theObject) {
+  theObject.make = 'Toyota';
+}
+var mycar = {make: 'Honda', model: 'Accord', year: 1998};
+var x, y;
+x = mycar.make; // x gets the value "Honda"
+myFunc(mycar);
+y = mycar.make; // y gets the value "Toyota"
+                // (the make property was changed by the function)
+				
+Function scope
+------------------
+Variables defined inside a function cannot be accessed from anywhere outside the function, because the variable is defined only in the scope of the function. However, a function can access all variables and functions defined inside the scope in which it is defined. In other words, a function defined in the global scope can access all variables defined in the global scope. A function defined inside another function can also access all variables defined in its parent function and any other variable to which the parent function has access.
+
+// The following variables are defined in the global scope
+var num1 = 20,
+    num2 = 3,
+    name = 'Chamahk';
+// This function is defined in the global scope
+function multiply() {
+  return num1 * num2;
+}
+multiply(); // Returns 60
+// A nested function example
+function getScore() {
+  var num1 = 2,
+      num2 = 3; 
+  function add() {
+    return name + ' scored ' + (num1 + num2);
+  }
+    return add();
+}
+getScore(); // Returns "Chamahk scored 5"
+topic:2 Scope and the function stack
+-------------------------------------
+Recursion
+A function can refer to and call itself. There are three ways for a function to refer to itself:
+
+the function's name
+arguments.callee
+an in-scope variable that refers to the function
+For example, consider the following function definition:
+var foo = function bar() {
+   // statements go here
+};
+Within the function body, the following are all equivalent:
+bar()
+arguments.callee()
+foo()
+A function that calls itself is called a recursive function
+Nested functions and closures
+-----------------------------
+You can nest a function within a function. The nested (inner) function is private to its containing (outer) function. It also forms a closure. A closure is an expression (typically a function) that can have free variables together with an environment that binds those variables (that "closes" the expression).
+
+Since a nested function is a closure, this means that a nested function can "inherit" the arguments and variables of its containing function. In other words, the inner function contains the scope of the outer function.
+
+To summarize:
+
+The inner function can be accessed only from statements in the outer function.
+The inner function forms a closure: the inner function can use the arguments and variables of the outer function, while the outer function cannot use the arguments and variables of the inner function.
+The following example shows nested functions:
+
+function addSquares(a, b) {
+  function square(x) {
+    return x * x;
+  }
+  return square(a) + square(b);
+}
+a = addSquares(2, 3); // returns 13
+b = addSquares(3, 4); // returns 25
+c = addSquares(4, 5); // returns 41
+Closure
+=======
+Since the inner function forms a closure, you can call the outer function and specify arguments for both the outer and inner function:
+function outside(x) {
+  function inside(y) {
+    return x + y;
+  }
+  return inside;
+}
+fn_inside = outside(3); // Think of it like: give me a function that adds 3 to whatever you give
+result = fn_inside(5); // returns 8
+result1 = outside(3)(5); // returns 8
+
+Name conflicts - The Scope chain
+---------------------------------
+When two arguments or variables in the scopes of a closure have the same name, there is a name conflict. More inner scopes take precedence, so the inner-most scope takes the highest precedence, while the outer-most scope takes the lowest. This is the scope chain. The first on the chain is the inner-most scope, and the last is the outer-most scope. Consider the following:
+
+function outside() {
+  var x = 5;
+  function inside(x) {
+    return x * 2;
+  }
+  return inside;
+}
+outside()(10); // returns 20 instead of 10
+The name conflict happens at the statement return x and is between inside's parameter x and outside's variable x. The scope chain here is {inside, outside, global object}. Therefore inside's x takes precedences over outside's x, and 20 (inside's x) is returned instead of 10 (outside's x).
+
+Closures
+========
+Closures are one of the most powerful features of JavaScript. JavaScript allows for the nesting of functions and grants the inner function full access to all the variables and functions defined inside the outer function (and all other variables and functions that the outer function has access to). However, the outer function does not have access to the variables and functions defined inside the inner function. This provides a sort of encapsulation for the variables of the inner function. Also, since the inner function has access to the scope of the outer function, the variables and functions defined in the outer function will live longer than the duration of the inner function execution, if the inner function manages to survive beyond the life of the outer function. A closure is created when the inner function is somehow made available to any scope outside the outer function.
+var pet = function(name) {   // The outer function defines a variable called "name"
+  var getName = function() {
+    return name;             // The inner function has access to the "name" variable of the outer     //function
+  }
+  return getName;            // Return the inner function, thereby exposing it to outer scopes
+}
+myPet = pet('Vivie');
+myPet();                     // Returns "Vivie"
+
+Arrow functions
+================
+An arrow function expression (previously, and now incorrectly known as fat arrow function) has a shorter syntax compared to function expressions and lexically binds the this value. Arrow functions are always anonymous. See also this hacks.mozilla.org blog post: "ES6 In Depth: Arrow functions".
+Two factors influenced the introduction of arrow functions: shorter functions and lexical this.
+Shorter functions
+In some functional patterns, shorter functions are welcome. Compare:
+
+var a = [
+  'Hydrogen',
+  'Helium',
+  'Lithium',
+  'Beryllium'
+];
+
+var a2 = a.map(function(s) { return s.length; });
+console.log(a2); // logs [8, 6, 7, 9]
+var a3 = a.map(s => s.length);
+console.log(a3); // logs [8, 6, 7, 9]
+Lexical this
+=============
+Until arrow functions, every new function defined its own this value (a new object in case of a constructor, undefined in strict mode function calls, the context object if the function is called as an "object method", etc.). This proved to be annoying with an object-oriented style of programming.
+
+function Person() {
+  // The Person() constructor defines `this` as itself.
+  this.age = 0;
+
+  setInterval(function growUp() {
+    // In nonstrict mode, the growUp() function defines `this` 
+    // as the global object, which is different from the `this`
+    // defined by the Person() constructor.
+    this.age++;
+  }, 1000);
+}
+
+var p = new Person();
+In ECMAScript 3/5, this issue was fixed by assigning the value in this to a variable that could be closed over.
+function Person() {
+  var self = this; // Some choose `that` instead of `self`. 
+                   // Choose one and be consistent.
+  self.age = 0;
+  setInterval(function growUp() {
+    // The callback refers to the `self` variable of which
+    // the value is the expected object.
+    self.age++;
+  }, 1000);
+}
+Alternatively, a bound function could be created so that the proper this value would be passed to the growUp() function.
+
+soln:===> Arrow function - lexical this. use of self Strict mode - no strict mode - lexical scope
+Arrow functions capture the this value of the enclosing context, so the following code works as expected.
+function Person() {
+  this.age = 0;
+
+  setInterval(() => {
+    this.age++; // |this| properly refers to the person object
+  }, 1000);
+}
+
+Ans:3  for how many ways define function -Question
+A function is a parametric block of code defined one time and called any number of times later. In JavaScript a function is composed and influenced by many components:
+
+JavaScript code that forms the function body
+The list of function parameters
+The variables accessible from the outer scope
+The returned value
+The context this when the function is invoked
+Named or anonymous function
+The variable that holds the function object after declaration
+arguments object (or its missing in an arrow function)
+These components affect the function behavior depending on the declaration type. In JavaScript a function can be declared using several ways:
+
+Function declaration
+Function expression
+Shorthand method definition
+Arrow function
+Generator function
+Function constructor
+Generator function
+------------------
+The Generator object is returned by a generator function and it conforms to both the iterable protocol and the iterator protocol.
+Syntax
+function* gen() { 
+  yield 1;
+  yield 2;
+  yield 3;
+}
+var g = gen(); // "Generator { }"
+var p = new Person();
+Function constructor
+----------------------
+The Function constructor creates a new Function object. Calling the constructor directly can create functions dynamically, but suffers from security and performance issues similar to eval.
+var sum = new Function('a', 'b', 'return a + b');
+console.log(sum(2, 6)); // expected output: 8
+
+Ref:  for functions
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#Arrow_functions
+https://www.davidbcalhoun.com/2011/different-ways-of-defining-functions-in-javascript-this-is-madness/
+https://dmitripavlutin.com/6-ways-to-declare-javascript-functions/
+https://www.w3schools.com/js/js_functions.asp
+
+#3. How to define Objects in JS / How many ways to define objects in javascript
+
+A1: =>
+Using the Object() constructor:
+var d = new Object();
+This is the simplest way to create an empty object. I believe it is now discouraged.
+
+A2:=>
+Using Object.create() method:
+var a = Object.create(null);
+This method creates a new object extending the prototype object passed as a parameter.
+
+A3:=>
+Using the bracket's syntactig sugar:
+var b = {};
+This is equivalent to Object.create(null) method, using a null prototype as an argument.
+
+A4:=>
+Using a function constructor
+var Obj = function(name) {
+  this.name = name
+}
+var c = new Obj("hello"); 
+What the new operator does is call a function and setting this of the function to a fresh new Object, and binding the prototype of that new Object to the function's prototype. As is:
+function f {};
+new f(a, b, c);
+Would be equivalent to: 
+// Create a new instance using f's prototype.
+var newInstance = Object.create(f.prototype)
+var result;
+// Call the function
+result = f.call(newInstance, a, b, c),
+// If the result is a non-null object, use it, otherwise use the new instance.
+result && typeof result === 'object' ? result : newInstance
+
+A5:=>
+Using the function constructor + prototype:
+function myObj(){};
+myObj.prototype.name = "hello";
+var k = new myObj();
+
+A6:=>
+Using ES6 class syntax:
+class myObject  {
+  constructor(name) {
+    this.name = name;
+  }
+}
+var e = new myObject("hello");
+Singleton pattern:
+var l = new function(){
+  this.name = "hello";
+}
+
+A7: =>
+// Older versions  
+const obj = {  
+    method1: function() {},  
+    method2: function() {}  
+};  
+
+// Edge mode  
+const obj = {  
+    method1() {},  
+    method2() {}  
+};  
+
+
+JS Objects
+-----------
+
+
+Objects are variables too. But objects can contain many values.
+This code assigns many values (Fiat, 500, white) to a variable named car:
+var car = {type:"Fiat", model:"500", color:"white"};
+The values are written as name:value pairs (name and value separated by a colon).
+JavaScript objects are containers for named values.
+
+ Js object def Ans:2
+ -------------------
+ javaScript is designed on a simple object-based paradigm. An object is a collection of properties, and a property is an association between a name (or key) and a value. A property's value can be a function, in which case the property is known as a method. In addition to objects that are predefined in the browser, you can define your own objects. 
+Object Properties=>
+The name:values pairs (in JavaScript objects) are called properties.
+var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+
+var person = {
+    firstName: "John",
+    lastName : "Doe",
+    id       : 5566,
+    fullName : function() {
+       return this.firstName + " " + this.lastName;
+    }
+};
+Accessing Object Properties
+-----------------------------
+You can access object properties in two ways:
+*** objectName.propertyName or objectName["propertyName"] eg obj.ke1 eg2. obj['key-1']
+
+Accessing Object Methods
+--------------------------
+You access an object method with the following syntax:
+objectName.methodName()
+Example => name = person.fullName();
+If you access a method without (), it will return the function definition:
+Example => name = person.fullName; function () { return this.firstName + " " + this.lastName; }
+
+JS Object : Ans2
+----------------
+In JavaScript, almost "everything" is an object.
+
+Booleans can be objects (if defined with the new keyword)
+Numbers can be objects (if defined with the new keyword)
+Strings can be objects (if defined with the new keyword)
+Dates are always objects
+Maths are always objects
+Regular expressions are always objects
+Arrays are always objects
+Functions are always objects
+Objects are always objects
+All JavaScript values, except primitives, are objects.
+
+JavaScript Objects are Mutable
+------------------------------
+Objects are mutable: They are addressed by reference, not by value.
+If person is an object, the following statement will not create a copy of person:
+*** var x = person;  // This will not create a copy of person.
+The object x is not a copy of person. It is person. Both x and person are the same object.
+Any changes to x will also change person, because x and person are the same object.
+Example
+var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
+var x = person;
+x.age = 10;           // This will change both x.age and person.
+Note: JavaScript variables are not mutable. Only JavaScript objects.
+
+how to compare to objects are same.
+-------------------------------------
+
+eg:
+var obj1 = {   a: 1,    c: 3 };
+var obj2 = {   a: 1,    c: 3 };
+
+function equals(obj1, obj2) {
+    function _equals(obj1, obj2) {
+        var clone = $.extend(true, {}, obj1),
+            cloneStr = JSON.stringify(clone);
+        return cloneStr === JSON.stringify($.extend(true, clone, obj2));
+    }
+    return _equals(obj1, obj2) && _equals(obj2, obj1);
+}
+$("#output").html(equals(obj1, obj2).toString());
+ans:2 => JSON.stringify({a: val1}) === JSON.stringify({a: val2})
+
+Enumerate the properties of an object
+---------------------------------------
+Starting with ECMAScript 5, there are three native ways to list/traverse object properties:
+for...in loops
+This method traverses all enumerable properties of an object and its prototype chain
+Object.keys(o)
+This method returns an array with all the own (not in the prototype chain) enumerable properties' names ("keys") of an object o.
+Object.getOwnPropertyNames(o)
+This method returns an array containing all own properties' names (enumerable or not) of an object o.
+
+Defining getters and setters
+------------------------------
+A getter is a method that gets the value of a specific property. A setter is a method that sets the value of a specific property. You can define getters and setters on any predefined core object or user-defined object that supports the addition of new properties. The syntax for defining getters and setters uses the object literal syntax.
+The following illustrates how getters and setters could work for a user-defined object o.
+var o = {
+  a: 7,
+  get b() { 
+    return this.a + 1;
+  },
+  set c(x) {
+    this.a = x / 2;
+  }
+};
+console.log(o.a); // 7
+console.log(o.b); // 8
+o.c = 50;
+console.log(o.a); // 25
+
+#3.5 how to comapre 2 objects in Js
+------------------------------------
+How would you compare two objects in JavaScript?
+
+Basics: JavaScript has two different approaches for testing equality. Primitives like strings and numbers are compared by their value, while objects like arrays, dates, and user defined objects are compared by their reference. This means it compares whether two objects are referring to the same location in memory.
+
+Answer: Equality check will check whether two objects have same value for same property. To check that, you can get the keys for both the objects. If the number of properties doesn't match, these two objects are not equal. Secondly, you will check each property whether they have the same value. If all the properties have same value, they are equal.
+function isEqual(a, b) {
+    var aProps = Object.getOwnPropertyNames(a),
+        bProps = Object.getOwnPropertyNames(b);
+    if (aProps.length != bProps.length) {
+        return false;
+    }
+    for (var i = 0; i < aProps.length; i++) {
+        var propName = aProps[i];        
+        if (a[propName] !== b[propName]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+#4. How do I remove a property from a JavaScript object?  how to delete an item fron JS Object
+
+var test = {'red':'#FF0000', 'blue':'#0000FF'};
+delete test.blue; // or use => delete test['blue'];   or use => var prop = "blue"; delete myObject[prop];
+console.log(test);
+
+#4.1. How to I delete an item from Array
+Removing item (ECMA-262 Edition 5 code aka oldstyle JS)
+ans:1
+-----
+var value = 3
+var arr = [1, 2, 3, 4, 5, 3]
+arr = arr.filter(function(item) { 
+    return item !== value
+})
+console.log(arr)
+// [ 1, 2, 4, 5 ]
+
+ans:2 using Arrow function
+------
+Removing item (ES2015 code)
+let value = 3
+let arr = [1, 2, 3, 4, 5, 3]
+arr = arr.filter(item => item !== value)
+console.log(arr)
+// [ 1, 2, 4, 5 ]
+
+Ans:3
+------
+Removing multiple items (ES2015 code)
+An additional advantage of this method is that you can remove multiple items
+let forDeletion = [2, 3, 5]
+let arr = [1, 2, 3, 4, 5, 3]
+arr = arr.filter(item => !forDeletion.includes(item))
+// !!! Read below about array.includes(...) support !!!
+console.log(arr)
+// [ 1, 4 ]
+
+
+#5.  diff b/w for..in and for..of
+----------------------------------
+let list = [4, 5, 6];
+
+for (let i in list) {
+   console.log(i); // "0", "1", "2",
+}
+
+for (let i of list) {
+   console.log(i); // "4", "5", "6"
+}
+
+for...in loop eg.;
+-------------------
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+for (const index in digits) {
+  console.log(digits[index]);   => 0-9 is output
+}
+
+for...of loop eg.;
+------------------
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+for (const digit of digits) {
+  console.log(digit);         => 0-9 is output
+}
+
+#5.1 difference between foreach, for of and for in loops.
+
+A collection is an object which contains a group of elements. For example: arrays, set, list, custom collections etc.
+
+foreach => is an method that is available only in Array objects. It allows you to iterate through elements of an array. When invoked it takes a callback function and invokes the callback once for every array element. The callback can access both index and value of the array elements. foreach is available only for looping arrays.
+
+for in => is used to loop through properties of an object. It can be any object. for in allows you to access the keys of the object but doesn’t provide reference to the values. In JavaScript object properties themselves have internal properties. One of the internal properties is [[Enumerable]]. for in will only walkthrough a property if it has [[Enumerbale]] set to true. It not used to iterate elements of an collection rather used to iterate properties of objects.
+
+for of => is a new way for iterating collections. Its introduced in ES6. Earlier you had to use for or while loop to iterate through elements of an collection. For for of to work on an collection, the collection must have an [Symbol.iterator] property.
+
+#5.2 => What's the difference between ' and " in javascript? No diff
+
+#6. this in Javascript , why we use self instead of this.
+
+Ans:1
+------
+this is a keyword whose value changes depending on how a function gets called. There six different ways where this can take on new values. They are:
+
+1.this in global context
+2.this in object construction
+3.this in an object method
+4.this in a simple function
+5.this in an arrow function
+6.this in an event listener
+
+This in a global context
+--------------------------
+When this is called outside of any function, in a global context, this defaults to the Window object in the browser.
+console.log(this) // Window
+
+This in object construction -> this refers to the instance.
+----------------------------
+When you create a new instance of an object with the new keyword, this refers to the instance.
+function Human (age) {
+  this.age = age
+}
+let greg = new Human(22)
+let thomas = new Human(24)
+console.log(greg) // this.age = 22
+console.log(thomas) // this.age = 24
+You can see that greg is an instance of Human in the code above. Now, whenever you reference greg, you won’t accidentally get thomas. 
+So, setting this to be the instance makes perfect sense.
+
+This in an object method
+-------------------------
+Methods are fancy words for functions that are associated with an object, like this:
+(Note: Methods here are defined with the ES6 object literal shorthand. 
+let o = {
+  // A method
+  aMethod () {}
+}
+this within any method refers to the object itself.
+let o = {
+  sayThis () {
+    console.log(this)
+  }
+}
+o.sayThis() // o
+eg-> below
+function Human (name) {
+  return {
+    name,
+    getName() {
+      return this.name
+    }
+  }
+}
+const zell = new Human('Zell')
+const vincy = new Human('Vincy')
+console.log(zell.getName()) // Zell
+This in a simple function
+-------------------------
+Simple functions are functions you know extremely well; like the one below. Anonymous functions written in the same form are also considered simple functions.
+function hello () {
+  // say hello!
+}
+On browsers, this is always set to Window in a simple function. The same is true even if you call a simple function in an object method.
+function simpleFunction () {
+  console.log(this)
+}
+const o = {
+  sayThis () {
+    simpleFunction()
+  }
+}
+simpleFunction() // Window
+o.sayThis() // Window
+Unfortunately, the change in this is unexpected for beginners. They expect this to remain the same within object methods. I got caught in it too.
+
+use self instead of this solve problem
+const o = {
+  doSomethingLater () {
+    setTimeout(function() {
+      this.speakLeet() // Error
+    }, 1000)
+  },
+  speakLeet() {
+    console.log(`1337 15 4W350M3`)
+  }
+}
+Unfortunately, the code above results in an error. The error occurs because this is set to Window in the setTimeout function. Window does not have a speakLeet method.
+
+One quick fix is to create a variable that stores the reference to the this. This variable is often called self or that.
+const o = {
+  doSomethingLater () {
+    const self = this
+    setTimeout(function() {
+      self.speakLeet()
+    }, 1000)
+  },
+  speakLeet() {
+    console.log(`1337 15 4W350M3`)
+  }
+}
+A second way to fix this problem is to use the new ES6 arrow functions, which brings us to the next context.
+
+This in arrow functions
+------------------------
+this in an arrow function is always the same as this around it (in its immediate scope). So, if you use arrow functions within an object method, the this context stays as the object, not Window.
+With arrow functions, the speakLeet example could be written in the following way:
+const o = {
+  doSomethingLater () {
+    setTimeout(() => this.speakLeet(), 1000)
+  },
+  speakLeet() {
+    console.log(`1337 15 4W350M3`)
+  }
+}
+This in event listeners
+------------------------
+this is set to the element that fired the event in an event listener:
+let button = document.querySelector('button')
+button.addEventListener('click', function() {
+  console.log(this) // button
+})
+When creating more complex components, you may find yourself creating event listeners within methods.
+function LeetSpeaker (elem) {
+  return {
+    listenClick () {
+      elem.addEventListener('click', function () {
+        // Do something here
+      })
+    }
+  }
+}
+Since this refers to the element in the event listener, if you need to activate another method, you need to provide a reference to the object with.
+function LeetSpeaker (elem) {
+  return {
+    listenClick () {
+      const self = this
+      elem.addEventListener('click', function () {
+        self.speakLeet()
+      })
+    },
+    speakLeet() { console.log(`1337 15 4W350M3`) }
+  }
+}
+Alternatively, you can use an arrow function. If you do so, you can still get the element with event.currentTarget.
+function LeetSpeaker (elem) {
+  return {
+    listenClick () {
+      elem.addEventListener('click', (e) => {
+        console.log(e.currentTarget) // elem
+        this.speakLeet()
+      })
+    },
+    speakLeet() { console.log(`1337 15 4W350M3`) }
+  }
+}
+
+ans:2
+-----
+Global scope:
+---------------
+If a function which includes 'this' keyword, is called from the global scope then this will point to the window object. Learn about global and local scope here.
+Example: this keyword
+-----------------------
+<script>
+var myVar = 100;
+function WhoIsThis() {
+    var myVar = 200;
+
+    alert("myVar = " + myVar); // 200
+    alert("this.myVar = " + this.myVar); // 100
+}
+WhoIsThis(); // inferred as window.WhoIsThis()
+</script>
+In the above example, a function WhoIsThis() is being called from the global scope. The global scope means in the context of window object. We can optionally call it like window.WhoIsThis(). So in the above example, this keyword in WhoIsThis() function will refer to window object. So, this.myVar will return 100. However, if you access myVar without this then it will refer to local myVar variable defined in WhoIsThis() function.
+'this' points to global window object even if it is used in an inner function. Consider the following example.
+Example: this keyword inside inner function
+-----------------------------------------
+var myVar = 100;
+function SomeFunction() {
+    function WhoIsThis() {
+        var myVar = 200;
+        alert("myVar = " + myVar); // 200
+        alert("this.myVar = " + this.myVar); // 100
+    }
+    WhoIsThis(); 
+}
+SomeFunction();
+So, if 'this' is used inside any global function and called without dot notation or using window. then this will refer to global object which is default window object.
+this inside object's method:
+As you have learned here, you can create an object of a function using new keyword. So, when you create an object of a function using new keyword then this will point to that particular object. Consider the following example.
+Example: this keyword
+----------------------
+var myVar = 100;
+function WhoIsThis() {
+    this.myVar = 200;
+}
+var obj1 = new WhoIsThis();
+var obj2 = new WhoIsThis();
+obj2.myVar = 300;
+alert(obj1.myVar); // 200 
+alert(obj2.myVar); // 300 
+In the above example, this points to obj1 for obj1 instance and points to obj2 for obj2 instance. In JavaScript, properties can be attached to an object dynamically using dot notation. Thus, myVar will be a property of both the instances and each will have a separate copy of myVar.
+Now look at the following example.
+Example: this keyword
+---------------------
+var myVar = 100;
+function WhoIsThis() {
+    this.myVar = 200;
+    this.display = function(){
+        var myVar = 300;   
+        alert("myVar = " + myVar); // 300
+        alert("this.myVar = " + this.myVar);  // 200
+    };
+}
+var obj = new WhoIsThis();
+obj.display(); 
+
+Example: call() & apply()
+
+var myVar = 100;
+
+function WhoIsThis() {
+
+    alert(this.myVar);
+}
+
+var obj1 = { myVar : 200 , whoIsThis: WhoIsThis };
+var obj2 = { myVar : 300 , whoIsThis: WhoIsThis };
+WhoIsThis(); // 'this' will point to window object
+WhoIsThis.call(obj1); // 'this' will point to obj1
+WhoIsThis.apply(obj2); // 'this' will point to obj2
+obj1.whoIsThis.call(window); // 'this' will point to window object
+WhoIsThis.apply(obj2); // 'this' will point to obj2
+
+Example: bind()
+----------------
+var myVar = 100;
+function SomeFunction(callback)
+{
+    var myVar = 200;
+    callback();
+};    
+var obj = {
+            myVar: 300,
+            WhoIsThis : function() {
+                alert("'this' points to " + this + ", myVar = " + this.myVar);
+            }
+      };     
+SomeFunction(obj.WhoIsThis); 
+SomeFunction(obj.WhoIsThis.bind(obj)); 
+
+Ans:3
+-----
+The this keyword behaves differently in JavaScript compared to other language. In Object Oriented languages, the this keyword refers to the current instance of the class. In JavaScript the value of this is determined mostly by the invocation context of function (context.function()) and where it is called.
+1. When used in global context
+------------------------------
+When you use this in global context, it is bound to global object (window in browser)
+document.write(this);  //[object Window]
+When you use this inside a function defined in the global context, this is still bound to global object since the function is actually made a method of global context.
+function f1()
+{
+   return this;
+}
+document.write(f1());  //[object Window]
+Above f1 is made a method of global object. Thus we can also call it on window object as follows:
+function f()
+{
+    return this;
+}
+document.write(window.f()); //[object Window]
+2. When used inside object method
+----------------------------------
+When you use this keyword inside an object method, this is bound to the "immediate" enclosing object.
+
+var obj = {
+    name: "obj",
+    f: function () {
+        return this + ":" + this.name;
+    }
+};
+document.write(obj.f());  //[object Object]:obj
+Above I have put the word immediate in double quotes. It is to make the point that if you nest the object inside another object, then this is bound to the immediate parent.
+var obj = {
+    name: "obj1",
+    nestedobj: {
+        name:"nestedobj",
+        f: function () {
+            return this + ":" + this.name;
+        }
+    }            
+}
+document.write(obj.nestedobj.f()); //[object Object]:nestedobj
+3. When invoking context-less function
+---------------------------------------
+When you use this inside function that is invoked without any context (i.e. not on any object), it is bound to the global object (window in browser)(even if the function is defined inside the object) .
+var context = "global";
+var obj = {  
+    context: "object",
+    method: function () {                  
+        function f() {
+            var context = "function";
+            return this + ":" +this.context; 
+        };
+        return f(); //invoked without context
+    }
+};
+document.write(obj.method()); //[object Window]:global 
+4. When used inside constructor function.
+-----------------------------------------
+When the function is used as a constructor (that is when it is called with new keyword), this inside function body points to the new object being constructed.
+var myname = "global context";
+function SimpleFun()
+{
+    this.myname = "simple function";
+}
+var obj1 = new SimpleFun(); //adds myname to obj1
+document.write(obj1.myname); //simple function
+5. When used inside function defined on prototype chain
+--------------------------------------------------------
+If the method is on an object's prototype chain, this inside such method refers to the object the method was called on, as if the method is defined on the object.
+var ProtoObj = {
+    fun: function () {
+        return this.a;
+    }
+};
+//Object.create() creates object with ProtoObj as its
+//prototype and assigns it to obj3, thus making fun() 
+//to be the method on its prototype chain
+var obj3 = Object.create(ProtoObj);
+obj3.a = 999;
+document.write(obj3.fun()); //999
+6. Inside call(), apply() and bind() functions
+-----------------------------------------------
+All these methods are defined on Function.prototype.
+These methods allows to write a function once and invoke it in different context. In other words, they allows to specify the value of this which will be used while the function is being executed. They also take any parameters to be passed to the original function when it is invoked.
+fun.apply(obj1 [, argsArray]) Sets obj1 as the value of this inside fun() and calls fun() passing elements of argsArray as its arguments.
+fun.call(obj1 [, arg1 [, arg2 [,arg3 [, ...]]]]) - Sets obj1 as the value of this inside  fun() and calls fun() passing arg1, arg2, arg3, ... as its arguments.
+fun.bind(obj1 [, arg1 [, arg2 [,arg3 [, ...]]]]) - Returns the reference to the function fun with this inside fun bound to obj1 and parameters of fun bound to the parameters specified arg1, arg2, arg3,....
+7. this inside event handlers
+------------------------------
+When you assign function directly to event handlers of an element, use of this directly inside event handling function refers to the corresponding element. Such direct function assignment can be done using addeventListener method or through the traditional event registration methods like onclick.
+Similarly, when you use this directly inside the event property (like <button onclick="...this..." >) of the element, it refers to the element.
+However use of this indirectly through the other function called inside the event handling function or event property resolves to the global object window.
+
+https://zellwk.com/blog/this/
+http://www.tutorialsteacher.com/javascript/this-keyword-in-javascript
+https://stackoverflow.com/questions/3127429/how-does-the-this-keyword-work
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+
+#7. Strict mode in JS
+---------------------
+The "use strict" directive is only recognized at the beginning of a script or a function.
+The "use strict" Directive
+The "use strict" directive is new in JavaScript 1.8.5 (ECMAScript version 5).
+It is not a statement, but a literal expression, ignored by earlier versions of JavaScript.
+The purpose of "use strict" is to indicate that the code should be executed in "strict mode".
+Declaring Strict Mode
+----------------------
+Strict mode is declared by adding "use strict"; to the beginning of a script or a function.
+Declared at the beginning of a script, it has global scope (all code in the script will execute in strict mode):
+"use strict";
+x = 3.14;       // This will cause an error because x is not declared
+Try it Yourself »
+Example
+"use strict";
+myFunction();
+function myFunction() {
+    y = 3.14;   // This will also cause an error because y is not declared
+}
+Declared inside a function, it has local scope (only the code inside the function is in strict mode):
+
+x = 3.14;       // This will not cause an error. 
+myFunction();
+function myFunction() {
+   "use strict";
+    y = 3.14;   // This will cause an error
+}
+
+Why Strict Mode?
+Strict mode makes it easier to write "secure" JavaScript.
+Strict mode changes previously accepted "bad syntax" into real errors.
+As an example, in normal JavaScript, mistyping a variable name creates a new global variable. In strict mode, this will throw an error, making it impossible to accidentally create a global variable.
+In normal JavaScript, a developer will not receive any error feedback assigning values to non-writable properties.
+In strict mode, any assignment to a non-writable property, a getter-only property, a non-existing property, a non-existing variable, or a non-existing object, will throw an error.
+Using an object, without declaring it, is not allowed:
+"use strict";
+x = {p1:10, p2:20};      // This will cause an error
+Deleting a function is not allowed.
+"use strict";
+function x(p1, p2) {}; 
+delete x;                // This will cause an error 
+Duplicating a parameter name is not allowed:
+"use strict";
+function x(p1, p1) {};   // This will cause an error
+Octal numeric literals are not allowed:
+"use strict";
+var x = 010;             // This will cause an error
+Octal escape characters are not allowed:
+"use strict";
+var x = "\010";            // This will cause an error
+Writing to a read-only property is not allowed:
+"use strict";
+var obj = {};
+Object.defineProperty(obj, "x", {value:0, writable:false});
+obj.x = 3.14;            // This will cause an error
+Writing to a get-only property is not allowed:
+"use strict";
+var obj = {get x() {return 0} };
+obj.x = 3.14;            // This will cause an error
+
+Ans:2
+------
+Converting mistakes into errors
+Strict mode changes some previously-accepted mistakes into errors. JavaScript was designed to be easy for novice developers, and sometimes it gives operations which should be errors non-error semantics. Sometimes this fixes the immediate problem, but sometimes this creates worse problems in the future. Strict mode treats these mistakes as errors so that they're discovered and promptly fixed.
+First, strict mode makes it impossible to accidentally create global variables. In normal JavaScript mistyping a variable in an assignment creates a new property on the global object and continues to "work" (although future failure is possible: likely, in modern JavaScript). Assignments which would accidentally create global variables instead throw in strict mode:
+'use strict';
+                       // Assuming a global variable mistypedVariable exists
+mistypeVariable = 17; // this line throws a ReferenceError due to the 
+                       // misspelling of variable
+Ref: https://docs.microsoft.com/en-us/scripting/javascript/advanced/strict-mode-javascript
+
+#8. Sort an array in JavaScript
+Ans:1
+-----
+Basic Array Sorting
+By default, the JavaScript Array.sort function converts each element in the array to be sorted, into a string, and compares them in Unicode code point order.
+const foo = [9, 2, 3, 'random', 'panda'];
+foo.sort(); // returns [ 2, 3, 9, 'panda', 'random' ]
+const bar = [4, 19, 30, function(){}, {key: 'value'}];
+bar.sort(); // returns [ 19, 30, 4, { key: 'value' }, [Function] ]
+You may be wondering why 30 comes before 4… not logical huh? Well, actually it is. This happens because each element in the array is first converted to a string, and "30" comes before "4" in Unicode order.
+It is also worth noting that unlike many other JavaScript array functions, Array.sort actually changes, or mutates the array it sorts.
+const baz = ['hello world', 31, 5, 9, 12];
+baz.sort(); // baz array is modified
+console.log(baz); // shows [12, 31, 5, 9, "hello world"]
+To avoid this, you can create a new instance of the array to be sorted and modify that instead.
+const baz = ['hello world', 31, 5, 9, 12];
+const newBaz = baz.slice().sort(); // new instance of baz array is created and sorted
+console.log(baz); // "hello world", 31, 5, 9, 12]
+console.log(newBaz); // [12, 31, 5, 9, "hello world"]
+
+Ans:2
+-----
+//Sort alphabetically and descending:
+var myarray=["Bob", "Bully", "Amy"]
+myarray.sort()
+myarray.reverse() //Array now becomes ["Bully", "Bob", "Amy"]
+
+//Sort numerically and ascending:
+var myarray=[25, 8, 7, 41]
+myarray.sort(function(a,b){ //Array now becomes [7, 8, 25, 41] 
+    return a - b			// Array becomes reverse order -> return b-a [41, 25, 8,7]
+})
+
+#9.1. window vs document
+==========================
+Question: Is there any difference between window and document?
+
+Answer: Yes. JavaScript has a global object and everything runs under it. window is that global object that holds global variables, global functions, location, history everything is under it. Besides, setTimeout, ajax call (XMLHttpRequest), console or localStorage are part of window.
+document is also under window. document is a property of the window object. document represents the DOM and DOM is the object oriented representation of the html markup you have written. All the nodes are part of document. Hence you can use getElementById or addEventListener on document. These methods are not present in the window object.
+
+window.document === document; //true
+window.getElementById; //undefined
+document.getElementById; //function getElementById() { [native code] }
+
+#9.2. window.onload vs document.onload
+Question: Does document.onload and window.onload fire at the same time?
+Answer: window.onload is fired when DOM is ready and all the contents including images, css, scripts, sub-frames, etc. finished loaded. This means everything is loaded.
+document.onload is fired when DOM (DOM tree built from markup code within the document)is ready which can be prior to images and other external content is loaded.
+Think about the differences between window and document, this would be easier for you.
+Bonus:document.readyState Returns "loading" while the Document is loading, "interactive" once it is finished parsing but still loading sub-resources, and "complete" once it has loaded. The readystatechange event fires on the Document object when this value changes.
+
+#10. How to find variable type in Javascript
+
+ Object.prototype.toString.call([1,2,3])
+"[object Array]"
+> Object.prototype.toString.call("foo bar")
+"[object String]"
+> Object.prototype.toString.call(45)
+"[object Number]"
+> Object.prototype.toString.call(false)
+"[object Boolean]"
+> Object.prototype.toString.call(new String("foo bar"))
+"[object String]"
+
+#11. == Vs ===
+Question: What are the differences between == and ===?   equality Vs Identity 
+Answer: The simplest way of saying that, == will not check types and === will check whether both sides are of same type. So, == is tolerant. But under the hood it converts to its convenient type to have both in same type and then do the comparison.
+=== compares the types and values. Hence, if both sides are not same type, answer is always false. For example, if you are comparing two strings, they must have identical character sets. For other primitives (number, boolean) must share the same value.
+
+Rule for implicit coercion: Comparison by using == does implicit type conversion under the hood. And rules for implicit coercion are as follows-
+If both operands are same type use === 
+undefined == null
+If one operands is string another is number, convert string to number
+If one is boolean and another is non-boolean, convert boolean to number and then perform comparison
+While comparing a string or number to an object, try to convert the object to a primitive type and then try to compare
+Be careful while comparing objects, identifiers must reference the same objects or same array.
+var a = {a: 1};
+var b = {a: 1};
+a == b //false
+a === b //false
+var c = a;
+a == c//true
+a === c //true       
+Special note: NaN, null and undefined will never === another type. NaN does not even === itself.
+
+Ans:2
+The 3 equal signs mean "equality without type coercion". Using the triple equals, the values must be equal in type as well.
+0 == false   // true
+0 === false  // false, because they are of a different type
+1 == "1"     // true, automatic type conversion for value only
+1 === "1"    // false, because they are of a different type
+null == undefined // true
+null === undefined // false
+'0' == false // true
+'0' === false // false
+
+#12 Pass by Value and Pass by Reference
+
+In Pass by Value, Function is called by directly passing the value of the variable as the argument. Changing the argument inside the function doesn’t affect the variable passed from outside the function.
+Javascript always pass by value so changing the value of the variable never changes the underlying primitive (String or number).
+eg=>
+function callByValue(varOne, varTwo) { 
+  console.log("Inside Call by Value Method"); 
+  varOne = 100; 
+  varTwo = 200; 
+  console.log("varOne =" + varOne +"varTwo =" +varTwo); 
+} 
+let varOne = 10; 
+let varTwo = 20; 
+console.log("Before Call by Value Method"); 
+console.log("varOne =" + varOne +"varTwo =" +varTwo); 
+callByValue(varOne, varTwo) 
+console.log("After Call by Value Method"); 
+console.log("varOne =" + varOne +"varTwo =" +varTwo)
+output will be : 
+--------------- 
+Before Call by Value Method 
+varOne =10 varTwo =20 
+Inside Call by Value Method 
+varOne =100 varTwo =200 
+After Call by Value Method 
+varOne =10 varTwo =20
+
+Pass by Reference:
+-------------------
+In Pass by Reference, Function is called by directly passing the reference/address of the variable as the argument. Changing the argument inside the function affect the variable passed from outside the function. In Javascript objects and arrays follows pass by reference.
+function callByReference(varObj) { 
+  console.log("Inside Call by Reference Method"); 
+  varObj.a = 100; 
+  console.log(varObj); 
+} 
+let varObj = {a:1};
+console.log("Before Call by Reference Method"); 
+console.log(varObj);
+callByReference(varObj) 
+console.log("After Call by Reference Method"); 
+console.log(varObj);
+output will be : 
+----------------
+Before Call by Reference Method  {a: 1} 
+Inside Call by Reference Method  {a: 100} 
+After Call by Reference Method   {a: 100}
+so if we are passing object or array as an argument to the method, then there is a possibility that value of the object can change.
+Ref: https://codeburst.io/javascript-pass-by-value-and-pass-by-reference-in-javascript-fcf10305aa9c
+
+#12. Differences between Constructors and methods
+
+Constructors can't be called directly; they are called implicitly when the new keyword creates an object. Methods can be called directly on an object that has already been created with new. 
+constructors create and initialize objects that don't exist yet, while methods perform operations on objects that already exist. 
+
+#13. A constructor function is a normal function.
+What makes the difference here is the use of the new operator which makes the context (this) in the function the new instance, thus letting it take the two properties, and returns this new instance.
+
+Without the new operator, the context would have been the external one (window if your code is in the global scope in loose mode, undefined if in strict mode).
+
+That is, if you omit the new
+
+var catC = Cat("Fluffy", "White");
+the function "works" (if you're not in strict mode) but you have two different results :
+
+catC is undefined as your function returns nothing
+name and color are now properties of the external scope
+The whole magic, thus, is in the new operator :
+
+#14. function Vs Methods
+In javascript every function is an object. An object is a collection of key:value pairs. If a value is a primitive (integer, string, boolean), or another object, the value is considered a property. If a value is a function, it is called a 'method'.
+Within the scope of an object, a function is referred to as a method of that object. It is invoked from the object namespace 'MyObj.theMethod()'. Since we said a function is an object, a function within a function is considered a method of that function. You can say I am going to use the save method of my object. Or you could say, "the save method accepts a function as a parameter". But you generally wouldn't say a function accepts a method as a parameter.
+
+#15. Error in Js
+Error types
+Besides the generic Error constructor, there are seven other core error constructors in JavaScript. For client-side exceptions, see Exception Handling Statements.
+
+EvalError=> Creates an instance representing an error that occurs regarding the global function eval().
+InternalError =>Creates an instance representing an error that occurs when an internal error in the JavaScript engine is thrown. E.g. "too much recursion".
+RangeError =>Creates an instance representing an error that occurs when a numeric variable or parameter is outside of its valid range.
+ReferenceError =>Creates an instance representing an error that occurs when de-referencing an invalid reference.
+SyntaxError =>Creates an instance representing a syntax error that occurs while parsing code in eval().
+TypeError =>Creates an instance representing an error that occurs when a variable or parameter is not of a valid type.
+URIError =>Creates an instance representing an error that occurs when encodeURI() or decodeURI() are passed invalid parameters.
+
+#16. Hoisting in Java Script
+Hoisting is JavaScript's default behavior of moving declarations to the top.
+JavaScript Declarations are Hoisted
+In JavaScript, a variable can be declared after it has been used. => In other words; a variable can be used before it has been declared.
+eg.
+x = 5; // Assign 5 to x  ==> Not hositing
+elem = document.getElementById("demo"); // Find an element 
+elem.innerHTML = x;                     // Display x in the element
+var x; // Declare x
+eg.
+var x = 5; // Initialize x  ==> Hoisting 
+elem = document.getElementById("demo"); // Find an element 
+elem.innerHTML = x + " " + y;           // Display x and y
+var y = 7; // Initialize y
+eg.
+var x = 5; // Initialize x
+var y;     // Declare y
+elem = document.getElementById("demo"); // Find an element 
+elem.innerHTML = x + " " + y;           // Display x and y
+y = 7;    // Assign 7 to y
+JavaScript in strict mode does not allow variables to be used if they are not declared. 
+
+Ans:2
+-----
+Hoisting is a JavaScript mechanism where variables and function declarations are moved to the top of their scope before code execution
+
+One of the trickier aspects of JavaScript for new JavaScript developers is the fact that variables and functions are "hoisted." Rather than being available after their declaration, they might actually be available beforehand.
+eg:1 type 1 - error 
+// ReferenceError: noSuchVariable is not defined
+console.log(noSuchVariable);
+This is more or less what one would expect. An error is thrown when you try to access the value of a variable that doesn't exist. But what about this case?
+eg:2  type 2 - Undefined, bcos, var dec later of the code
+// Outputs: undefined
+console.log(declaredLater);
+var declaredLater = "Now it's defined!";
+// Outputs: "Now it's defined!"
+console.log(declaredLater);
+Explanation => 
+What is going on here? It turns out that JavaScript treats variables which will be declared later on in a function differently than variables that are not declared at all. Basically, the JavaScript interpreter "looks ahead" to find all the variable declarations and "hoists" them to the top of the function
+eg:3 type -> self Invoking func - not consider global variables
+var name = "Baggins";
+(function () {
+    // Outputs: "Original name was undefined"
+    console.log("Original name was " + name);
+    var name = "Underhill";
+    // Outputs: "New name is Underhill"
+    console.log("New name is " + name);
+})();
+In cases like this, the developer probably expected name to retain its value from the outer scope until the point that name was declared in the inner scope. But due to hoisting, name is undefined instead.
+Note: => Because of this behavior JavaScript linters and style guides often recommend putting all variable declarations at the top of the function so that you won't be caught by surprise.
+Additional Ans: => Function Hoisting - if function def as declaration part. gives output. expression type is hositing error
+// Outputs: "Yes!"
+isItHoisted();
+function isItHoisted() {
+    console.log("Yes!");
+}
+As you can see, the JavaScript interpreter allows you to use the function before the point at which it was declared in the source code. This is useful because it allows you to express your high-level logic at the beginning of your source code rather than the end, communicating your intentions more clearly.
+eg:
+travelToMountDoom();
+destroyTheRing();
+function travelToMountDoom() { /* Traveling */ }
+function destroyTheRing() { /* Destruction */ }
+However, function definition hoisting only occurs for function declarations, not function expressions. For example:
+// Outputs: "Definition hoisted!"
+definitionHoisted();
+// TypeError: undefined is not a function
+definitionNotHoisted();
+function definitionHoisted() {
+    console.log("Definition hoisted!");
+}
+var definitionNotHoisted = function () {
+    console.log("Definition not hoisted!");
+};
+eg:
+You might be wondering what happens if you use a named function expression
+// ReferenceError: funcName is not defined
+funcName();
+// TypeError: undefined is not a function
+varName();
+var varName = function funcName() {
+    console.log("Definition not hoisted!");
+};
+As you can see, the function's name doesn't get hoisted if it is part of a function expression.
+And that is how variable and function hoisting works in JavaScript.
+
+Addition Ans:
+***Function Declaration Overrides Variable Declaration When Hoisted
+Both function declaration and variable declarations are hoisted to the top of the containing scope. And function declaration takes precedence over variable declarations (but not over variable assignment). As is noted above, variable assignment is not hoisted, and neither is function assignment. As a reminder, this is a function assignment: var myFunction = function () {}.
+Here is a basic example to demonstrate:
+eg:
+ // Both the variable and the function are named myName​
+​var myName;
+​function myName () {
+console.log ("Rich");
+}
+​​// The function declaration overrides the variable name​
+console.log(typeof myName); // function
+eg:
+// But in this example, the variable assignment overrides the function declaration​
+​var myName = "Richard"; // This is the variable assignment (initialization) that overrides the function declaration.​​
+​function myName () {
+console.log ("Rich");
+}​
+console.log(typeof myName); // string 
+
+JavaScript classes too can be loosely classified either as:
+Class declarations
+Class expressions
+Class declarations
+Much like their function counterparts, JavaScript class declarations are hoisted. However, they remain uninitialised until evaluation. This effectively means that you have to declare a class before you can use it.
+
+http://adripofjavascript.com/blog/drips/variable-and-function-hoisting.html
+http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/
+https://scotch.io/tutorials/understanding-hoisting-in-javascript
+
+#17 js string link () functions 
+--------------------------------
+<button onclick="myFunction()">Try it</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+    var str = "Free Web Building Tutorials!";
+    var result = str.link("https://www.w3schools.com");
+    document.getElementById("demo").innerHTML = result;
+}
+Ans2: different type of approache
+-----------------------------------
+<html>
+<head>
+<script language="JavaScript">
+<!--
+  function myFunction() {
+    alert("Hello World!");
+  }
+//-->
+</script>
+</head>
+<body>
+<a href="javascript:myFunction()">Click me</a>
+</body>
+</html>
+
+           
+#18. Private, privileged, static, public property and methods
+-------------------------------------------------------------
+// Constructor
+function Kid (name) {
+// Private
+var idol = "Paris Hilton";
+// Privileged
+this.getIdol = function () {
+return idol;
+};
+// Public
+this.name = name;
+}
+// Public
+Kid.prototype.getName = function () {
+return this.name;
+};
+// Static property
+Kid.town = "South Park";
+Creating An Instance And Checking Access ==>
+Now, finally, it’s time to test how these different approaches work in practice. We start by creating an instance of the Kid object, and then test what different values we get back. The tests and their results are:
+// Create a new instance
+var cartman = new Kid("Cartman");
+// Access private property
+cartman.idol; // undefined
+// Access privileged method
+cartman.getIdol(); // "Paris Hilton"
+// Access public property
+cartman.name; // "Cartman"
+// Access public method
+cartman.getName(); // "Cartman"
+// Access static property on an instance
+cartman.town; // undefined
+// Access static property on the constructor object
+Kid.town; // "South Park"
+
+Ans:2
+======
+private variables =>are declared with the 'var' keyword inside the object, and can only be accessed by private functions and privileged methods.
+private functions =>are declared inline inside the object's constructor (or alternatively may be defined via var functionName=function(){...}) and may only be called by privileged methods (including the object's constructor).
+privileged methods =>are declared with this.methodName=function(){...} and may invoked by code external to the object.
+public properties =>are declared with this.variableName and may be read/written from outside the object.
+public methods =>are defined by Classname.prototype.methodName = function(){...} and may be called from outside the object.
+prototype properties =>are defined by Classname.prototype.propertyName = someValue
+static properties =>are defined by Classname.propertyName = someValue
+
+#19. Regex in Js
+A regular expression is an object that describes a pattern of characters.
+Regular expressions are used to perform pattern-matching and "search-and-replace" functions on text.
+Syntax
+/pattern/modifiers;
+var patt = /w3schools/i
+Example explained:
+/w3schools/i  is a regular expression.
+w3schools  is a pattern (to be used in a search).
+i  is a modifier (modifies the search to be case-insensitive).
+For a tutorial about Regular Expressions, read our JavaScript RegExp Tutorial.
+Modifiers
+Modifiers are used to perform case-insensitive and global searches:
+Modifier	Description
+i	Perform case-insensitive matching
+g	Perform a global match (find all matches rather than stopping after the first match)
+m	Perform multiline matching
+Brackets
+Brackets are used to find a range of characters:
+
+Expression	Description
+[abc]	Find any character between the brackets
+[^abc]	Find any character NOT between the brackets
+[0-9]	Find any character between the brackets (any digit)
+[^0-9]	Find any character NOT between the brackets (any non-digit)
+
+Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+
+#21 Closure
+<script type="text/javascript">
+
+var incrementClickCount = (function()
+{
+ var clickCount = 0;
+ return function (){
+	return ++clickCount;
+}
+})();	
+</script>
+<input type="button" value="Click Me" onClick="alert(incrementClickCount());" />
+
+
+detailed e.g from techsith tutorial
+
+
+let obj = function(){
+let i=0;
+return {
+setI(k){
+i=k;
+},
+getI(){
+return i;
+}
+
+}
+};
+let x = obj();
+x.setI(2);
+console.log(x.getI());   // 2 -> able to see in 
+console.log(x);     // this is closure object. Able to see in console.
+
+
+#22 Call, Apply and Bind
+
+JS- Call, Apply, Bind.how to  use the object in function requirement.
+var obj = { key : val };
+var functionName = function(arg1, arg2, agr3){
+//do operation with args...
+}
+
+functionName.call(obj, arg1, arg2, arg3);
+functionName.apply(obj,[arg1,arg2,arg3]);
+var bound = functionName.bind(obj);
+bound.bind(arg1,arg2,arg3);  
+e.g 
+
+var obj = {num:2};
+var addToThis = function(a,b){
+ return this.num + a+b;
+};
+
+console.log("call" ,addToThis.call(obj,3,4));
+var arr = [3,4];
+console.log("Apply" ,addToThis.apply(obj,arr));
+var bound = addToThis.bind(obj);
+console.log("bind", bound(3,4));
+
+#21. Promises in Js
+JS- Promises 
+=============
+<html>
+<head>
+<style>
+</style>
+<script type="text/javascript">
+let promiseTocleanRoom = new Promise(function(resolve, reject){
+//clean room operation
+let isClean = true;   // if success - resolve
+// let isClean = false; // if not 
+if(isClean){
+resolve('clean');
+}
+else{
+reject('not clean');
+}
+});
+promiseTocleanRoom.then(function(fromResolve){
+	console.log('the room is '+fromResolve);
+}).catch(function(fromReject){
+	console.log('the room is' +fromReject);
+});
+</script>
+</head>
+<body>
+</body>
+</html>
+
+
+Ref: techsith.com
+https://jsfiddle.net/jspatel/mkjh2ev5
+
+let cleanRoom = function() {
+  return new Promise(function(resolve, reject) {
+    resolve('Cleaned The Room');
+  });
+};
+let removeGarbage = function(message) {
+  return new Promise(function(resolve, reject) {
+    resolve(message + ' remove Garbage');
+  });
+};
+let winIcecream = function(message) {
+  return new Promise(function(resolve, reject) {
+    resolve( message + ' won Icecream');
+  });
+};
+cleanRoom().then(function(result){
+	return removeGarbage(result);
+}).then(function(result){
+	return winIcecream(result);
+}).then(function(result){
+	console.log('finished ' + result);
+})
+
+output is synchronous way 1 by 1 -> finished Cleaned The Room remove Garbage won Icecream
+
+#23.  Asynchronous Vs Synchronous -> Ref https://medium.com/@siddharthac6/javascript-execution-of-synchronous-and-asynchronous-codes-40f3a199e687
+
+Asynchronous request
+If you use an asynchronous XMLHttpRequest, you receive a callback when the data has been received. This lets the browser continue to work as normal while your request is being handled.
+
+Example: send a file to the console log
+This is the simplest usage of asynchronous XMLHttpRequest.
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "/bar/foo.txt", true);
+xhr.onload = function (e) {
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200) {
+      console.log(xhr.responseText);
+    } else {
+      console.error(xhr.statusText);
+    }
+  }
+};
+xhr.onerror = function (e) {
+  console.error(xhr.statusText);
+};
+xhr.send(null);
+
+synchronous request
+Synchronous XHR often causes hangs on the web. But developers typically don't notice the problem because the hang only manifests during poor network conditions or slow server response. Synchronous XHR is now in deprecation state. Developers are recommended to move away from the API.
+All new XHR features such as timeout or abort aren't allowed for synchronous XHR. Doing so would invoke InvalidAccessError. 
+All new XHR features such as timeout or abort aren't allowed for synchronous XHR. Doing so would invoke InvalidAccessError. 
+Example: HTTP synchronous request
+This example demonstrates how to make a simple synchronous request.
+
+var request = new XMLHttpRequest();
+request.open('GET', '/bar/foo.txt', false);  // `false` makes the request synchronous
+request.send(null);
+
+if (request.status === 200) {
+  console.log(request.responseText);
+}
+
+#24. Event Loop
+JS Engine, event Table, event Queue and event loop
+http://altitudelabs.com/blog/what-is-the-javascript-event-loop/
+
+#25. Callback Function and call back Hello
+// define our function with the callback argument
+function some_function(arg1, arg2, callback) {
+  // this generates a random number between
+  // arg1 and arg2
+  var my_number = Math.ceil(Math.random() * (arg1 - arg2) + arg2);
+  // then we're done, so we'll call the callback and
+  // pass our result
+  callback(my_number);
+}
+// call the function
+some_function(5, 15, function(num) {
+  // this anonymous function will run when the
+  // callback is called
+  console.log("callback called! " + num);
+});
+
+Eg:2
+function some_function2(url, callback) {
+  var httpRequest; // create our XMLHttpRequest object
+  if (window.XMLHttpRequest) {
+    httpRequest = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    // Internet Explorer is stupid
+    httpRequest = new
+    ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  httpRequest.onreadystatechange = function() {
+    // inline function to check the status
+    // of our request
+    // this is called on every state change
+    if (httpRequest.readyState === 4 &&
+      httpRequest.status === 200) {
+      callback.call(httpRequest.responseXML);
+      // call the callback function
+    }
+  };
+  httpRequest.open('GET', url);
+  httpRequest.send();
+}
+// call the function
+some_function2("text.xml", function() {
+  console.log(this);
+});
+console.log("this will run before the above callback");
+
+#26. Event Handling and Event Capturing
+Event Bubbling:
+---------------
+
+<div class="styleClass" onClick="alert('Div click handler')"> Div Element
+    <span class="styleClass" onClick="alert('span click handler')"> span element
+	<input type="button" value="clic" onClick="alert('button click halder')" /> 
+ 	</span>
+</div>
+ 
+<script type="text/javascript">
+var divElement = document.getElementByTagName('div');
+
+for(var i=0; i < divElement.lenght; i++ ){
+ divElement[i].onclick = function(){
+	this.style.borderColor = 'green';
+	alert(this.getAttribute("id")+ "border color chnage");
+}
+}
+
+</script>
+
+<p>This example uses the addEventListener() method to add two click events to the same button.</p>
+<button id="myBtn">Try it</button>
+<script>
+var x = document.getElementById("myBtn");
+x.addEventListener("click", myFunction);
+x.addEventListener("click", someOtherFunction);
+function myFunction() {
+    alert ("Hello World!");
+}
+function someOtherFunction() {
+    alert ("This function was also executed!");
+}
+</script>
+
+Event Bubbling or Event Capturing?
+There are two ways of event propagation in the HTML DOM, bubbling and capturing.
+Event propagation is a way of defining the element order when an event occurs. If you have a <p> element inside a <div> element, and the user clicks on the <p> element, which element's "click" event should be handled first?
+In bubbling the inner most element's event is handled first and then the outer: the <p> element's click event is handled first, then the <div> element's click event.
+
+In capturing the outer most element's event is handled first and then the inner: the <div> element's click event will be handled first, then the <p> element's click event.
+
+With the addEventListener() method you can specify the propagation type by using the "useCapture" parameter:
+addEventListener(event, function, useCapture);
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="example.css">
+</head>
+
+<body>
+  A click shows both <code>event.target</code> and <code>this</code> to compare:
+
+  <form id="form">FORM
+    <div>DIV
+      <p>P</p>
+    </div>
+  </form>
+
+  <script >
+    form.onclick = function(event) {
+  event.target.style.backgroundColor = 'yellow';
+
+  // chrome needs some time to paint yellow
+  setTimeout(() => {
+    alert("target = " + event.target.tagName + ", this=" + this.tagName);
+    event.target.style.backgroundColor = ''
+  }, 0);
+};
+  </script>
+</body>
+</html>
+
+<body onclick="alert(`the bubbling doesn't reach here`)">
+  <button onclick="event.stopPropagation()">Click me</button>
+</body>
+
+#27. Web storage
+With web storage, web applications can store data locally within the user's browser.
+Before HTML5, application data had to be stored in cookies, included in every server request. Web storage is more secure, and large amounts of data can be stored locally, without affecting website performance.
+Unlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server
+Web storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.
+
+HTML Web Storage Objects
+HTML web storage provides two objects for storing data on the client:
+
+window.localStorage - stores data with no expiration date
+window.sessionStorage - stores data for one session (data is lost when the browser tab is closed)
+Before using web storage, check browser support for localStorage and sessionStorage:
+
+if (typeof(Storage) !== "undefined") {
+    // Code for localStorage/sessionStorage.
+} else {
+    // Sorry! No Web Storage support..
+}
+
+eg:
+<script type="text/javascript">
+// Check if the localStorage object exists
+if(localStorage){
+    // Store data
+    localStorage.setItem("first_name", "Peter");
+ 
+    // Retrieve data
+    alert("Hi, " + localStorage.getItem("first_name"));
+} else{
+    alert("Sorry, your browser do not support local storage.");
+}
+</script>
+
+Web SQL
+=======
+The Core Methods
+There are following three core methods defined in the spec that I.m going to cover in this tutorial −
+openDatabase − This method creates the database object either using existing database or creating new one.
+transaction − This method give us the ability to control a transaction and performing either commit or roll-back based on the situation.
+executeSql − This method is used to execute actual SQL query.
+var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+Above method took following five parameters −
+
+Database name
+Version number
+Text description
+Size of database
+Creation callback
+
+create DB and insert sql
+var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+db.transaction(function (tx) {
+   tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
+   tx.executeSql('INSERT INTO LOGS (id, log) VALUES (1, "foobar")');
+   tx.executeSql('INSERT INTO LOGS (id, log) VALUES (2, "logmsg")');
+});
+
+db.transaction(function (tx) {
+   tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+      var len = results.rows.length, i;
+      msg = "<p>Found rows: " + len + "</p>";
+      document.querySelector('#status').innerHTML +=  msg;
+	
+      for (i = 0; i < len; i++){
+         alert(results.rows.item(i).log );
+      }
+	
+   }, null);
+   });
+   
+   <!DOCTYPE HTML>
+<html>
+
+   <head>
+	
+      <script type="text/javascript">
+		
+         var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+         var msg;
+			
+         db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
+            tx.executeSql('INSERT INTO LOGS (id, log) VALUES (1, "foobar")');
+            tx.executeSql('INSERT INTO LOGS (id, log) VALUES (2, "logmsg")');
+            msg = '<p>Log message created and row inserted.</p>';
+            document.querySelector('#status').innerHTML =  msg;
+         });
+
+         db.transaction(function (tx) {
+            tx.executeSql('SELECT * FROM LOGS', [], function (tx, results) {
+               var len = results.rows.length, i;
+               msg = "<p>Found rows: " + len + "</p>";
+               document.querySelector('#status').innerHTML +=  msg;
+					
+               for (i = 0; i < len; i++){
+                  msg = "<p><b>" + results.rows.item(i).log + "</b></p>";
+                  document.querySelector('#status').innerHTML +=  msg;
+               }
+            }, null);
+         });
+			
+      </script>
+		
+   </head>
+	
+   <body>
+      <div id="status" name="status">Status Message</div>
+   </body>
+	
+</html>
+
+#28 cookies
+
+#29 

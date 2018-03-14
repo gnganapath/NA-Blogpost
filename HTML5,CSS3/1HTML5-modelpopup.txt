@@ -1,0 +1,109 @@
+HTML5 - Model popup desing in simple design:
+--------------------------------------------
+
+<!doctype html>
+<html>
+<head>
+<style>
+body{
+	    font-family: arial;
+	    font-size: 14px;
+	    background:#ccc;
+}
+
+.heading{
+	font-weight: bold;
+	font-size: 18px;
+	background: #0067c4;
+	color:#fff;
+	line-height: 50px;
+	padding-left:2%;
+	text-align: center;
+}
+.heading-text{
+	padding:1% 2%;
+	color:#333333;
+}
+
+.modal {
+    /* some styles to position the modal at the center of the page */
+    position: relative;   
+   margin-left: auto; margin-right: auto;
+    width: 70%;       
+    background-color: #fff;
+    /* needed styles for the overlay */
+    z-index: 10; /* keep on top of other elements on the page */
+    /*outline: 9999px solid rgba(0,0,0,0.5);*/
+
+}
+.version-div,.date-div{
+	font-weight: 
+	color:#0067C5;
+	text-align: left;
+	padding-left: 4%;
+}
+.version-div
+{width: 20%;}
+.date-div{
+	width: 70%;
+}
+th,b{
+	color:#0067C5;
+}
+ul
+{
+    list-style-type: none;
+}
+table{
+	color:#333333;
+	
+}
+table, th, td {
+   border: 1px solid #ccc;
+}
+
+</style>
+</head>
+<body>
+<div class="modal">
+	<div class="heading"> HEADING </div>
+	<div class="heading-text">Sub Heading for the model popup</div>
+
+
+ <table style="width:100%" border="1">
+  
+  <tr>
+		<th class="version-div" >Version Number</th>
+		<th class="date-div">Date of Release</th> 
+  </tr>
+  <tr>    
+     <td colspan="2">
+	   <ul>
+		  <li><b>Feature1Name</b>
+		  <p>content - Sub Heading for the model popup</p></li>
+		   <li><b>Feature2Name</b>
+		  <p>content - Sub Heading for the model popup</p></li>
+	   </ul>
+     </td> 
+  </tr>
+
+  <tr>
+		<th class="version-div" >Version Number</th>
+		<th class="date-div">Date of Release</th> 
+  </tr>
+  <tr>    
+     <td colspan="2">
+	   <ul>
+		
+		  <li><b>Feature1Name</b>
+		  <p>content for Sub Heading for the model popup</p></li>
+		   <li><b>Feature2Name</b>
+		  <p>content   for the model popup</p></li>
+	  
+	   </ul>
+     </td> 
+  </tr>
+  </table>
+</div>
+</body>
+</html>

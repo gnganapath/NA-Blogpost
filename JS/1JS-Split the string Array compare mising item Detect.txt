@@ -1,0 +1,36 @@
+JS- Split the string with comma (,) make as array 
+JS- Compare two array have same value - detect missing item (sorting)
+JS - array to string
+
+var SerialArry = "123,13, 1234";
+var ResponseArry = "123,1234";
+
+		SerialArry =SerialArry.split(",");
+		for(var i=0; i<SerialArry.length; i++) { 
+		SerialArry[i] = +SerialArry[i]; 			// [123,13,1234]
+		}
+		SerialArry = SerialArry.sort();	
+		
+				
+		ResponseArry = ResponseArry.split(",");
+		for(var i=0; i<ResponseArry.length; i++) {
+		ResponseArry[i] = +ResponseArry[i];			// [123,1234]
+		}
+		ResponseArry = ResponseArry.sort();
+		
+		
+		var InvalidNo = SerialArry.filter(function(x) 
+		{ return ResponseArry.indexOf(x) < 0 });	// missing number from response array
+		
+		
+		SerialArry = SerialArry.toString();			// convert Array to String
+		ResponseArry = ResponseArry.toString();
+		if(SerialArry == ResponseArry) {			
+			console.log('true');					// request & response  same and true
+			
+							
+		}
+		else {
+			console.log('false')					// request & response false not same		
+			
+		}

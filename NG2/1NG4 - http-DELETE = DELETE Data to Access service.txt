@@ -1,0 +1,59 @@
+NG4 - http-DELETE = DELETE Data Access service 
+==============================================
+import { Component,Output,OnInit,Input, EventEmitter } from '@angular/core'
+
+deleteProduct.component.ts
+------------------------
+
+@Component({
+	selector:'deleteHttp',
+	styleUrls: ['./deleteHttp.scss'],
+	templateUrl: './deleteHttp.html',
+})
+
+export class DeleteHttpComponent implements OnInit{
+
+...
+constructor(private productService: ProductService) { }
+		...
+		deleteProduct(id: number): void {
+		this.productService.postProduct(id)
+		.subscribe(
+		(product: IProduct) => this.onProductRetrieved(product),    
+		// ---> Instead of this (data:any)=>{ if(data.success){ //true } else { //false }}
+		(error: any) => this.errorMessage= <any>error
+		);
+}
+
+postProduct.service.ts
+----------------------
+...
+import { Http, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+
+...
+@Injectable()
+exportclassProductService{
+	privatebaseUrl= 'www.myWebService.com/api/products';
+	constructor(privatehttp: Http) { }
+	deleteProduct(id: number): Observable<Response> {
+	letheaders = newHeaders({ 'Content-Type': 'application/json'});
+	letoptions = newRequestOptions({ headers: headers });
+	consturl= `${this.baseUrl}/${id}`;
+	return this.http.delete(url, options);
+	}
+}
+private extractData(res: Response) {
+    let body = res
+    return body || {} ;
+  }
+   private handleError (error: any) {
+    
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
+}

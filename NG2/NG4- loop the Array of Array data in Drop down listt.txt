@@ -1,0 +1,33 @@
+NG4- loop the Array of Array data in Drop down list
+====================================================
+
+Backend Response
+-----------------
+	Response = [['data'], ['data2'], ['data3']]
+
+ng4Component.component.ts
+-------------------------
+
+ listTable:any [];
+    for(let item in this.Response){
+      for(let it in this.Response[item]){
+         this.listtable.push({val:this.Response[item][it]});
+      }
+    }
+	
+	
+	
+Usual Backend Response
+-----------------
+	Response = [{'data'}, {'data2'}, {'data3'}]  or Response = ['data1, 'data2', 'data3']
+
+ng4Component.component.ts
+-------------------------
+
+ listTable:any [];
+    this.listTable = Response
+ng4Component.html
+-------------------
+<select>
+	<option *ngFor = "let item of listTable"> {{ item }} </option>
+</select>

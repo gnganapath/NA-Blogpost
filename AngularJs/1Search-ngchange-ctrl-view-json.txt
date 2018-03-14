@@ -1,0 +1,332 @@
+AngularJS- Search form simple example and JSON object to Array Itration
+========================================================================
+Controller:
+===========
+
+    $scope.SearchChange = function(input){
+        $scope.searchResult = searchAPI(input);
+    }
+
+    $scope.searchclick = function(input, isLength){
+        $scope.searchResult = searchAPI(input, isLength);
+    }
+
+    function searchAPI(input, isLength){
+        var output = {Customers: [], Sites : [], Groups : []};
+        if(input.length >= 3 || isLength){
+            $http.get('app/json/search.json').success(function(response) {
+                    //Filter Customers
+                    output.Customers = response.customers.rows.filter(function(x) {
+                            return x.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()) ? true : false
+                    }).map(function(x){
+                        return x.name
+                    })
+
+                    //Filter Sites
+                    output.Sites = response.sites.rows.filter(function(x) {
+                            return x.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()) ? true : false
+                    }).map(function(x){
+                        return x.name
+                    })
+                    
+                    //Filter Groups
+                    output.Groups = response.groups.rows.filter(function(x) {
+                            return x.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()) ? true : false
+                    }).map(function(x){
+                        return x.name
+                    })
+
+                });
+        }
+        return output;
+    }
+
+Ng-view:
+========
+
+
+ <form  role="search" id="customerform" >
+                    <div class="input-group">
+                        <input type="text" ng-disabled="disabled" class="form-control" placeholder="Search"  ng-model ="searchText" ng-change="SearchChange(searchText)" >
+                        <span class="input-group-btn">  
+                            
+                            <button type="submit" class="btn btn-default" type="button" ng-click="searchclick(searchText, true)">
+                                <i class="fa fa-search ng-scope" ng-if="!searching" slide-toggle="#searchresult"></i>
+                            </button>
+                        </span>
+                         <div class="tool-tip-head hide ng-isolate-scope" tool-tip="" tool-tip-content="Please enter a valid search data">
+                            <div class="tooltip bottom-right in tooltip-inner"><span class="tooltip-arrow"></span>
+                            Please enter a valid search data</div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+ <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="customername in searchResult.Customers track by $index">
+                        {{customername}}
+                    </li> 
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="sitename in searchResult.Sites track by $index">
+                        {{sitename}}
+                    </li> 
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="groupname in searchResult.Groups track by $index">
+                        {{groupname}}
+                    </li> 
+                </ul>
+
+
+search.json:
+============
+
+
+{
+	"success": true,
+	"totalCount": 88,
+	"customers": {
+		"count": 11,
+		"rows": [{
+			"id": "1033453434536",
+			"name": " Infdgdfdia Pvt Ltd ."
+		}, {
+			"id": "13453453403",
+			"name": " Ltd."
+		}, {
+			"id": "1034534533",
+			"name": "Jagdfpan Corp."
+		}, {
+			"id": "10345345317",
+			"name": "! Inc. Asia"
+		}, {
+			"id": "4987998798144",
+			"name": " Idfgndia Pvt Ltd."
+		}, {
+			"id": "10190571",
+			"name": " Switzerland Server Services SARL"
+		}, {
+			"id": "145098989882674",
+			"name": "Yahoo! rPte Ltd."
+		}, {
+			"id": "0980980981034139",
+			"name": "Yahoo! Inc."
+		}, {
+			"id": "0980980981427949",
+			"name": "Yahodwo! Corp."
+		}, {
+			"id": "098098091033022",
+			"name": "Yaewrerhoo!7"
+		}, {
+			"id": "0980910260d65",
+			"name": "Yahdfoo! Research Ltd."
+		}]
+	},
+	"sites": {
+		"count": 75,
+		"rows": [{
+			"id": "0980981083960",
+			"name": Oogfgdfaki"
+		}, {
+			"id": "098092168076",
+			"name": "Ogadfgdfdfgki"
+		}, {
+			"id": "0980982168601",
+			"name": Cordfgdfporation"
+		}, {
+			"id": "1501bvfdg857",
+			"name": "Yahodfgdfgdffdgo-Kitakyushu"
+		}, {
+			"id": "22101ddfgf48",
+			"name": Corpdfgdfgoration"
+		}, {
+			"id": "180dfg5685",
+			"name": "Yahoo - 19 Rue FR"
+		}, {
+			"id": "980981058568",
+			"name": "Yahoo!Shaftesbur y Avenue"
+		}, {
+			"id": "0981044051",
+			"name": "yacxvhoo-londxcvon"
+		}, {
+			"id": "092129136",
+			"name": "YAHOO! - C/O TEcvLECITY"
+		}, {
+			"id": "0981747259",
+			"name": "Yahoxcvxcvo!  Electronics"
+		}, {
+			"id": "0981090795",
+			"name": "yahoo!inc-Geneva"
+		}, {
+			"id": "0981803977",
+			"name": "Yahccxvoo! ut 175 HU"
+		}, {
+			"id": "9801803947",
+			"name": "Yahoo! Spadolini 7 Floor 9IT"
+		}, {
+			"id": "8902161968",
+			"name": "Yahoo! 2 BallycoolinIE"
+		}, {
+			"id": "891803984",
+			"name": "Yahoo! Maria de Molina 4 ES"
+		}, {
+			"id": "1667553981",
+			"name": "Yahoo! Europe Ltd. Bus IE"
+		}, {
+			"id": "090981817239",
+			"name": "Yahoo! Deutsc hlaGmbH-
+		}, {
+			"id": "160q324262",
+			"name": "Yahoo! Inc."
+		}, {
+			"id": "1722434322343239",
+			"name": "Yahvvcxoo! Pte. Ltd."
+		}, {
+			"id": "182342312775",
+			"name": "Yahoo!"
+		}, {
+			"id": "108453960",
+			"name": "Yahoo-Oogzxczaki"
+		}, {
+			"id": "1051345196",
+			"name": "Yahoo-Otesdfmachi"
+		}, {
+			"id": "2328134562",
+			"name": "Yahoo-Shinsfdgfdghirakawa"
+		}, {
+			"id": "3451501857",
+			"name": "Yaxzxcvhoo-Kitadfgfdgkyushu"
+		}, {
+			"id": "341848413",
+			"name": "YahXcxzoo! Dfdgdfg Telecity"
+		}, {
+			"id": "341083895",
+			"name": "Yahoo -Bangalore-s Embassy Golf L"
+		}, {
+			"id": "341056349",
+			"name": "Yahoo sdfs sdf1"
+		}, {
+			"id": "1345989963",
+			"name": "Yafsdfhoo - sdfds sdf"
+		}, {
+			"id": "13443501857",
+			"name": "Yahosdfo-Kitasdfsdskyushu"
+		}, {
+			"id": "134435920944",
+			"name": "yahoo-otemasdsdfsdfchi"
+		}, {
+			"id": "1345083960",
+			"name": "Yasdfsd-Oogsdfdsfaki"
+		}, {
+			"id": "134543723239",
+			"name": "Ysdf! Asia Pasdfsdfdscific Pte. Ltd."
+		}, {
+			"id": "1435430946",
+			"name": "sdfahsdfoo TPsdfdsfdsf2- Taiwan"
+		}, {
+			"id": "2341036582",
+			"name": "sdfahoo-Taisdfsdfdsfwan"
+		}, {
+			"id": "234231476048",
+			"name": "Yahoo TsdfsdfW1"
+		}, {
+			"id": "2341075192",
+			"name": "Ya324hoo! CsdfdsfH1"
+		}, {
+			"id": "2341090795",
+			"name": "ysehjjahoo!inc-Gesdsdfneva"
+		}, {
+			"id": "2341075192",
+			"name": "hoosdf! CHsdfsdfs1"
+		}, {
+			"id": "2341604262",
+			"name": "Yaklkohoo! sdfsdfsdInc."
+		}, {
+			"id": "2342418363",
+			"name": "dsfklYophoo! Inc. sdfdsf- Playsdfdsa Vista"
+		}, {
+			"id": "767561835274",
+			"name": "Yahoo! Inc.Nsdfsdew York111sdfsdf W 40th dsfSt Fl 12US"
+		}, {
+			"id": "4651729554",
+			"name": "Yahoo! Asia Pasdfdsfcific Pte. Ltd"
+		}, {
+			"id": "564561747259",
+			"name": "Yahoo! C/Ofgdfg fdgfd Electronics"
+		}, {
+			"id": "4564561430947",
+			"name": "Yahoo! Inc.xvxcvxc Asia"
+		}, {
+			"id": "1591185",
+			"name": "Yahsdfsdfoo! Inc. vbvcbvcb- Josdfrdan"
+		}, {
+			"id": "1430946",
+			"name": "Yafsdfhoo TP2xcvcxvcxv- Taiwan"
+		}, {
+			"id": "1828174",
+			"name": "yahoo TW1"
+		}, {
+			"id": "4564561559154",
+			"name": "Yasdfsdfhoo! Inc. xcvcxvcxAsia-Seoul"
+		}, {
+			"id": "644561355007",
+			"name": "Yahsdfoo! Eursdfope Ltdxcvcx.-Dublin 3-Esdfast Posdfint B usinedsfdsfss Park"
+		}, {
+			"id": "4564561723239",
+			"name": "Yasdfhoo! Asdfssia Pazxcxzccific Pte. Ltd."
+		}, {
+			"id": "24545632452130418",
+			"name": "YAasdasdHOO! INCzxcxzc. TW1"
+		}, {
+			"id": "1234234576291",
+			"name": "Yasdhoo! Inczxcxzc. Asia"
+		}, {
+			"id": "1234243058246",
+			"name": "Yaasdhoo Europzxcxzce HQ"
+		}, {
+			"id": "245232092103",
+			"name": "Yaasdsadhoo-Hong zxcxzcKong"
+		}, {
+			"id": "42342229677",
+			"name": "Yaasddsahoo! Inc.New York229 West 43rd St US"
+		}, {
+			"id": "2341070121",
+			"name": "Yaasdhoo! Inc.-Dublin."
+		}, {
+			"id": "342341434605",
+			"name": "Yaasdsadhoo! GmbHHasdfmburgSuederstra DE"
+		}, {
+			"id": "2342341452ertre675",
+			"name": "Yddsaahoo Singapxzcxzcxzcxzore (S) Ptzxcxze Ltd"
+		}, {
+			"id": "1809ertret814",
+			"name": "Yasdsadahoo! IndiazxcxzcxzcR&D"
+		}, {
+			"id": "151ertret4892",
+			"name": "Yasadasdhoo Richaxczxcxzczxcrdson"
+		}, {
+			"id": "10760ertert3481",
+			"name": "Yasfdhoo Muzxcxzczxcsic"
+		}, {
+			"id": "184dfdg8413",s
+			"name": "Yagfasdsafhhoo! Dubzczxcxzczlin x- C/O Telecfdsfity"
+		}, {
+			"id": "1476fv048",
+			"name": "Yasddsaahoo TW1"
+		}
+		]
+	},
+	"groups": {
+		"count": 2,
+		"rows": [{
+			"id": "YAdfgfdgHOO DXB",
+			"name": "YAfdgfdgfdHOO DXB"
+		}, {
+			"id": "dfgINC",
+			"name": "YAHdfgfdgfdOO! INC"
+		}]
+	}
+}
+

@@ -1,0 +1,89 @@
+#1.The <!DOCTYPE html> declaration defines this document to be HTML5
+The <html> element is the root element of an HTML page
+The <head> element contains meta information about the document
+The <title> element specifies a title for the document
+The <body> element contains the visible page content
+
+#2. HTML Elements pair elements, empty elements
+
+#3. HTML Attributes
+HTML Attributes
+All HTML elements can have attributes
+Attributes provide additional information about an element
+Attributes are always specified in the start tag
+Attributes usually come in name/value pairs like: name="value"
+The lang Attribute
+<!DOCTYPE html>
+<html lang="en-US">
+
+We Suggest: Use Lowercase Attributes
+The HTML5 standard does not require lowercase attribute names.
+
+The title attribute can be written with uppercase or lowercase like title or TITLE.
+
+W3C recommends lowercase in HTML, and demands lowercase for stricter document types like XHTML.
+
+#4.css
+CSS can be added to HTML elements in 3 ways:
+
+Inline - by using the style attribute in HTML elements
+Internal - by using a <style> element in the <head> section
+External - by using an external CSS file -><link rel="stylesheet" href="styles.css">
+
+#5. Images 
+Image Maps
+The <picture> Element
+
+#6. Table
+
+#7. Lists
+
+#8. Block level Elements and In line Elements
+
+#9. HTML and classes 
+
+#10.iFrame
+
+#11.HTML javascript -> <noscript>
+
+#12. Absolute File Paths, Relative file path
+
+#13.HTML Layout Elements - Semantics 
+
+#14. HTML Layout Techniques ->4 
+
+#15. HTML RWD
+
+#16. HTML computer code
+
+#17.HTML Encoding (Character Sets)
+
+#18. HTML Uniform Resource Locators
+
+#19. XHTML diff b/w html
+
+#20. 
+
+HTML5 header
+-------------
+HTML <header> tag is used as a container of introductory content or navigation links. Generally a <header> element contains one or more heading elements, logo or icons or author's information.
+You can use several <header> elements in one document, but a <header> element cannot be placed within a <footer>, <address> or another <header> element.
+
+HTML5 footer
+------------
+HTML <footer> tag is used to define a footer for a document or a section. It is generally used in the last of the section (bottom of the page).
+The footer tag is included in HTML5. HTML <footer> tag contains information about its containing elements for example:
+author information
+contact information
+copyright information
+sitemap
+back to top links
+related documents etc.
+Note: You can have one or many footer elements in one document.
+
+figure tag
+----------
+If you want to put information like address, e-mail etc. about the author on your web page, all the relevant elements should be included into the footer element.
+HTML <figure> tag is used to mark up a photo in the document on a web page.
+As we know image tag is already available in HTML to display the pictures on web pages. But HTML 5 <figure> tag is used to handle the group of diagrams, photos, code listing etc. with some embedded content. You can also add a caption for the photo with the help of <figcaption> tag.
+HTML figure is new a new tag introduced in HTML5.

@@ -1,0 +1,209 @@
+Select - Dropdown -option
+-------------------------
+
+<div id="selectDiv">
+          <select id="dropdown" (change)="getdays()">
+     <option  *ngFor='let data of day_list'>{{data.days}}</option>
+    </select>
+	
+componet.ts
+------------
+
+	getdays(e) {
+
+	var inputValue: any = (<HTMLInputElement>document.getElementById('dropdown'));
+		let index = inputValue.selectedIndex;
+		this.alertService.getAlertData(this.day_list[index].id, this.url).subscribe(
+		  (data: any) => {
+			if (data.success) {
+			}
+	}
+	
+	
+Checkbox - selected list to show
+---------------------------------
+
+input type="checkbox" [(checked)]="Checkvalue.Regular" id="Regular" name="Regular" (change)="onclickcheckbox($event)">
+
+<tr *ngFor="let rowdata of AsupTableRows | filter:{ option:filtered}>
+
+ componet.ts
+ -----------
+ public Checkvalue:Object={
+			"Regular":true,
+			"Others":true
+	};
+ onclickcheckbox(event?:any){
+		
+		if(event){
+			var obj={
+				[event.target.name] : event.target.checked
+			}
+			this.Checkvalue=Object.assign({},this.Checkvalue,obj)
+		}
+
+		var keys = Object.keys(this.Checkvalue);
+		this.filtered = keys.filter((key) => {
+		    return this.Checkvalue[key]
+		});
+	}
+
+
+Radio buttton:
+--------------
+
+radio.json or entries array
+---------------------------
+[
+    {
+        id: 1,
+        description: 'entry 1'
+    },
+    {
+        id: 2,
+        description: 'entry 2'
+    },
+    ...
+]
+---
+
+	<tbody>
+          <tr *ngFor="let entry of entries">
+            <td>{{ entry.description }}</td>
+            <td>
+                <input type="radio" name="radiogroup">
+            </td>
+          </tr>
+        </tbody>
+
+export class App { 
+    entries = []
+}
+
+Case1: Pre-select the 1st radio button of the list ==>
+
+<tr *ngFor="let entry of entries; let idx = index">
+    <td>{{ entry.description }}</td>
+    <td>
+        <input type="radio" name="radiogroup" [checked]="idx === 0">
+    </td>
+</tr>
+
+Case2: Binding: Model -> Template ==> 
+
+<tr *ngFor="let entry of entries">
+    <td>{{ entry.description }}</td>
+    <td>
+        <input type="radio" name="radiogroup" 
+            [checked]="idx === 0" 
+            [value]="entry.id">
+    </td>
+</tr>
+
+Case3: Binding: Template -> Model ==>
+
+<tr *ngFor="let entry of entries">
+    <td>{{ entry.description }}</td>
+    <td>
+        <input type="radio" name="radiogroup" 
+            [checked]="idx === 0" 
+            [value]="entry.id" 
+            (change)="onSelectionChange(entry)">
+    </td>
+</tr>
+
+@Component({...})
+class App {
+    entries = [];
+    selectedEntry;
+
+    onSelectionChange(entry) {
+        this.selectedEntry = entry;
+    }
+}
+
+Radio Button Full code:
+------------------------
+import {Component, NgModule} from '@angular/core'
+import {BrowserModule} from '@angular/platform-browser'
+
+@Component({
+  selector: 'my-app',
+  template: `
+    <div>
+      <h2>Binding radio buttons</h2>
+      
+      <p>Binding radio button lists</p>
+      
+      <table>
+        <thead>
+          <td>Description</td>
+          <td></td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of entries; let idx = index">
+            <td>{{ entry.description }}</td>
+            <td><input type="radio" name="certificategroup" (change)="onSelectionChange(entry)" [checked]="(idx === 0)" [value]="entry.value"></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <hr>
+      
+<pre>
+{{ this.selectedEntry | json }}
+</pre>
+      
+    </div>
+  `,
+})
+export class App {
+  entries = [];
+  selectedEntry: { [key: string]: any } = {
+    value: null,
+    description: null
+  };
+  
+  constructor() {
+  }
+  
+  ngOnInit() {
+    this.entries = [
+      {
+        description: 'entry 1',
+        value: 1
+      },
+      {
+        description: 'entry 2',
+        value: 2
+      },
+      {
+        description: 'entry 3',
+        value: 3
+      },
+      {
+        description: 'entry 4',
+        value: 4
+      }
+    ];
+    
+    // select the first one
+    if(this.entries) {
+      this.onSelectionChange(this.entries[0]);  
+    }
+    
+  }
+  
+  onSelectionChange(entry) {
+    // clone the object for immutability
+    this.selectedEntry = Object.assign({}, this.selectedEntry, entry);
+  }
+  
+}
+
+@NgModule({
+  imports: [ BrowserModule ],
+  declarations: [ App ],
+  bootstrap: [ App ]
+})
+export class AppModule {}

@@ -1,0 +1,34 @@
+<tr *ngFor="let rowdata of TableRows">
+          <td><a routerLink="{{rowdata.sysid}}">{{rowdata.date}}</a></td>      --> link to route
+          <td [class.mycls]=getclass(rowdata)>  {{rowdata.title}}</td>         -->No need to make {{rowdata.weekly}}
+		  
+</tr>
+
+components.ts
+--------------
+
+getTableData(): void {
+		this._Service.getData()
+					     .subscribe( 
+							 res => {
+									this.TableData =  res;
+									this.TableRows = res.rows;
+								}
+							)
+	}
+
+	getclass(color){
+		if(color.weekly == 1){
+			return true;
+		}
+	}
+	
+	
+service.ts
+-----------
+	
+	getData(): Observable<any> {
+        return this._http.get('./app/systemMain/data.json')
+                         .map(response => response.json())
+
+    }

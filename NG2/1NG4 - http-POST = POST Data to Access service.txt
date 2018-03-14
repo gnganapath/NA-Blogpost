@@ -1,0 +1,71 @@
+NG4 - http-POST = POST Data Access service 
+=========================================
+import { Component,Output,OnInit,Input, EventEmitter } from '@angular/core'
+
+postProduct.component.ts
+------------------------
+
+@Component({
+	selector:'postHttp',
+	styleUrls: ['./postHttp.scss'],
+	templateUrl: './postHttp.html',
+})
+
+export class GetHttpComponent implements OnInit{
+
+...
+constructor(private productService: ProductService) { }
+		...
+		postProduct(id: number): void {
+		this.productService.postProduct(id)
+		.subscribe(
+		(product: IProduct) => this.onProductRetrieved(product),  
+		// ---> Instead of this (data:any)=>{ if(data.success){ //true } else { //false }}
+		(error: any) => this.errorMessage= <any>error
+		);
+}
+
+@Injectable()
+exportclassProductService{
+	privatebaseUrl= 'www.myWebService.com/api/products';
+	constructor(privatehttp: Http) { }
+	createProduct(product: IProduct): Observable<IProduct> {
+	letheaders = newHeaders({ 'Content-Type': 'application/json'});
+	letoptions = newRequestOptions({ headers: headers });
+	return this.http.post(this.baseUrl, product, options)
+	.map(this.extractData).catch(this.handleError);
+	}
+}
+}
+
+postProduct.service.ts
+----------------------
+...
+import { Http, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+...
+@Injectable()
+exportclassProductService{
+	privatebaseUrl= 'www.myWebService.com/api/products';
+	constructor(privatehttp: Http) { }
+	createProduct(product: IProduct): Observable<IProduct> {
+	letheaders = newHeaders({ 'Content-Type': 'application/json'});             
+	letoptions = newRequestOptions({ headers: headers });
+	return this.http.post(this.baseUrl, product, options)
+	.map(this.extractData);
+	}
+}
+
+private extractData(res: Response) {
+    let body = res
+    return body || {} ;
+  }
+   private handleError (error: any) {
+    // In a real world app, we might use a remote logging infrastructure
+    // We'd also dig deeper into the error to get a better message
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }

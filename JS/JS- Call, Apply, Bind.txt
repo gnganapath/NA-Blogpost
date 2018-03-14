@@ -1,0 +1,37 @@
+JS- Call, Apply, Bind 
+
+how to  use the object in function requirement.
+
+var obj = { key : val };
+
+
+var functionName = function(arg1, arg2, agr3){
+
+//do operation with args...
+
+}
+functionName.call(obj, arg1, arg2, arg3);
+
+functionName.apply(obj,[arg1,arg2,arg3]);
+
+var bound = functionName.bind(obj);
+bound.bind(arg1,arg2,arg3);   
+
+
+e.g 
+
+var obj = {num:2};
+
+var addToThis = function(a,b){
+ return this.num + a+b;
+};
+
+console.log("call" ,addToThis.call(obj,3,4));
+
+var arr = [3,4];
+
+console.log("Apply" ,addToThis.apply(obj,arr));
+
+
+var bound = addToThis.bind(obj);
+console.log("bind", bound(3,4));

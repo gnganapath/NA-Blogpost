@@ -1,0 +1,157 @@
+NG4-router  - 2 way to implement. 1.routing within module file, 2. routing file as separate 
+===========
+
+router we can achieve based on url change. 
+
+Method:1 
+--------
+Write the routing in Module file it self. No need to import or create mycompoent.routing.ts file externally.
+Most important = We can achieve Lazy loading using ForChild(routes)
+
+app.module.ts
+-------------
+import { NgModule, ApplicationRef } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { Component1Module } from './modules/my-Componet1/Componet1.module';
+import { service } from './modules/Serivice';
+ 
+
+@NgModule({
+  bootstrap: [App],
+  declarations: [   App, RedirectPage   ],
+  
+  imports: [ // import Angular's modules
+    BrowserModule,
+    HttpModule,
+    RouterModule,
+    MyComponet1Module
+	],
+	  providers: [ // expose our Services and Providers into Angular's dependency injection
+		Service, 
+	  ]
+	})
+
+export class AppModule {
+
+  constructor() {
+  }
+}
+
+
+app.component.html
+------------------
+
+<main >
+ <nav>
+	  <a routerLink='/first-component' >HTML</a> |
+	  <a routerLink='/Second-Component' >CSS</a> |
+  </nav>
+  <router-outlet></router-outlet>
+</main>
+
+
+Component1.module.ts
+--------------------
+
+
+const routes: Routes = [
+  {
+    path: 'first-component',
+    component: Component1.component
+  }
+]
+const routing = RouterModule.forChild(routes);
+
+@NgModule({
+  imports: [],
+  declarations: [Component1Component],
+   providers: []
+   })
+
+export class component1Module { }
+
+Component1.Component.ts
+-----------------------
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'compare',
+  templateUrl: './Component1.html',
+  styleUrls: ['./Component1.scss']
+})
+export class Component1Component implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+ }
+ 
+
+Component1.html
+---------------
+component1 Content comes Here...
+
+
+
+Method:2
+--------
+create a Routing file for every separate module and do the routing wiht routes { path: '/compnent2, component:}
+How to include multiple component into major component and display - dashboard (aggr and charts )
+
+Same the app.module.ts , app.component.ts and app.compnent.html
+
+
+Component2.module.ts
+--------------------
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { routing } from './my-reports.routing';
+
+@NgModule({
+  imports: [ routing ],     // here we import routing from external routing file.
+  declarations: [Component2Component],
+  providers: []
+   })
+
+export class component2Module { }
+
+Component2.routing.ts
+----------------------
+import { Routes, RouterModule } from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { MyReportsComponent } from './my-reports.component';
+
+const routes: Routes = [
+  {
+    path: 'Second-Component',
+    component: MyReportsComponent
+  }
+]
+
+export const routing: ModuleWithProviders = RouterModule.forChild(routes);
+
+
+Component2.Component.ts
+-----------------------
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'compare2',
+  templateUrl: './Component2.html',
+  styleUrls: ['./Component2.scss']
+})
+export class Component2Component implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+ }
+ 
+
+Component2.html
+---------------
+component2 Content comes Here...
+
+

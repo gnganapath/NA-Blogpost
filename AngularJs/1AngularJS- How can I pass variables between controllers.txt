@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="toDo" >
+<head>
+<meta name="description" content="Simplest Controllers sharing Service" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <script>
+  angular.module('toDo',[])
+
+.service('dataService', function() {
+  // private variable
+  var _dataObj = {};
+  
+  this.dataObj = _dataObj;
+})
+
+.controller('One', function($scope, dataService) {
+  dataService.dataObj.end = "Yahoo";
+  dataService.dataObj.begin = "customer";
+  $scope.data = dataService.dataObj;
+})
+
+.controller('Two', function($scope, dataService) {
+  $scope.data = dataService.dataObj;
+})
+
+;
+  </script>
+</head>
+<body>
+  REF: http://jsbin.com/tigebaguto/edit?html,js,output
+  <div ng-controller="One">
+    <div>Type and see your text in the other box:</div>
+    <input ng-model="data.string">
+     <input ng-model="data.string2">{{data.end}}
+  </div>
+  
+  <hr>
+  
+  <div ng-controller="Two">
+    <div>And now type here: </div>
+    <input ng-model="data.string">
+     <input ng-model="data.string2">{{data.end}}
+  </div>
+  
+</body>
+</html>

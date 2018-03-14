@@ -1,0 +1,35 @@
+NG5- Event Bubling
+--------------------
+DOM events provide a mechanism that can prevent bubbling. It is the stopPropagation method. 
+@Component({
+  selector: 'event-bubbling',
+  template: `
+    <div>
+      <button (click)="onClick($event, 'Button 1')">Button 1</button>
+      <button (click)="onClick($event, 'Button 2')">Button 2</button>
+    </div>
+  `
+})
+export class EventBubblingComponent {
+  @Output() click = new EventEmitter();
+
+  onClick(event: Event, button: string) {
+    event.stopPropagation();
+
+    this.click.next(button);
+  }
+}
+
+E.g
+----
+<div (click)="hidetheDiv()"> <span (click)="maketheFunctionCall($event,item)"> API Call </span>  Close X</div>
+
+  
+  maketheFunctionCall(event:Event,item){
+    event.stopPropagation();
+    console.log("Make the API call", item)
+  }
+  
+  hidetheDiv(){
+  this.Div = false;
+  }

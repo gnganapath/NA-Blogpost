@@ -1,0 +1,33 @@
+<html>
+<head>
+<style>
+
+.slide{
+ -webkit-transition:1s;
+ border:1px solid red;
+ float:right;
+ position:relative;
+ left:-50px;
+
+}
+
+.slide:hover{
+margin-right:100px;
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="slide">
+<ul>
+<li>list1</li>
+<li>list2</li>
+<li>list3</li>
+<li>list4</li>
+<li>list5</li>
+</ul>
+</div>
+</body>
+</html>

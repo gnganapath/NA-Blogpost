@@ -1,0 +1,74 @@
+NG4- ng-content 
+----------------
+
+Display for popup content based on the auto/adjusted content
+Base-popup.html
+------------------
+<div (click)="showngContnet()"> template html contnet </div>
+<dynamic-popup [popuptitle]="title" (closed)="close()" [baseclose]="basepopupcloseflag">
+    <div *ngIf="PopupContent">
+        <label for="textarea">Comments :</label>
+        <textarea maxlength="30" placeholder="Enter any comments #textAreaInput></textarea>
+        <div style="float:right">
+            <button [ngClass]="{'button':trueFlag, 'diable-button':!bydefaultFalse}" (click)="send(textAreaInput.value)">Submit</button>
+        </div>
+    </div>
+</dynamic-popup>
+
+Base-popup.component.ts
+------------------------
+
+import { Component, ViewContainerRef, ViewEncapsulation, ElementRef } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+
+basepopupcloseflag = flase;
+
+export class BasePopupComponent {
+
+showngContnet(){
+this.basepopupcloseflag = true;
+}
+
+close(){
+this.basepopupcloseflag = false;
+}
+}
+dynamic_popup-component.ts
+--------------------------
+
+import { Component, Input, Output, OnChanges, OnInit, EventEmitter, ViewEncapsulation, HostListener } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'dynamic-popup',
+  styleUrls: ['dynamic-popup.component.scss'],
+  templateUrl: 'dynamic-popup.component.html',
+  encapsulation: ViewEncapsulation.None,
+})
+export class DynamicPopUp implements OnChanges, OnInit {
+
+  @Input() popuptitle:any = 'test';
+  @Output() closed = new EventEmitter();
+  constructor(){
+
+  }
+  closeModal(){
+    this.closed.emit('close');
+  }
+
+  }
+  
+dynamic-popup.html
+--------------------- 
+<div [hidden]="!close" class="popup-bg">
+    <div class="container">      
+            <div class="popup-title">{{popuptitle}}</div>
+            <button aria-hidden="true"  class="close" data-dismiss="modal" (click)="closeModal()" type="button">×</button>
+             
+            <ng-content></ng-content>
+            
+        </div>
+    </div>
+</div>
+
+

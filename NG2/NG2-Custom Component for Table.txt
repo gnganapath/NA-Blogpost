@@ -1,0 +1,6 @@
+NG2-Custom Component for Tabble 
+================================
+@hint: Input and Output data pass for common service responses
+
+Cutome Component implementation for particular column
+

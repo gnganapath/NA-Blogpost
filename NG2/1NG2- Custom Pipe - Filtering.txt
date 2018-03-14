@@ -1,0 +1,140 @@
+NG4- Custom Pipe | - ng1 filtering  - Angular 2 beta version system based
+==================================
+Custom Filter 
+==============
+
+
+app.component.tpl.html
+----------------------
+
+Message:
+<input type="text" [(ngModel)]="message">
+<br> Translated: {{(message | translate) | nvl:'N/A'}}
+
+Here >=> traslate and nvl are custome filetrs. Need use the same naem for filter @pipe ->name
+translate.pipe.ts               ==> custome filter no1
+------------------
+import {Pipe, PipeTransform, Inject} from 'angular2/core';
+import {MessageService} from '../service/message.service';
+
+@Pipe({
+  name: 'translate',
+  pure: false
+})
+export class TranslatePipe  implements PipeTransform{
+
+private messageBundle:any;
+private request:any;
+    
+    constructor(private _messageService: MessageService){
+        this._messageService = _messageService;
+        this.messageBundle = {};
+    }
+    
+    transform(value:string, args:string[]):any {
+        if(!this.request){
+            this.request = this._messageService.getBundle();
+            this.request.subscribe(
+                data => this.messageBundle = data
+             );
+        }
+        
+        return this.messageBundle[value];
+    }
+}
+
+nvl.pipe.ts                  ==> custome filter 2
+-------------
+import {Pipe, PipeTransform} from 'angular2/core';
+
+@Pipe({
+  name: 'nvl',
+  pure: true
+})
+export class NvlPipe  implements PipeTransform{
+    
+    constructor(){}
+    
+    transform(value:string, args:string[]):any {
+        return value?value : args[0];
+    }
+}
+
+
+app.component.ts
+------------------
+import {Component} from 'angular2/core';
+import {TranslatePipe} from './pipe/translate.pipe';
+import {NvlPipe} from './pipe/nvl.pipe';
+
+@Component({
+  selector: 'app-component',
+  templateUrl: 'src/app.component.tpl.html',
+  pipes: [TranslatePipe, NvlPipe]
+})
+export class AppComponent {}
+
+message.service.ts
+------------------
+import {Injectable} from "angular2/core"
+import {Http} from 'angular2/http';
+import 'rxjs/Rx'
+
+@Injectable()
+export class MessageService{
+    constructor(http: Http){
+        this.http = http;
+    }
+    getBundle (){
+        return this.http.get('./src/bundle.json').map(res => res.json());
+    }
+}
+
+
+
+
+
+
+index.html
+------------
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Custom Pipe Example</title>
+
+    <!-- libraries -->
+    <script src="https://rawgithub.com/systemjs/systemjs/0.19.6/dist/system.js"></script>
+    <script src="https://code.angularjs.org/tools/typescript.js"></script>
+    <script src="https://code.angularjs.org/2.0.0-beta.0/angular2-polyfills.js"></script>
+    <script src="https://code.angularjs.org/2.0.0-beta.0/Rx.js"></script>
+    <script src="https://code.angularjs.org/2.0.0-beta.0/angular2.dev.js"></script>
+    <script src="https://code.angularjs.org/2.0.0-beta.0/http.dev.js"></script>
+
+    <script>
+        System.config({
+            transpiler: 'typescript',
+            typescriptOptions: {
+                emitDecoratorMetadata: true
+            },
+            packages: {
+                'src': {
+                    defaultExtension: 'ts'
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+        System.import('src/boot');
+
+    </script>
+
+</head>
+
+<body>
+    <app-component>Loading...</app-component>
+</body>
+
+</html>

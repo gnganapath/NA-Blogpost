@@ -1,0 +1,21 @@
+NG2-Filter text to convert upper case character, even entering as lower case.
+=============================================================================
+
+template.html
+================
+
+<input  type="text" [ngModel]="sectionSearch" (ngModelChange)="onSearchSection($event)" 
+				 #input (input)="input.value=$event.target.value.toUpperCase()" placeholder="Search...">
+				 
+componets.ts
+============
+onSearchSection(event:Event) {
+ 
+    this.allsection = this.toFilterAllSection.filter(
+              section => section.displayName.toUpperCase().indexOf(event) >= 0
+              );
+
+    } 
+	--------------------------------------
+	Note:
+	data.section is backend data as an array.

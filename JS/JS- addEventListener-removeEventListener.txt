@@ -1,0 +1,24 @@
+Basic syntax is 
+ 
+element.addEventListener("event" , haldler, phase);
+
+<input type="button" value="click me" id="btn" />
+<input type="button" value="remove event listener" onClick="removeListener()" />
+
+
+<script type="text/javascript">
+
+btn.addEventListener("mouseover" , changeColorOnMO );
+btn.addEventListener("mouseout" , changeColorOffMO );
+
+function changeColorOnMO(){
+this.style.color = 'red';
+}
+function changeColorOffMO(){
+this.style.color='green';
+}
+
+function  removeListener(){
+btn.removeEventListener("mouseover" , changeColorOnMO );
+btn.removeEventListener("mouseout" , changeColorOffMO );
+}

@@ -1,0 +1,7 @@
+
+1. how to run simple nodejs app --> install and find version, how to update node -v,
+2. function express
+3. module , require 
+4. nodemon --> to auto compile and run again , RS - showrt cut command to re-run project
+
+

@@ -1,0 +1,39 @@
+NG2- Default Checkbox true and change Checkbox selection values:
+----------------------------------------------------------------
+
+
+
+Ref:http://plnkr.co/edit/Hxy5Jz?p=preview
+
+@Component({
+ 
+ selector: 'my-app',
+
+  providers: [],
+ 
+
+
+ template: `
+  <div>
+   
+   
+      <input type="checkbox" [checked]="isAvailable" (change)="isAvailable = $event.target.checked">
+ 
+     <pre>{{ isAvailable | json }}</pre>
+
+    </div>
+  `,
+ 
+ directives: []
+})
+
+
+export class App {
+ 
+ isAvailable = true;
+  
+constructor() {
+    
+  }
+
+}

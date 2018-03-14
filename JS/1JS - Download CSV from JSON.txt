@@ -1,0 +1,82 @@
+JS - Download CSV from JSON
+-----------------------------
+Single Array of JSON compose in CSV file
+
+html
+-------
+<div Onclick="downloadCSV()"> CSV Format Download </div>
+
+API.json
+-------
+"sections": {
+			"table1": [{
+          			"table1column1": "t1c1",
+          			"table1coloumn2": "t1c2"			
+          		},
+          		{
+          			"table1column1": "t12c1",
+          			"table1coloumn2": "t12c2"			
+          		}]
+			}
+
+<script>
+var jsonData = data.section.table1; // compose  csv data
+
+var keys = ['table1column1','table1coloumn2'];
+var header = ['Table1 Column1', 'Table1 column2']
+
+
+downloadCSV(){
+
+let filteredData = this.getCSV(keys,jsonData);
+    let ReportTitle = filename+ " " +level+" "+id;
+    let ShowLabel = true;
+    var arrData = typeof filteredData != 'object' ? JSON.parse(filteredData) : filteredData;
+    var CSV = '';
+    if (ShowLabel) {
+      var row = "";
+	  
+	  //CSV column header is composing here and assamble in row1,column1
+      for (let index=0;index<header.length;index++) {
+        row += header[index] + ',';
+      }
+      row = row.slice(0, -1);
+      CSV += row + '\r\n';
+    }
+    for (var i = 0; i < arrData.length; i++) {
+      var row = "";
+      for (var index in arrData[i]) {
+        row += '"' + arrData[i][index] + '",';
+      }
+      row.slice(0, row.length - 1);
+      CSV += row + '\r\n';
+    }
+
+    if (CSV == '') {
+      console.log("Invalid data");
+      return;
+    }
+    var fileName = ReportTitle.replace(/ /g, "_");
+    var uri = 'data:text/csv;charset=utf-8,' + encodeURI(CSV);
+    var link = document.createElement("a");
+    link.href = uri;
+    link.download = fileName + ".csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+}
+
+getCSV(keys,jsonObj){
+
+let k=[];
+     for(let i=0;i<jsonObj.length;i++){
+         let item = {};
+         for(let m=0;m<keys.length;m++){
+         item[keys[m]]=jsonObj[i][keys[m]];
+         }
+        k.push(item);
+       }      
+       return k;
+
+}

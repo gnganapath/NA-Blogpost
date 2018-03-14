@@ -1,0 +1,85 @@
+1
+Open an Administrator command prompt.
+
+Press the Win key, type cmd.exe, and press Ctrl + Shift + Enter to run the Command Prompt as Administrator.
+
+Execute the remaining steps from the Administrator command prompt.
+
+2
+Create directories.
+
+Create directories for your database and log files:
+
+now cmd id C:\> 
+
+mkdir c:\data\db
+//mkdir c:\data\log
+
+3. install mongodb.msi at custome location
+c:\mongodb
+
+after installation run the command for running manually mdongodb.
+
+c:\> C:\mongodb\bin\mongod.exe
+
+It gives the status This started the MongoDB service on a default 27017 port  
+
+4.running as a Windows service
+
+c:> mkdir c:\mongodb\log
+
+Now, create a configuration file by executing:
+c:> echo logpath=C:\mongodb\log\mongo.log > C:\mongodb\mongod.cfg
+
+5: NEW COMMD PROMT
+
+c:> sc.exe create MongoDB binPath= "\"C:\mongodb\bin\mongod.exe\" --service --config= \"C:\mongodb\mongod.cfg\"" DisplayName= "MongoDB" start= "auto"
+
+[SC] CreateService SUCCESS
+
+if (SC service already exist means 
+stop the mongodb and run the command
+
+sc.exe delete MongoDB
+
+)
+Again do the step:5
+
+6.start mongo DB
+
+net start MongoDB
+
+7.net Stop MongoDB
+
+We can able to services running for MongoDB. Mycomputer->Right click->services->MongoDB->right clcik- start or stop.
+
+
+8.Now to run the mongodb you need to open another command prompt+admin and issue the following command.
+c:\mongodb\bin>mongo.exe
+Shell version of MongoDB run
+
+It shows mongoDB version and details
+
+Display DB name: ->$show dbs
+
+local , test db name
+
+create and switch to dbs ->$use mydb
+
+switched to bd mydb >
+
+9.DB insert and select
+
+>db.test.save( { a: 1 } )
+>db.test.find()
+{ "_id" : ObjectId(5879b0f65a56a454), "a" : 1 }
+>
+
+10. db.help
+
+
+
+
+
+
+

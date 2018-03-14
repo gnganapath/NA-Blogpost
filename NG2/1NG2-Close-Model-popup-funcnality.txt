@@ -1,0 +1,28 @@
+Model Popup close using Angular 2 funcnality:
+===============================================
+
+soln: 1 jQuery based
+=======
+ jQuery variable with any type inside Angular2 controller.
+
+public jQuery:any;
+
+Add the above just after import statements and before component decorator.
+
+Then access bootstrap modal with it's id like this.
+
+jQuery("#myModal).modal("hide");
+
+
+
+Soln:2: Typescript based
+=======
+<div id="myModal" [hidden]="hideModal" class="modal fade">
+
+hideModal: boolean = false;
+
+ set submitComments(), set hideModal to true
+ submitComments(){
+ 
+ this.hideModal = true;
+ }

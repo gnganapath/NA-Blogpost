@@ -1,0 +1,60 @@
+AngualrJS - Pagination from list, ngpeat array:
+=================================--=============
+<!DOCTYPE html>
+<html ng-app="myapp">
+
+  <head>
+    <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <script data-require="angular.js@*" data-semver="1.3.15" src="https://code.angularjs.org/1.3.15/angular.js"></script>
+    <script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+ 
+    <script>
+	var todos2 = angular.module('myapp', ['ui.bootstrap']);
+
+todos2.controller('TodoController', function($scope) {
+   $scope.filteredTodos = []
+  ,$scope.currentPage = 1
+  ,$scope.numPerPage = 10
+  ,$scope.maxSize = 100;
+  
+
+    $scope.todos = ["Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yarethoo","Yahsdfosdoi","Ysdadhoo","sdYsdahou","nnYanhnion","fgYaoo FR","Yahoo! 125 ","yahoo!incn","YAHO! DBLIN ECITY",
+"Yahodfgo!dria47 Bd AU","Yahoo -639 Gars Road","Yahosdfo! Issdfrael Rese 30"];
+    
+  
+  $scope.$watch('currentPage + numPerPage', function() {
+    var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+    , end = begin + $scope.numPerPage;
+    
+    $scope.filteredTodos = $scope.todos.slice(begin, end);
+  });
+});
+
+	</script>
+	<style>
+	
+	</style>
+	
+  </head>
+
+  <body ng-controller="TodoController">
+    <h1>Todos</h1>
+    <h4>{{todos.length}} total</h4>
+    <ul>
+      <li ng-repeat="todo in filteredTodos track by $index">{{todo}}</li>
+    </ul>
+    <pagination  ng-model="currentPage" total-items="todos.length" max-size="maxSize" boundary-links="true">
+    </pagination>
+  </body>
+
+</html>
+,

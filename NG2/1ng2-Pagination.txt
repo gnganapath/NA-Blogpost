@@ -1,0 +1,40 @@
+ng2-Pagination:
+----------------
+Ref: http://michaelbromley.github.io/ng2-pagination/#/
+
+npm install ng2-pagination --save
+
+// app.module.ts
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {Ng2PaginationModule} from 'ng2-pagination'; // <-- import the module
+import {MyComponent} from './my.component';
+
+@NgModule({
+    imports: [BrowserModule, Ng2PaginationModule], // <-- include it in your app module
+    declarations: [MyComponent],
+    bootstrap: [MyComponent]
+})
+export class MyAppModule {}
+
+
+
+// my.component.ts
+import {Component} from '@angular/core';
+
+@Component({
+    selector: 'my-component',
+    template: `
+    <ul>
+      <li *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: p }"> ... </li>
+    </ul>
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    `
+})
+export class MyComponent {
+    public collection: any[] = someArrayOfThings;  
+}
+
+
+Plukr ref: http://plnkr.co/edit/JVQMPvV8z2brCIzdG3N4?p=preview

@@ -1,0 +1,52 @@
+
+what is EJS
+E" is for "effective." EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
+ No religiousness about how to organize things. No reinvention of iteration and control-flow. It's just plain JavaScript.
+
+Features
+=========
+Fast compilation and rendering
+Simple template tags: <% %>
+Custom delimiters (e.g., use <? ?> instead of <% %>)
+Includes
+Both server JS and browser support
+Static caching of intermediate JavaScript
+Static caching of templates
+Complies with the Express view system
+
+Installation:
+============
+It's easy to install EJS with NPM.
+$ npm install ejs
+
+e.g:
+=====
+var ejs = require('ejs'),
+    people = ['geddy', 'neil', 'alex'],
+    html = ejs.render('<%= people.join(", "); %>', {people: people});
+
+Tags:
+====
+<% 'Scriptlet' tag, for control-flow, no output
+<%= Outputs the value into the template (HTML escaped)
+<%- Outputs the unescaped value into the template
+<%# Comment tag, no execution, no output
+<%% Outputs a literal '<%'
+%> Plain ending tag
+-%> Trim-mode ('newline slurp') tag, trims following newline
+
+custom Delimeters:
+------------------
+Custom delimiters can be applied on a per-template basis, or globally:
+
+var ejs = require('ejs'),
+    users = ['geddy', 'neil', 'alex'];
+
+// Just one template
+ejs.render('<?= users.join(" | "); ?>', {users: users},
+    {delimiter: '?'});
+// => 'geddy | neil | alex'
+
+// Or globally
+ejs.delimiter = '$';
+ejs.render('<$= users.join(" | "); $>', {users: users});

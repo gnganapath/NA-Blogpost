@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="showhide" >
+<head>
+<meta name="description" content="Simplest Controllers sharing Service" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <script>
+  var app = angular.module('showhide',[]);
+  function MyCtrl($scope) {    
+    $scope.myvalue = false;    
+    $scope.showAlert = function(){
+      $scope.myvalue = true;  
+    };
+	}  
+  </script>
+  
+  <body>
+  <div>
+    <div ng-controller="MyCtrl">
+        <div><button id="mybutton" ng-click="showAlert()">Click me</button></div>
+        <div>Value: {{myvalue}}</div>
+        <div><div ng-show="myvalue" >Here I am</div></div>
+    </div>
+</div>
+  
+  </body>
+  </html>
+  
+  

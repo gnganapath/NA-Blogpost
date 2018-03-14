@@ -1,0 +1,30 @@
+<script type="text/javascript">
+date funciton
+getFullYear() - Retrun -full year ( all 4 digits)
+getMonth() - return 0-11
+getDate() - retrun 1-31
+getDay() - return ( 0-6 , 0-is sunday)
+getHours()- return 0-23
+getMinuts() - return 0-59
+getSeconds - return 0-59
+getMilliseconds() - retrun 0-9999
+function dateFormat(){
+	
+	var d= new Date();
+	var yyyy = d.getFullYear();
+	
+	var month = d.getMonth();
+		if(month <10){
+			month = "0"+month;
+		}
+	
+	var day = d.getDate();
+		if(day < 10){
+			day = "0"+day;
+		}
+		
+		console.log( day + '/' + month + '/' +yyyy )
+
+}
+dateFormat();
+</script>

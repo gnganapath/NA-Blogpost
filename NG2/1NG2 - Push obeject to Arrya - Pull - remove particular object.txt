@@ -1,0 +1,61 @@
+NG2- Push object to an Array 
+============================
+@Component{
+
+public Cart:Array = [];
+
+product = {
+			"name": "shirt",
+			"price": "$32",
+			"productCode": "123123" 
+		  }
+
+AddToCart(){   // add to cart (product)
+let cardItem =	{	
+					"itemName":product.name
+					"itemPrice":product.price,
+					"itemKey": product.productCode				
+				}							
+				this.Cart.push(cardItem);       // Push object to Array.
+				console.log(this.Cart)
+		}	 // add method end
+		
+
+Remove Particular Item from Cart
+================================
+		
+RemoveFromCart(paritucarItem){
+
+let cardItem =	{	
+					"itemName":paritucarItem.name
+					"itemPrice":paritucarItem.price,
+					"itemKey": paritucarItem.productCode				
+				}
+
+		let index = this.Cart.indexOf(cardItem);		
+		this.Cart = this.Cart.filter( (x) => {
+			console.log('-----',x.productCode,'---',paritucarItem.productCode,'------',x.productCode === paritucarItem.productCode);
+			return x.productCode != paritucarItem.productCode;
+		});
+		console.log(this.Cart)       // Removed cart item
+
+}
+
+remove the last item
+=====================
+
+product = {
+			"name": "shirt",
+			"price": "$32",
+			"productCode": "123123" 
+		  }
+
+lastItmeRemove(){
+let cardItem =	{	
+					"itemName":product.name
+					"itemPrice":product.price,
+					"itemKey": product.productCode				
+				}							
+				this.Cart.pop(cardItem);       // pop object to Array.
+				console.log(this.Cart)
+		}	 // remove last item

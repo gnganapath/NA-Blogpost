@@ -1,0 +1,55 @@
+NG2- Pass data from child to parent (reverse also) components
+=============================================================
+parent.components.ts
+---------------------
+....
+import { Component, Input, EvenEmitter } from '@angular/core'
+....
+export class parentCompoent implements OnInit {
+  // no need of @input for one way data pass
+   ShowCustomPopup= true // hidden by default true
+   ....
+   
+   ShowCustomPopup(){
+    this.ShowCustomPopup=false;
+  }
+  closeCustomPopupModol(event){
+    this.ShowCustomPopup= true;
+  }
+
+}
+
+parent.template.html
+----------------------
+.....
+	<div (click)="ShowCustomPopup()"> Open Popup </div>
+....
+    <childComponent [hidden]="ShowCustomPopup" (clospopup)="closeCustomPopupModol(event)"></childComponent>
+....
+....
+
+
+Child.components.ts
+---------------------
+....
+import { Component, Input,Outout, EvenEmitter } from '@angular/core'
+// boolean value is going to pass 
+
+//closepop -> click or close function of child modal
+
+@Output() clospopup : EventEmitter<any>= new EventEmitter();
+
+ClosechildPopup(){
+			console.log("clooooose icon in child component pass to parent components ")
+			
+			this.clospopup.emit(true);
+
+		}
+childComponent.template.html
+----------------------------
+
+<div class="panel">
+<div class="panel-head pull-right" (click)="ClosechildPopup()"> X (close) </div>
+</div>
+
+@hint : child popup is the custom Popup of Parent component.

@@ -1,0 +1,7 @@
+NG2- @Input @ Output new EventEmitter()
+=======================================
+bapagetop/modalpopup/modalpopup.component.ts
+
+-> input from CustomGroups and retrun out to same CustomGroups
+
+4files invole

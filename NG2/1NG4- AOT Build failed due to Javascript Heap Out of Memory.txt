@@ -1,0 +1,13 @@
+NG4- AOT Build failed due to Javascript Heap Out of Memory 
+===========================================================
+
+It will occur build memory space is less to build our Angular 2 code.
+Here we are forcing to increase memory space to build.
+
+Many thanks! Working perfectly with
+node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve --aot
+Or for build
+node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build -prod
+
+
+Ref: https://github.com/angular/angular/issues/20687

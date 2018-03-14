@@ -1,0 +1,49 @@
+http://stackoverflow.com/questions/34219199/angular2-how-to-get-all-selected-check-boxes
+
+.html
+--------
+
+<button value="all" (click)="bulk('all')">ALL</button>
+<button value="none" (click)="bulk('none')">NONE</button>
+
+<div *ngFor="#students of student_list #i=index">
+  <input type="checkbox" value={{students.id}} class="checkedStudent"   
+  (change)="checkedStudents(students.id)" id={{students.id}}>
+</div>
+
+.ts
+-----
+
+abc:Array<any>= [];
+checkedStudents(value) {
+        console.log(value);
+        if ((<HTMLInputElement>document.getElementById(value)).checked === true) {
+            this.abc.push(value);
+        }
+        else if ((<HTMLInputElement>document.getElementById(value)).checked === false) {
+            let indexx = this.abc.indexOf(value);
+            this.abc.splice(indexx,1)
+        }
+        console.log(this.abc)
+    }
+
+// for Bulk actions
+
+bulk(a) {
+        // console.log(a);
+        if (a == "all") {
+            console.log("yes all");
+            this.abc = [];
+            for (let i = 0; i < this.student_list.length; i++) {
+                (<HTMLInputElement>document.getElementsByClassName("checkedStudent")[i]).checked = true;
+                this.abc.push(this.student_list[i].id);
+            }
+        }
+        if (a == "none") {
+            for (let i = 0; i < this.student_list.length; i++) {
+                (<HTMLInputElement>document.getElementsByClassName("checkedStudent")[i]).checked = false;
+            }
+            this.abc = [];
+        }
+        console.log(this.abc);
+    }

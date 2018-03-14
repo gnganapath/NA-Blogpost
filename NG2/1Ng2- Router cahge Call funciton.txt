@@ -1,0 +1,17 @@
+NG2- router change function call
+============================
+import { Router } from '@angular/router'
+
+@Component{
+
+Export Class Mycomponent{
+
+Constructor(_router: Router){
+
+ _router.events.subscribe((val) => {
+                this.searchChange = '';
+}
+
+}
+
+Ref:http://stackoverflow.com/questions/33520043/how-to-detect-a-route-change-in-angular-2

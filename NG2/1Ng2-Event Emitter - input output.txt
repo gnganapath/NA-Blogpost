@@ -1,0 +1,77 @@
+component1.html:
+---------------
+(click)="mobileMenuClick()"
+
+
+component1.component.ts
+-----------------------
+
+import { component, Input, Output, EventEmitter } from '@angular/core'
+
+ @Output() mobileMenu = new EventEmitter <boolean>() ; 
+
+
+mobileMenuClick(){
+  console.log('clickedd.........');
+  this.isToggleVisible = !this.isToggleVisible;
+  debugger;
+  this.mobileMenu.emit(this.isToggleVisible);  
+
+}
+
+component2.componet.ts -> html and component
+--------------------------
+
+import {Component, ViewContainerRef,ViewEncapsulation,OnInit, OnChanges} from '@angular/core';
+<ba-page-top (mobileMenu)="moileMenuClicked($event)"></ba-page-top>
+
+<ba-sidebar menuItems="systemMain" [pageId]="pageNumber" [mobileMenuClicked]="mobileMenuClick"></ba-sidebar> // Pass to another component
+
+ moileMenuClicked(e){
+    console.log("System Component -- mobliemenuclicked()" + e);
+    //this.mobileMenuClick = clickFlag;
+  }
+  
+import {Component, ViewContainerRef,ViewEncapsulation,OnInit, OnChanges} from '@angular/core';
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+
+import {ActivatedRoute} from '@angular/router'
+
+@Component({
+  selector: 'system',
+  encapsulation: ViewEncapsulation.None,
+  styles: [require('./system.scss')],
+  template: ` 
+    <ba-page-top (mobileMenu)="moileMenuClicked($event)"></ba-page-top> 
+    <div class="row systemMainPanel">
+      <div class="LeftMenu">
+      	<ba-sidebar menuItems="systemMain" [pageId]="pageNumber" [mobileMenuClicked]="mobileMenuClick"></ba-sidebar> 
+      </div>
+      <div class="al-content">
+       <router-outlet></router-outlet>
+      </div>
+    </div>
+   
+	<ba-back-top position="200"></ba-back-top>
+    `
+})
+export class SystemComponent implements OnInit {
+ 
+  private pageNumber: any;
+  mobileMenuClick:boolean;
+
+  constructor(private route:ActivatedRoute) {
+  }
+
+  ngOnInit(){
+      let id = this.route.params.subscribe(params => {
+        this.pageNumber = Number.parseInt(params['id']);
+      });
+      console.log(this.pageNumber)
+  }
+  moileMenuClicked(clickFlag){
+    console.log("System Component -- mobliemenuclicked()" + clickFlag);
+    this.mobileMenuClick = clickFlag;
+  }
+}

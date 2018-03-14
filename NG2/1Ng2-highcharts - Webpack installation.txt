@@ -1,0 +1,43 @@
+Ng2-highcharts - Webpack installation:
+-------------------------------------
+Ref: https://www.npmjs.com/package/angular2-highcharts#installation
+
+npm install angular2-highcharts --save
+
+setuo App.module:->
+--------------------
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ChartModule } from 'angular2-highcharts';
+import { App } from './App';
+ 
+@NgModule({
+    imports: [BrowserModule, ChartModule],
+    declarations: [App],
+    bootstrap: [App]
+})
+export class AppModule {}
+
+Component.ts:
+-------------
+
+import { Component } from '@angular/core';
+ 
+@Component({
+    selector: 'simple-chart-example',
+    template: `
+        <chart [options]="options"></chart>
+    `
+})
+export class App {
+    constructor() {
+        this.options = {
+            title : { text : 'simple chart' },
+            series: [{
+                data: [29.9, 71.5, 106.4, 129.2],
+            }]
+        };
+    }
+    options: HighchartsOptions;
+}

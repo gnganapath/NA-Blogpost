@@ -1,0 +1,44 @@
+Ng4- Apply Css ngClass (attribute directive) based on more than one condition ( && and || )
+=============================================================================================
+Use case:1
+----------
+you can't directly use <div [ngClass]="{'cssClass1': value1 && value2,'cssClass2': value1 || value2 }"} Css effect in Template </div>
+firefox browser doesn't support the && perfectly.
+Use case:
+----------
+more than 2 condition check in with css ngClass make performance better via component function
+<div [ngClass]="{'cssClass1': value1,'cssClass2': value2, 'cssClass3':value3}"} Css effect in Template </div>
+
+Solution:
+----------
+Component.template.html
+------------------------
+<div [ngClass]="{'cssClass1': isCondtionTrue(),'cssClass2': isvalid() }"} Css effect in Template </div>
+
+Component.component.ts
+----------------------
+import { component } from '@angular/component';
+import { } from '@angular/route';
+
+@Component({
+  selector: 'ngClassFunction',
+  templateUrl: './Component.template.html',
+  styleUrls: ['./Component.template.scss'],
+  encapsulation: ViewEncapsulation.None
+})
+export class ComponentComponent implements OnInit, OnChanges {
+
+constructor(){
+}
+isCondtionTrue(){
+if(this.value1 && this.value2)
+return true;
+else false;
+}
+isvalid(){
+if(this.value1 && this.value2)
+return true;
+else false;
+}
+
+}

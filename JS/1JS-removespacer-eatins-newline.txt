@@ -1,0 +1,20 @@
+Javascript - Remove White space  and retain New line character,spl char not allow
+=================================================================================
+
+function RemoveallSpaces() {
+    var output = document.getElementById("content").value;   // textarea or text .....
+	
+    output = output.replace(/\s/g, "")							// remove all spl characters
+	
+	output = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(output) //retain new line chars
+	
+    document.getElementById("output").innerHTML = output;
+}
+	
+	output = output.replace(/[ \t]/g,'');          // textarea or text .....
+	
+	function isValid(str){
+	return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(str);    //special character not allow 
+ 
+	}
+

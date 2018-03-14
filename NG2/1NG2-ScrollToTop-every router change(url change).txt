@@ -1,0 +1,28 @@
+NG2-ScrollToTop-every router change(url change)
+ 
+Componet.ts
+============ 
+import {ChangeDetectionStrategy, Component } from '@angular/core'
+import { ActivatedRoute,Router } from '@angular/router'
+ 
+ 
+@Component({
+  selector: 'rootcomponent',
+	.....
+	
+export class Rootcomponent{	
+  searchChange;
+	constructor( _router: Router){
+	
+	_router.events.subscribe((val) => {
+	this.searchChange = '';   // change text box value as empty every router change
+	window.scrollTo(0,0);
+	}
+	this.searchChange = somevalue
+	
+}
+
+template.html
+=============
+
+<input type="text" value="{{ searchChange }}">

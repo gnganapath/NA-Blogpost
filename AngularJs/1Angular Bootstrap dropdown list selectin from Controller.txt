@@ -1,0 +1,26 @@
+Angular Bootstrap dropdown list item selection from Controller
+==============================================================
+
+MyApp.controller('SubjectDropDownController', function ($scope) {
+ 
+    $scope.subjects = ['Math', 'Physics', 'Chemistry', 'Hindi', 'English'];
+});
+
+ 
+
+We can bind the subjects array to create a dropdown as shown in the listing below:
+
+<div ng-controller="SubjectDropDownController">
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Subject
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li ng-repeat="a in subjects"><a href="#">{{a}}</a></li>
+        </ul>
+    </div>
+
+----------***********----------
+
+REf: http://www.infragistics.com/community/blogs/dhananjay_kumar/archive/2015/06/29/how-to-work-with-the-bootstrap-dropdown-in-angularjs.aspx

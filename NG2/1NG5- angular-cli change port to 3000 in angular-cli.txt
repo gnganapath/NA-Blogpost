@@ -1,0 +1,42 @@
+NG5- angular-cli change port to 3000 in angular-cli.json
+=======================================================
+
+Edit with Angular-CLI 1.0.0
+
+soln:1
+--------
+You can now directly define the used port in the .angular-cli.json file by defining the property like this:
+
+{
+    "defaults": {
+		"styleExt": "scss",
+		"component": {},
+        "serve": {
+            "port": 3000
+        }
+    }
+}
+Here is a direct link to all available options for the configuration: Angular-CLI options configuration
+
+Soln:2
+-------
+Old Answer
+
+You can configure it directly in your packages.json, change your start scripts by:
+
+"start": "ng serve --port 2500",
+And then run your server with npm start
+
+
+this will override the .angular.cli.json file. app will run in 2500 port.
+
+
+Soln:3
+------
+You can also try with this to run your application in visual studio code -:
+
+ng serve --open --port 4201
+
+you can give any port number. *** It will in open in default browser. e.g I.E edge in windows or your preferred browser.
+
+Ref: https://stackoverflow.com/questions/41260194/angular-cli-change-port-to-3000-in-angular-cli-json

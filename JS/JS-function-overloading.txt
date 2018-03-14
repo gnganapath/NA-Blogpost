@@ -1,0 +1,16 @@
+JS -function overloading
+============================
+The example for function overloadingnot supporting in JavaScript as give below.
+
+function sum(a, b) {
+    alert(a + b);
+}
+
+function sum(c) {
+    alert(c);
+}
+
+sum(3);//The output is 3.
+sum(2, 4);//The output is 2.
+
+In the JavaScript, when we write more than one functions with same name that time JavaScript consider the last define function and override the previous functions. You can see the above example output for the same.

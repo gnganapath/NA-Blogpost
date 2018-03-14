@@ -1,0 +1,45 @@
+ng2-ToggleStyle-Apply from components:
+-------------------------------------
+
+Ref: - https://plnkr.co/edit/yCalvA1OsC6w2VZUAHm6?p=preview
+
+//our root app component
+import { NgModule} from '@angular/core'
+import {BrowserModule} from '@angular/platform-browser'
+import {Component} from '@angular/core';
+
+// while using [ngdirective] import FomrsModule in your app.module.ts
+
+@Component({
+  selector: 'my-app',
+  providers: [],
+  template: `
+    <div>
+      <div [ngClass]="{'my-class': isClassVisible }">
+        I'm a div that wants to be styled
+      </div>
+      <button (click)="isClassVisible = !isClassVisible;">Toggle style</button>
+    </div>
+  `,
+  styles: [
+  `
+  .my-class {
+    background-color: yellow;
+  }
+  `
+  ]
+})
+class App {
+  isClassVisible: false;
+  
+  constructor() {
+  }
+  
+}
+
+@NgModule({
+  imports: [ BrowserModule ],
+  declarations: [ App ],
+  bootstrap: [ App ]
+})
+export class AppModule {}

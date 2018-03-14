@@ -1,0 +1,22 @@
+NG4- BreadCrumb implement based on URL / routing based
+--------------------------------------------------------
+
+export class AppComponent{
+
+  urldata: any;
+  url:any;
+  
+  constructor(private router: Router) {
+    this.urldata = this.router.parseUrl(this.router.url);
+    this.url = router.url.split('/');
+	
+  }
+  
+  ngOnInit() {
+     if (this.urldata.root.children.primary.segments[1].path === "home") {
+      this.pageNumber = this.urldata.root.children.primary.segments[3].path  //  userCode - uniqueCustomerID
+      this.pagetitle = this.urldata.root.children.primary.segments[2].path   //  userName - uniqueCustomerName
+    }
+	
+	We can implement same kind of logic for breadcrumb usage
+	

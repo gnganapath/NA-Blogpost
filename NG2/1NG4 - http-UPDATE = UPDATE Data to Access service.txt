@@ -1,0 +1,63 @@
+NG4 - http- UPDATE = UPDATE Data Access service 
+=========================================
+import { Component,Output,OnInit,Input, EventEmitter } from '@angular/core'
+
+updateProduct.component.ts
+------------------------
+
+@Component({
+	selector:'updateHttp',
+	styleUrls: ['./updateHttp.scss'],
+	templateUrl: './updateHttp.html',
+})
+
+export class UpdateHttpComponent implements OnInit{
+
+...
+constructor(private productService: ProductService) { }
+		editProduct: void {
+			this.productService.updateProduct(p)
+			.subscribe(
+			() => this.onSaveComplete(),
+			(error: any) => this.errorMessage= <any>error
+			);
+		}
+}
+
+}
+
+postProduct.service.ts
+----------------------
+...
+import { Http, Response} from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+
+...
+@Injectable()
+exportclassProductService{
+	privatebaseUrl= 'www.myWebService.com/api/products';
+	constructor(privatehttp: Http) { }
+	updateProduct(product: IProduct): Observable<IProduct> {
+	letheaders = newHeaders({ 'Content-Type': 'application/json'});
+	letoptions = newRequestOptions({ headers: headers });
+	
+	consturl= `${this.baseUrl}/${product.id}`;
+	return this.http.put(url, product, options)
+	.map(() => product).catch(this.handleError);
+	}
+}
+
+private extractData(res: Response) {
+    let body = res
+    return body || {} ;
+  }
+   private handleError (error: any) {
+    // In a real world app, we might use a remote logging infrastructure
+    // We'd also dig deeper into the error to get a better message
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }

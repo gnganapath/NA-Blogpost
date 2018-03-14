@@ -1,0 +1,258 @@
+techsith interview questions.
+1.diff b/w let and var keyword?
+
+var in js - local scope, or function scope, 
+let introduced es6. block scope -will die block end, garbadge collection.  
+
+similarity are: (common behaviours)
+both are used define value. Able to reasssign values.
+
+let x = function(){
+if(true){
+ console.log(v);   // undefined
+console.log(l);   // uncautch reference error. 
+var v= 2;		
+let l =1;
+}
+console.log(v);    // value = 2
+console.log(l);   // uncautch reference error
+}
+x();
+
+2. diff b/w let and const keyword ?
+
+both are used define value.
+
+let l =1;
+l=2;
+console.log(l)   // output = 2
+
+const c=1;
+c=2;
+console.log(c)  // uncautch ref error. : Missing initializer in const declaration
+
+const c;  // c is undefined. not reassign values
+c=2;    
+console.log(c)   // uncautch ref error. :Reassignment to constant variable
+
+
+const c = [1,2];
+c.push(3);        // it is consider as object. Object can reassign.
+console.log(c);  // [1,2,3]
+c.pop()
+console.log(c);  // [1,2]
+c.unshift(0);
+console.log(c);  // [0,1,2]
+c.shift(0);
+console.log(c);  // [1,2]
+c= [1,5,7]
+console.log(c)   // un err . assing const var
+
+3. diff b/w === and == ?
+both are comparision operators. 
+== it just compare values '1'== 1 => true.  convert the value,type from left to right. i.e string 1 to String 1(number)
+=== it compares value and  '1' === 1 => false. because, string compare with number
+
+4. diff b/w null and undefined
+both are represent the empty.
+var val1;         // undefined  and typeof(val1) => undefined.
+var val2 = 'null; //null is values and typeof(val1) => object. 
+when I declare var and not assinged,  it's implict assign -> undefined as value. Also we can assign value as undefined.but not best practice.
+
+5. what is the use Arrow function ? arrow functin also called pareArrow ?
+
+=> function behave like window object type, 
+const profile = 
+{ firstName: '',lastName: '',
+setName: function(name) {
+let splitName = (n)=> {    // instead of this line use ==> change let splitName = (n) => {
+let nameArray = n.split(' ');  // it's private function
+this.firstName = nameArray[0];
+this.lastName = nameArray[1];
+}
+splitName(name);
+}
+}
+
+profile.setName('gng trt');
+console.log(profile.firstName);  // nothing
+console.log(window.firstName);   // gng
+
+if use Arrow function 
+
+console.log(profile.firstName); // gng 
+console.log(window.firstName);   // undefined
+
+6. what is prototypal inheritance ?
+Every object has property called prototype. when we create new object from parent object, it inherits propertties and methods from parent object.
+Not making duplicate copies.
+
+other e.g 
+let animal = {
+  eats: true
+};
+let rabbit = {
+  jumps: true
+};
+
+rabbit.__proto__ = animal; // (*)
+
+// we can find both properties in rabbit now:
+alert( rabbit.eats ); // true (**)
+alert( rabbit.jumps ); // true
+
+additional e.g
+<!DOCTYPE html>
+<html>
+
+<body>
+  <script>
+    'use strict';
+    let animal = {
+      eats: true,
+      walk() {
+        alert("Animal walk");
+      }
+    };
+    
+    let rabbit = {
+      jumps: true,
+      __proto__: animal
+    };
+    
+    let longEar = {
+      earLength: 10,
+      __proto__: rabbit
+    }
+    
+    alert(rabbit.eats);    // parent to grandparent inheritance 
+     
+    // walk is taken from the prototype chain   //child  to grand parent
+    longEar.walk(); // Animal walk
+    alert(longEar.jumps); // true (from rabbit)  // child to parent
+    
+  </script>
+</body>
+
+</html>
+
+7. diff b/w function declaration and function expression
+fun dec is formal funciton syntax. we can't assing to one func dec to another func dec
+fun exp is ananymous function. we have to assing to one variable. we can assing fun exp to another var.
+
+console.log(funcD());   // function declaration from method 
+console.log(funcE());   // error. because it behave here s let variable type.
+
+function funcD(){
+console.log('function declarion');
+}
+
+var funcE = function(){       
+console.log('function expresssion');
+};
+
+
+funcDDuplicate() = funcD();  // cann't assingn.
+
+8.what is promises and why do we use it ?
+
+promises using ajax call (nested ajax call)
+e.g
+
+$.ajax({ 
+url:'file.json',
+success: function(r){
+$.ajax({ 
+url:"data.json?'+r.file,
+success: function(result){
+$("#div").html(result);
+});
+});
+
+promises,
+
+var p1= new Promise(function(resolve, reject){
+resolve($.ajax('file.json');)
+});
+
+p1.then(function(r){
+return new Promise()}).then(function(result){
+$("div1").html(result);
+});
+
+e.g
+
+let promiseTocleanRoom = new Promise(function(resolve, reject){
+//clean room operation
+
+
+let isClean = true;   // if success - resolve
+// let isClean = false; // if not 
+
+if(isClean){
+resolve('clean');
+}
+else{
+reject('not clean');
+}
+
+});
+
+promiseTocleanRoom.then(function(fromResolve){
+	console.log('the room is '+fromResolve);
+}).catch(function(fromReject){
+	console.log('the room is' +fromReject);
+});
+
+9.setTimeout() vs setInterval()-clearInterval();
+
+setTimeout is method to wait the ms to excute. runs once the settimeout method.
+
+console.log('1'); console.log('2'); console.log('3');  // 1  2 3
+
+setTimeout(function(){
+console.log('1'); } ,0);
+console.log('2'); console.log('3');  //  2 3 1
+
+Even settimeout is 0 milliseconds, it consider as stacked code execution. Async code code also have to wait to to finish
+setInterval(function(){
+console.log('1'); } ,1000);
+console.log('2'); console.log('3');  // 1 2 3 1repeat n number of times with 1000 miliiseconds,
+
+//To clear this interval use clearInterval.
+
+var s= setInterval(function(){
+console.log('1'); } ,1000);
+console.log('2'); console.log('3');
+
+clearInterval(s);  // 2 3 . 1 not printed here....
+
+
+
+const wait = time => new Promise((resolve) => setTimeout(resolve, time));
+
+wait(3000).then(() => console.log('Hello!')); // 'Hello!'
+
+
+10. what is closure. why we user it ?
+
+function have return inner function to have all varaible, is accessable or closure values.
+
+let obj = function(){
+let i=0;
+return {
+setI(k){
+i=k;
+}
+getI(){
+return i;
+}
+
+}
+);
+let x = obj();
+x.setI(2);
+console.log(x.getI());   // 2 -> able to see in 
+console.log(x);     // this is closure object. Able to see in console.
+
+}

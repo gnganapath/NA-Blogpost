@@ -1,0 +1,17 @@
+NG2- How to add Javascript in Angular 2
+---------------------------------------
+
+We shouldn't directly include script in index.html
+
+Solution-1 - Angular CLI- solution
+-----------
+Open Angular-cli.json 
+
+add under script{ ""ScriptName": "JS file  path located in our application" }
+
+Solution-2 - Other Ng application
+-----------
+
+Open the package.json 
+
+add under script{ "ScriptName" :"Script npm path - name" }

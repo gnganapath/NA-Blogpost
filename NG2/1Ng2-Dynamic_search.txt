@@ -1,0 +1,62 @@
+Two way data binding - Searc Text Filter list of item in Array
+==============================================================
+Template.html
+-------------
+
+<div class="panel-default">
+	<div class="panel-heading">All list Data
+		<div>
+			<input [ngModel]="sectionSearch" (ngModelChange)="onSearchSection($event)" class="sidesearch" placeholder="Search...">
+		</div>
+	</div>
+	<div class="panel-body allDataList">
+		<div *ngFor="let item of alldata" routerLinkActive="active"><a routerLink="DomainSecondURL/{{item.displayName}}">{{item.displayName}}</a>
+		</div>
+	</div>
+</div>
+
+
+Component.ts
+-------------
+
+import {Component,ViewContainerRef,ViewEncapsulation, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import { FormControl } from '@angular/forms';
+
+@Component({
+selector:'template',
+template:require('./template.html')
+})
+
+export class FilterData{
+
+public allData:any;
+public filterData:any;
+
+
+		constructor(private route:ActivatedRoute,private allDataService:AllDataService, private router: Router){
+		this.url = router.url.split('/');
+		this.AllDataService.getleftmenuData(this.url)    
+		.subscribe(
+		(data:any)=>{     
+		
+			this.allData= data.sections;
+			this.filterData = this.allData;
+				
+		},
+			(error:any)=>{
+			console.log("error");
+			}
+			);        
+		}
+		onSearchSection(event:Event) {
+
+		this.allData = this.filterData.filter(
+		section => section.displayName.toLocaleLowerCase().indexOf(event) >= 0
+		
+		// {section => Obj.propeName - displayName}
+		);
+
+	} 
+
+}

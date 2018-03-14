@@ -1,0 +1,11 @@
+NG2- Screen height and Width measure even resize of the screenHeight
+=====================================================================
+
+screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+onResize(event) {
+  event.target.innerWidth;
+  this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+   
+}
+
+Ref: http://stackoverflow.com/questions/35527456/angular2-window-resize-event

@@ -1,0 +1,73 @@
+Sublime text 2/3 package control install - for HTML Beatify and other pacakge :
+--------------------------------------------------------------------------------
+Download Sublime text 2 or 3 after that Ctrl+shift+p -> Package Control : if not appear follow the procedure for HTMLbeatifier
+
+According to its webpage:
+
+A full-featured package manager that helps discovering, installing, updating and removing packages for Sublime Text 2. It features an automatic upgrader and supports GitHub, BitBucket and a full channel/repository system.
+What's it mean? It's a Sublime Text package that makes it super-easy & convenient to install & manage all your other Sublime Text packages. Because of the ease of use it offers, Package Control really should be the first Sublime Text package you install.
+
+Install the Package Control package
+Follow these steps:
+FOR windows:
+============
+Go to http://wbond.net/sublime_packages/package_control/installation & copy the long command there.
+
+Open the Sublime Text 2 console by pressing Ctrl+`.
+Paste the command you copied into the Sublime Text console.
+import urllib2,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), 'wb' ).write(by) if dh == h else None; print('Error validating download (got %s instead of %s), please try manual install' % (dh, h) if dh != h else 'Please restart Sublime Text to finish installation')
+sublime text2 :
+==============
+
+import urllib2,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), 'wb' ).write(by) if dh == h else None; 
+print('Error validating download (got %s instead of %s), please try manual install' % (dh, h) if dh != h else 'Please restart Sublime Text to finish installation')
+
+Press Enter.
+After Package Control installs, restart Sublime Text.
+
+
+sublime text3:
+==============
+
+import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+
+Press Enter.
+After Package Control installs, restart Sublime Text.
+
+
+NOW:
+==== Package control -> type HTMLBeatify enter - > SHORTCUT -> WINODWS7 -> CRTL+ALt+shit+F for html
+
+
+
+MMMMAAAACCC users
+-----------------
+
+
+Usage
+Follow these steps:
+
+Press Command-Shift-P (Mac OS X) or Ctrl-Shift-P (Windows) to open the Command Palette.
+Start typing Package Control until you see the appropriate commands.
+Some of the possible commands are:
+
+Disable Package
+Temporarily turn off a package (if you think it's causing problems, for instance)
+Discover Packages
+List all available packages in your web browser
+Enable Package
+If you disabled a package & now want to re-enable it
+Install Package
+List all available packages, allowing you to narrow down results by typing; clicking on the package will install it
+List Packages
+Show all installed packages, even those manually installed
+Remove Package
+Upgrade Package
+Upgrade a specific package
+Upgrade/Overwrite All Packages
+Run this periodically to upgrade all your installed packages
+Package Control Settings – Default
+Package Control Settings – User
+On other pages, I'll talk about some of the other packages you should install.
+
+Ref:https://www.granneman.com/webdev/editors/sublime-text/packages/how-to-install-and-use-package-control/

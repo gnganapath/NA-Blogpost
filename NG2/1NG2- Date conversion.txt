@@ -1,0 +1,7 @@
+NG2-To convert the data in NG2 using data default format
+--------------------------------------------------------
+
+"2017-02-18T07:43:00-05:00"
+
+
+{{lastupdate |  date:'EEE, d MMM,y hh:mm:ss'}}

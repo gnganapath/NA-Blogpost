@@ -1,0 +1,8 @@
+Disable submit button when form invalid with AngularJS
+
+To void this, you just need to handle $pending state of the form:
+
+<form name="myForm">
+  <input name="myText" type="text" ng-model="mytext" required />
+  <button ng-disabled="myForm.$invalid || myForm.$pending">Save</button>
+</form>

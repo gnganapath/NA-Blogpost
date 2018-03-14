@@ -1,0 +1,21 @@
+JS - merge 2 arrays of objects in JavaScript
+============================================
+soln1: Array.prototype.push.apply(arr1,arr2);
+soln2: arr1 = arr1.concat(arr2);
+
+eg: 
+var arr1 = [{name: "lang", value: "English"},{name: "age", value: "18"}];
+var arr2 = [{name : "childs", value: '5'}, {name: "lang", value: "German"}];
+
+Array.prototype.push.apply(arr1,arr2); 
+
+console.log(arr1); 
+
+Output:
+
+[{"name":"lang","value":"English"},
+{"name":"age","value":"18"},
+{"name":"childs","value":"5"},
+{"name":"lang","value":"German"}
+
+Ref: https://stackoverflow.com/questions/7146217/merge-2-arrays-of-objects

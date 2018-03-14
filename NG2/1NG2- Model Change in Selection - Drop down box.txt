@@ -1,0 +1,37 @@
+NG2- Model Change in Selection - Drop down box:
+-----------------------------------------------
+
+Ref: https://plnkr.co/edit/oFADUI?p=preview
+
+ 
+//our root app component
+import {Component, Directive, Output, EventEmitter, Input, SimpleChange} from 'angular2/core'
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
+//import 'rxjs/Rx';
+
+
+@Component({
+    selector: 'my-app',
+    template: `
+    <h1>Hello</h1>
+<select class="form-control" [(ngModel)]="selectedPrototypeSelector" (ngModelChange)="onPrototypeChange()">
+   <option *ngFor="let p of prototypes" [ngValue]="p">
+         {{ p.id }}
+   </option>
+</select>
+<div>selected: {{selectedPrototypeSelector.id}}</div>
+    `,
+})
+export class AppComponent {
+  selectedPrototypeSelector;
+  prototypes = [{id: 'a'}, {id: 'b'}, {id: 'c'}];
+  
+  constructor() {
+    this.selectedPrototypeSelector = this.prototypes[1];
+  }
+  
+  onPrototypeChange() {
+    console.debug(this.selectedPrototypeSelector);
+  }
+}

@@ -1,0 +1,79 @@
+NG2- Video Play in Popup  (click the link)
+==========================
+
+Play you tube video also in using in iframe
+
+step:1
+------
+Add the videoView.mp4 file in ProjectFolder/App/src/ or some build not affected place.
+
+stpe:2
+-------
+
+component.html
+--------------
+<div (click)="showSaleVideo"> Play video as popup in Angular 2 </div>
+
+--> end of component add popup div
+
+<div style=" z-index: 12; top: 30%; position: fixed; margin-left:25%; height: 50%;   width: 50%;     background: #fff;    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);" *ngIf="videoPlay">
+    <span style="float:right;color:blue;padding-right:3px;padding-top:3px;cursor:pointer;" (click)="CloseVideoPlay()"> X </span>
+        <div>           
+           <video width="100%" height="100%" controls>
+                <source src="Videorview.mp4" type="video/mp4">  
+                Your browser does not support the video tag.
+            </video>
+			<!-- Video in iFrame from You tube
+			<iframe width="100%" height="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k"></iframe> -->
+        </div>
+</div>
+
+
+component.ts
+-------------
+
+
+@Component({
+  selector: 'popup-model-video',
+  templateUrl: './component.html',
+  styleUrls: ['./component.css'],
+  encapsulation: ViewEncapsulation.None    <-- not required 
+  
+})
+export class PopupModelVideoComponent implements OnInit{
+
+
+constructor(){}
+
+videoPlay = false;
+
+showSaleVideo(){
+this.videoPlay = true;
+}
+CloseVideoPlay(){
+this.videoPlay = false;
+}
+
+}
+
+
+==========
+
+html video play:
+---------------
+<html>
+
+<body>
+	
+	<!-- Video in iFrame -->
+	<iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k"></iframe>
+
+    <!-- Video in video control  -->
+    <video width="100%" height="100%" controls>
+		<source src="Videoview2.mp4" type="video/mp4">  
+		Your browser does not support the video tag.
+	</video>
+</body>
+
+</html>
+

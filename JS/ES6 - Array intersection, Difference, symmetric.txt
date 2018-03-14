@@ -1,0 +1,18 @@
+ES6 - Array intersection, Difference, symmetric
+-----------------------------------------------
+There is a better way using ES6:
+Intersection
+============
+ let intersection = arr1.filter(x => arr2.includes(x));
+ For [1,2,3] [2,3] it will yield [2,3]. On the other hand, for [1,2,3] [2,3,5] will return the same thing.
+
+Difference
+==========
+let difference = arr1.filter(x => !arr2.includes(x));
+For [1,2,3] [2,3] it will yield [1]. On the other hand, for [1,2,3] [2,3,5] will return the same thing.
+
+symmetric difference
+====================
+let difference = arr1.filter(x => !arr2.includes(x)).concat(arr2.filter(x => !arr1.includes(x)));
+
+Ref: https://stackoverflow.com/questions/1187518/how-to-get-the-difference-between-two-arrays-in-javascript

@@ -1,0 +1,87 @@
+Angular JS - Share or call function from custome Directive to Contoller
+----------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html >
+<head>
+<meta name="description" content="Simplest Controllers sharing Service" />
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+  <meta charset="utf-8">
+  
+  <script>
+  var myApp = angular.module('MyCtrl', []);
+myApp.directive('passObject', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      obj: '='
+    },
+    template: '<div>Hello, {{obj.prop}}!<input type="text" ng-model="stext"   ng-change="changeValue(stext)" /><button ng-click="changeValue(stext)">Change Value</button></div></div>',
+    link: function(scope, element, attrs) {
+      scope.changeValue = function(stext) {
+        scope.obj.prop = stext;//"Change form directive";
+      }
+    }
+  };
+});
+
+myApp.controller('MyCtrll', function($scope) {
+  $scope.obj = {
+    prop: "world"
+  };
+});
+  </script>
+  <body>
+  
+<div ng-app="MyCtrl">
+  <div ng-controller="MyCtrll">
+    <pass-object obj="obj"></pass-object>
+    <div>
+      Controller {{obj.prop}}
+    </div>
+  </div>
+</div>
+  
+  </body>
+  </html>
+
+
+
+Alternate Soln: 1
+-----------------
+
+use $parent.changevalue(stext) for some different kind of array value changes.
+
+Alternate Soln: 2
+-------------------  
+  http://jsfiddle.net/L8masomq/
+
+<div ng-app="dr" ng-controller="testCtrl">
+    <test color1="color1" data-method="ctrlFn"></test>    
+</div>
+
+
+Script:
+-------
+
+var app = angular.module('dr', []);
+
+app.controller("testCtrl", function($scope) {
+    $scope.ctrlFn = function(arg) {        
+        alert(arg);
+    }
+    
+});
+app.directive('test', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            fromDirectiveFn: '=method'
+        },
+        link: function(scope, elm, attrs) {
+            //Way One
+            scope.hello = "some message";
+            scope.fromDirectiveFn(scope.hello);
+        }
+    }
+});

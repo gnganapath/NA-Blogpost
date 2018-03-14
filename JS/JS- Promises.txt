@@ -1,0 +1,70 @@
+JS- Promises 
+=============
+<html>
+<head>
+<style>
+
+</style>
+<script type="text/javascript">
+
+let promiseTocleanRoom = new Promise(function(resolve, reject){
+//clean room operation
+
+
+let isClean = true;   // if success - resolve
+// let isClean = false; // if not 
+
+if(isClean){
+resolve('clean');
+}
+else{
+reject('not clean');
+}
+
+});
+
+promiseTocleanRoom.then(function(fromResolve){
+	console.log('the room is '+fromResolve);
+}).catch(function(fromReject){
+	console.log('the room is' +fromReject);
+});
+</script>
+</head>
+
+<body>
+
+ </body>
+</html>
+
+
+Ref: techsith.com
+https://jsfiddle.net/jspatel/mkjh2ev5
+
+let cleanRoom = function() {
+  return new Promise(function(resolve, reject) {
+    resolve('Cleaned The Room');
+  });
+};
+
+let removeGarbage = function(message) {
+  return new Promise(function(resolve, reject) {
+    resolve(message + ' remove Garbage');
+  });
+};
+
+let winIcecream = function(message) {
+  return new Promise(function(resolve, reject) {
+    resolve( message + ' won Icecream');
+  });
+};
+
+cleanRoom().then(function(result){
+	return removeGarbage(result);
+}).then(function(result){
+	return winIcecream(result);
+}).then(function(result){
+	console.log('finished ' + result);
+})
+
+
+output is synchronous way 1 by 1 -> finished Cleaned The Room remove Garbage won Icecream

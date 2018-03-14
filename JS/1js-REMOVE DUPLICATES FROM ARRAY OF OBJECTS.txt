@@ -1,0 +1,40 @@
+﻿JS,NG2- JAVASCRIPT: REMOVE DUPLICATES FROM ARRAY OF OBJECTS
+-------------------------------------------------------------
+var tmp = [
+    {
+        "uniqueCode" : "1234",
+        "selected" : true,
+        "otherVal" : "abc"
+    },
+    {
+        "uniqueCode" : "5678",
+        "selected" : false,
+        "otherVal" : "abc"
+    },
+    {
+        "uniqueCode" : "1234",
+        "selected" : true,
+        "otherVal" : "def"
+    }
+];
+
+function removeDuplicates(arr, prop) {
+     var new_arr = [];
+     var lookup  = {};
+ 
+     for (var i in arr) {
+         lookup[arr[i][prop]] = arr[i];
+     }
+ 
+     for (i in lookup) {
+         new_arr.push(lookup[i]);
+     }
+ 
+     return new_arr;
+ }
+ 
+var uniqueArray = removeDuplicates(tmp, "uniqueCode");
+
+console.log(uniqueArray);
+
+Ref: http://www.tjcafferkey.me/remove-duplicates-from-array-of-objects/

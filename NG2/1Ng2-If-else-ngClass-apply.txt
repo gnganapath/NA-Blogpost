@@ -1,0 +1,33 @@
+component1.html
+-----------------
+<div [ngClass]="{'n-dropdown-menu--active': isActive, 'n-dropdown-menu': true}">
+
+<a (click)="isActive = !isActive">Click</a>
+</div>
+
+component1.component.ts
+-----------------------
+import {component} from 'angular@/core';
+
+@componet{
+
+}
+export class classname{
+
+isActive =false;
+
+}
+
+component1.css
+--------------
+n-dropdown-menu--active{
+
+background : red;
+}
+n-dropdown-menu{
+
+background: Green;
+}
+
+By default the dropdown background color is green. Once click,
+ it will be toogle the color as red and green

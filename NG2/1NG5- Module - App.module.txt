@@ -1,0 +1,55 @@
+NG5- Module - App.module.ts
+============================
+
+Angular apps are modular and Angular has its own modularity system called NgModules. NgModules are a big deal.
+Every Angular app has at least one NgModule class, the root module, conventionally named AppModule.
+While the root module may be the only module in a small application, most apps have many more feature modules, each a cohesive block of code dedicated to an application domain, a workflow, or a closely related set of capabilities.
+
+An NgModule, whether a root or feature, is a class with an @NgModule decorato
+NgModule is a decorator function that takes a single metadata object whose properties describe the module. The most important properties are:
+
+declarations - the view classes that belong to this module. Angular has three kinds of view classes: components, directives, and pipes.
+
+exports - the subset of declarations that should be visible and usable in the component templates of other modules.
+
+imports - other modules whose exported classes are needed by component templates declared in this module.
+
+providers - creators of services that this module contributes to the global collection of services; they become accessible in all parts of the app.
+
+bootstrap - the main application view, called the root component, that hosts all other app views. Only the root module should set this bootstrap property
+
+generic.app.module.ts
+---------------------
+
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+@NgModule({
+  imports:      [ BrowserModule ],
+  providers:    [ Logger ],
+  declarations: [ AppComponent ],
+  exports:      [ AppComponent ],
+  bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+
+
+Sample Ng-cli app.module at initial level
+--------------------------------------------
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+// import { routing } from './app.routing.ts';  =>  App routing file needs to include 
+import { AppComponent } from './app.component';
+
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [		// import Angular's modules ->BrowserModule,    HttpModule,    RouterModule,    FormsModule,    ReactiveFormsModule, <= coresponding import statement as to add 
+	BrowserModule   
+  ],
+  providers: [],   // expose our Services and Providers into Angular's dependency injection  Mostly service files <= coresponding import statement as to add 
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

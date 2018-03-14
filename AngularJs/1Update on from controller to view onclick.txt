@@ -1,0 +1,21 @@
+Update View text from contoller using $rootScope 
+================================================
+
+if(!rootScope.sitename)
+    {
+        rootScope.sitename = "App";
+        rootScope.searchcol =  "App";
+    }
+
+$scope.SearchDashboard = function(sitename, searchcol){
+        rootScope.sitename = sitename; 
+        rootScope.searchcol =  searchcol;
+        $location.path('dashboard/'+'-'+sitename)  //reload the page to update
+    }
+
+
+
+view:
+=======
+  <a href="" ng-click="SearchDashboard(sitename,'Site')" title=" {{sitename}}" class="ng-binding">   {{sitename}}</a>
+

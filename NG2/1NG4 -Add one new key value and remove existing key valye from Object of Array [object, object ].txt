@@ -1,0 +1,56 @@
+NG4 - Add one new key value and remove existing key valye from Object of Array [object, object ]
+------------------------------------------------------------------------------------------
+
+InitialArray = [{"key1":"val1", "key2": "val2"}, {"key1":"val11","key2":"val21"}]
+
+Drop Key1/val1 and add Key3/Val3 
+
+ExpctedArray =  [{"key3":"val3", "key2": "val2"}, {"key3":"val31","key2":"val21"}]
+
+Using Angular4/2 Arrow fundtion with ForEach Loop
+
+this.InitialArray.forEach(el => {
+        var existingObject = el;
+	//delete existingObject["key1"];
+	delete existingObject.key1;
+	Object.assign(existingObject, {
+	key3:this.valu3   //'valu3' in this.valu3. Key3 no need of 'key3' Quotes (')
+	});
+   });
+
+
+NG4- add/ Remove one more key value of Existing object
+=======================================================
+With the new ES6 method Object.assign, much of the repeated boilerplate can be eliminated. Example:
+
+var existingObject = {
+    firstValue: 'hello'
+};
+
+/* some time later... */
+
+Object.assign(existingObject, {
+  secondValue: 'world' });
+  
+Ref: https://stackoverflow.com/questions/25777499/short-hand-to-add-many-key-value-pairs-to-an-existing-javascript-object
+
+Remove:
+------
+// Example 1
+var key = "Cow";
+delete thisIsObject[key]; 
+
+// Example 2
+delete thisIsObject["Cow"];
+
+// Example 3
+delete thisIsObject.Cow;
+
+If a JavaScript shell, it's as easy as:
+
+delete object.keyname;
+
+Ref: https://stackoverflow.com/questions/3455405/how-do-i-remove-a-key-from-a-javascript-object
+
+
+ 

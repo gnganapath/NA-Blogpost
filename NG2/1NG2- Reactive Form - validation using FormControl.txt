@@ -1,0 +1,85 @@
+NG2- Reactive Form - validation using FormControl
+==================================================
+myform.template.html
+=====================
+
+<div class="login-form">
+<!-- No need of Tag start with <form> and if edit mode of the form  [(ngModel)] 2 way data binding.
+<div class="username">
+	<input  [formControl]="userNameCtrl" >
+	<div *ngIf="userNameCtrl.touched" style="color:brown">
+		<span *ngIf="userNameCtrl.status == 'INVALID'">    Enter User name </span>
+	</div>
+</div
+
+<div class="password">
+	<input  [formControl]="password" >
+	<div *ngIf="password.touched" style="color:brown">
+		<span *ngIf="password.status == 'INVALID'">    Enter Password </span>
+	</div>
+</div> 
+<div class="form-submit">
+	 <span [ngClass]="{'button disableCGbtn': password.status == 'INVALID' || userNameCtrl.status == 'INVALID' , 
+	 'button ': password.status == 'VALID' && userNameCtrl.status == 'VALID' }" (click)="SubmitLogin()"> SUBMIT</span>
+	 
+	 <span class="button" (click)="ClosecreateNewCustomGroup()">Cancel</span>	
+<div class="loginfail" *ngIf="loginFail"> Login failed. Try Again </div>	 
+</div>	
+</div <!-- form div end -->
+ 
+ Style.css   --> disable css property for buttons 
+-----------
+{
+ opacity: 0.5;
+ pointer-events: none;
+} 
+myform.compoent.ts
+===================
+import { Component } from '@angular/core'
+import { FormControl, NgForm, Validator, Validators } from '@angular/forms';
+
+@component({
+selector: 'login-form',
+styles: [require('./Style.css')],
+template: require('./myform.template.html')
+
+})
+
+export class MyformComponent {
+
+loginSucess:private;
+loginfail:private;
+userNameCtrl = new FormControl('',Validators.required);
+constructor( private router: Router, private _loginService: :LoginService){
+this.loginfail = false;
+}
+SubmitLogin(){
+let usernameValue = this.userNameCtrl.value;
+let passwordValue = this.password.value;
+
+// if post body as pay-load -> create string format data to post
+let postCredential = `username=${usernameValue}&password=${passwordValue}` 
+// if post body as form-data  -> create JSON object formta data to post
+let postCredential { username: usernameValue, password: passwordValue }
+
+	this._loginService.login(postCredential).subscribe( (data=>any) {
+		if(data.status == "true" ){
+		console.log("Login success")
+		this.loginfail = false;
+		this.loginSucess = true;
+		let userid = data.userID;
+		
+		let redirectURL = 'homepage/userpage/'+userid+'/page1';
+		this.router.navigate([url]);
+		//this.usernameValue.setValue(data.userFullName) ->ngModel replacement not relate to login
+		
+		}
+		else {
+		console.log("login Failed")
+		this.loginfail = true;
+		this.loginSucess = false;
+		}
+	
+	}
+}  // login method end
+}  // compoent end

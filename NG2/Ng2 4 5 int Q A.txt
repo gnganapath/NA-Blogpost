@@ -1,0 +1,1188 @@
+Anagular 2 4 5 Interveiw Questions and Answers -  Rough copy -1
+===============================================================
+#1. Angular 2 Life cycle hooks / Angular 2 component -life cycle hook (4) middle 
+----------------------------------------------------
+There are eight main hooks for every component to have robustness in our built applications.
+Constructor:
+This won’t be taken as lifecycle hooks but this will instantiate all component hooks and it is run first when the component is activated.
+>app.ts file:
+class MyComponent {
+constructor( ) {
+/*all other modules injection and dependency injection and initialization will go here*/
+console.log(“This is Constructor”); // printed first in console
+}
+}
+
+ngOnChanges:
+This hook will be run when our component is setting or resetting the values for input properties.This will be called before ngOnInit hook whenever the changes in the input property made in a component.
+This will be used to render the DOM and updating the DOM for each and every changes made in the component attributes.
+This may run multiple times in the lifetime of the each component
+>app.ts file:
+class MyComponent {
+ngOnChanges( ) {
+/*Called when the changes made in the input properties of the component before it binds to view*/
+console.log(“This is ngOnChange”); // printed second in console
+}
+}
+ngOnInit:
+The Initialization of the component or directive of our app will be made in this hook after the angular displays the initial value of input properties.
+When changes made in input properties of the component this hook will be called after the ngOnChanges.
+This hook will run only one time after initializing all the properties of the component
+>app.ts file:
+class MyComponent {
+ngOnInit( ) {
+/*the Initialization of every input properties and functionalities will go here*/
+console.log(“This is ngOnInit”); // printed third in console
+}
+}
+
+ngDoCheck:
+This will be called immediately after ngOnInit, And called on every change made in component properties, So the operations that have to be done on the change of any input properties can be written in this hook.
+This will be executed for every change detection in cycles even there is no properties changed
+>app.ts file:
+class MyComponent {
+ngDoCheck( ) {
+/*The functionalities to be done for every change made in input properties will go here*/
+
+console.log(“This is ngDoCheck”); //printed whenever the changes made
+}
+}
+ngAfterContentInit:
+This will be called after the angular updates the component’s view values this will be called after ngDoCheck hook.
+This hook can be written only for component of angular application
+If the content is inserted in the component this will be called
+>app.ts file:
+class MyComponent {
+ngAfterContentInit( ) {
+/*The functionalities to be done when initialization of the whole content in the component will go here*/
+console.log(“This is ngAfterContentInit”); /*printed when the whole content is initialized*/
+}
+}
+
+ngAfterContentChecked:
+This hook will be called after the angular checked the content has been projected into the component. This will be called after ngAfterContentInit and every call of ngDoCheck hook of the component
+This hook also can be written only for component of angular application
+The component this will be called when the content which is inserted has been changed
+
+>app.ts file:
+class MyComponent {
+ngAfterContentChecked( ) {
+/*The functionalities to be done when changes present in the component will go here*/
+console.log(“This is ngAfterContentChecked”); /*printed when the content is checked and changes present*/
+}
+}
+
+ngAfterViewInit:
+Called when the angular checks the view of the component and child views of the components.
+It will check all the HTML view has been initialized
+>app.ts file:
+class MyComponent {
+ngAfterViewInit( ) {
+/*The functionalities to be done when initialization of the whole content has been projected into view will go here*/
+console.log(“This is ngAfterViewInit”); /*printed when the whole content is projected in view and runs only once*/
+}
+}
+
+ngAfterViewChecked:
+Initially this hook will be called after the ngAfterContentChecked hook and after every call of ngAfterViewInit and subsequent of ngAfterContentChecked.
+It will check all initialized view or child view had any changes
+>app.ts file:
+class MyComponent {
+ngAfterViewChecked( ) {
+/*The functionalities to be done when changes present in the component and they are projected in view will go here*/
+console.log(“This is ngAfterViewChecked”); /*printed when the content is checked and changes present are projected in view*/
+}
+}
+ngDestroy:
+This hook will be called only when the component is removed from the view of the angular component, So the deallocation of memory and removing the intervals, timeout variables will be done in this hook.
+
+app.ts file:
+class MyComponent {
+ngDestory ( ) {
+/*The functionalities to be done when the component is unmounted from the app will go here*/
+console.log(“This is ngDestory”); /*printed in after the component is unmounted*/
+}
+}
+
+
+e.g 
+//our root app component
+import {Component, NgModule, VERSION, OnInit} from '@angular/core'
+import {BrowserModule} from '@angular/platform-browser'
+import { FormsModule } from '@angular/forms';
+
+
+@Component({
+  selector: 'my-app',
+  template: `
+    <div>
+      <input type="text" id="name" [(ngModel)]="name" />
+      <h2>Hello {{name}}</h2>
+    </div>
+  `,
+})
+export class App {
+  name:string;
+  constructor() {
+    console.clear();
+    this.name = `Angular! v${VERSION.full}`;
+    console.log("This is constructor");
+  }
+   ngOnChanges() {
+		
+		console.log("This is ngOnChange");
+		}
+  ngOnInit() {
+    this.name = "Angular Example";
+    console.log("This is ngOnInit"); 
+  		}
+  ngDoCheck() { 
+			console.log("This is ngDoCheck");
+		}
+  ngAfterContentInit() {
+			console.log("This is ngAfterContentInit");
+		}
+  ngAfterContentChecked() {
+			console.log("This is ngAfterContentChecked"); 
+		}
+		ngAfterViewInit() {
+			console.log("This is ngAfterViewInit");
+		}
+		ngAfterViewChecked() {
+			console.log('This is ngAfterViewChecked');
+		}
+		ngDestory () {
+			console.log("This is ngDestory");
+		}
+
+
+
+  }
+}
+
+@NgModule({
+  imports: [ BrowserModule, FormsModule ],
+  declarations: [ App ],
+  bootstrap: [ App ]
+})
+export class AppModule {}
+
+console output:
+---------------
+Console was cleared
+This is constructor
+This is ngOnInit
+This is ngDoCheck
+This is ngAfterContentInit
+This is ngAfterContentChecked
+This is ngAfterViewInit
+This is ngAfterViewChecked
+Angular is running in the development mode. Call enableProdMode() to enable the production mode.
+This is ngDoCheck
+This is ngAfterContentChecked
+This is ngAfterViewChecked
+This is ngDoCheck
+This is ngAfterContentChecked
+This is ngAfterViewChecked
+This is ngDoCheck
+This is ngAfterContentChecked
+This is ngAfterViewChecked
+This is ngDoCheck
+This is ngAfterContentChecked
+This is ngAfterViewChecked
+This is ngDoCheck
+This is ngAfterContentChecked
+This is ngAfterViewChecked
+http://www.techjini.com/blog/angular2-lifecycle-hooks/
+
+Ans:2
+------
+After creating a component/directive by calling its constructor, Angular calls the lifecycle hook methods in the following sequence at specific moments:
+Hook	Purpose and Timing
+=>ngOnChanges()	
+Respond when Angular (re)sets data-bound input properties. The method receives a SimpleChanges object of current and previous property values.
+Called before ngOnInit() and whenever one or more data-bound input properties change.
+
+=>ngOnInit()	
+Initialize the directive/component after Angular first displays the data-bound properties and sets the directive/component's input properties.
+Called once, after the first ngOnChanges().
+
+=>ngDoCheck()	
+Detect and act upon changes that Angular can't or won't detect on its own.
+Called during every change detection run, immediately after ngOnChanges() and ngOnInit().
+
+=>ngAfterContentInit()	 <=A component-only hook.
+Respond after Angular projects external content into the component's view.
+Called once after the first ngDoCheck().
+
+ngAfterContentChecked()	 <=A component-only hook.
+Respond after Angular checks the content projected into the component.
+Called after the ngAfterContentInit() and every subsequent ngDoCheck().
+
+ngAfterViewInit()	<=A component-only hook.
+Respond after Angular initializes the component's views and child views.
+Called once after the first ngAfterContentChecked().
+
+ngAfterViewChecked()	<=A component-only hook.
+Respond after Angular checks the component's views and child views.
+Called after the ngAfterViewInit and every subsequent ngAfterContentChecked().
+
+ngOnDestroy()	
+Cleanup just before Angular destroys the directive/component. Unsubscribe Observables and detach event handlers to avoid memory leaks.
+Called just before Angular destroys the directive/component.
+
+Ans:3
+-----
+=>ngOnChanges()
+It is invoked whenever an Input() property of a component gets changed. We know that if we are using an Input() decorator this means it is an input property, the value for which is going to be supplied by it's parent component. This will gets executed every time the Input() property value changes. 
+=>ngOnInit()
+The data value initializes after the component gets constructed. After this the ngOnInit() executes. This is called one time only per component creation. This is normally used to initialize any http calls or any heavy startup operations which should not be executed in constructor function. 
+=>ngDoCheck()
+Normally Angular automatically does the change detection of properties and events and updates the view or invokes any other event accordingly. But sometimes, we need to execute some functionality of keep checking certain thing on every change detection. This is where ngDoCheck() does the job for you. For example - you want to check the performance of your complex component as how many changes are happening frequently. In this case we can log things which let us know which changes and how frequently those changes are happening. 
+ Please note that implementing this method is very costly as this gets executed on every change cycle. So do try to avoid it and use if it is really really required.
+==>ngAfterViewInit() and ngAfterViewChecked()
+These are called once the child view is created. ngAfterViewInit() is called only one time when the child view is initialized. ngAfterViewChecked() is called whenever there is any changes that encountered in the child's view. 
+ This means that both of these hooks are consumed by the parent view for the child view. ngAfterViewChecked() hook should be avoided for the same performance issue reasons. 
+==>ngAfterContentInit() and ngAfterContentChecked()
+These are similar to AfterViewInit() and AfterViewChecked() but the difference can be found from below examples: If we normally want to render any child component, we usually place the child selector in parent template e.g: 
+`<div>
+   <my-child></my-child>
+</div>`
+if we want to import some external html into our view, which may or may not be an Angular child template, then we can achieve the same through AfterContect hooks. The component have to use to import external html or another Angular component into the view. 
+`<div>
+    <ng-content></ng-content>
+</div>`
+=>ngOnDestroy()
+Any clean-up logic for the component, we use to write in this hook. As soon as the component gets destroyed, this method is invoked. This is very useful and should be used to free up any global variable, temporary subscriptions or any third party initialization. 
+Now, we pretty much understood what these life cycle hooks are. Let's now focus on how these lifecycle hooks invoked in an Angular component lifecycle. 
+I have created an example - https://embed.plnkr.co/XVMd1oQfI3IjRYTkG9li/. Here I have created a sample Sign up form component. There is one more child component called "Random" component which is a part of Sign up form component. 
+This sign up form can be shown or hide from our main app. 
+
+e.g
+https://embed.plnkr.co/XVMd1oQfI3IjRYTkG9li/
+
+
+app.ts
+------
+//our root app component
+import {Component, NgModule, VERSION} from '@angular/core'
+import {BrowserModule} from '@angular/platform-browser'
+import { FormsModule } from '@angular/forms';
+import {Signup} from './signup'
+import {Random} from './random'
+
+@Component({
+  selector: 'my-app',
+  template: `
+    <h2>Press F12 to see the lifecycle events in console</h2>
+    <div>
+      <input type='button' (click)='toggleSignup()' value='{{btnText}} Signup'>
+    </div>
+    <div *ngIf='showSignup'>
+      <signup></signup>
+    </div>
+  `,
+})
+export class App {
+  name:string;
+  boolean: showSignup;
+  btnText: string;
+  constructor() {
+    this.showSignup = false;
+    this.btnText = 'Show';
+  }
+  
+  toggleSignup(){
+    this.showSignup = !this.showSignup;
+    this.btnText = this.showSignup ? 'Hide' : 'Show';
+  }
+}
+
+@NgModule({
+  imports: [ BrowserModule, FormsModule ],
+  declarations: [ App, Signup, Random ],
+  bootstrap: [ App ]
+})
+export class AppModule {}
+
+singup.ts
+---------
+import {Component, Injectable} from '@angular/core'
+
+@Component({
+  selector: 'signup',
+  template: `
+    <div>
+      <h2>Name : </h2>
+      <input type='text' [(ngModel)]='name' />
+      <input type='text' [(ngModel)]='prefix' />
+      <random [salt]='prefix'
+                          (generatePassword)='onGeneratePassword($event)'></random>
+      <h3>Password : {{password}}</h3>
+    </div>
+  `
+})
+export class Signup implements OnInit, OnChanges, DoCheck, AfterViewChecked, AfterViewInit, AfterContentInit, AfterContentChecked, OnDestroy{
+  name:string = 'Angular';
+  prefix:string = ''; 
+  password: string = '';
+  constructor(){
+   this.name = 'Angular 2';
+   console.log('Parent constructor() called');
+  }
+  
+  onGeneratePassword(pwd: string){
+    console.log('clle')
+    this.password = pwd;
+  }
+  
+  ngOnInit(){
+    this.name = 'Angular 5';
+    console.log('Parent ngOnInit() called');
+  }
+  
+  ngOnChanges(){
+    console.log('Parent ngOnChanges() called');
+  }
+  
+  ngDoCheck(){
+    console.log('Parent ngDoCheck() called')
+  }
+  
+  ngAfterViewChecked(){
+    console.log('Parent ngAfterViewChecked() called');
+  } 
+  
+  ngAfterViewInit(){
+    console.log('Parent ngAfterViewInit() called');
+  }
+  
+  ngAfterContentInit(){
+    console.log('Parent ngAfterContentInit() called');
+  }
+  
+  ngAfterContentChecked(){
+    console.log('Parent ngAfterContentChecked() called');
+  }
+  
+  ngOnDestroy(){
+    console.log('Parent ngOnDestroy() called');
+  }
+}
+random.ts
+---------
+import {Component, Injectable, Input, Output, EventEmitter} from '@angular/core'
+
+@Component({
+  selector: 'random',
+  template: `
+    <div>
+      <input type='button' (click)='random()' value='Generate Password' />
+    </div>
+  `
+})
+export class Random implements OnInit, OnChanges, DoCheck, AfterViewChecked, AfterViewInit, AfterContentInit, AfterContentChecked, OnDestroy{
+  @Input() salt:string;
+  @Output() generatePassword: EventEmitter<string> = new EventEmitter<string>();
+  constructor(){
+   this.salt = '';
+   console.log('Child constructor() called');
+  }
+  
+  random(){
+    var t = new Date().getTime();
+    this.generatePassword.emit(this.salt + t.toString());
+  }
+  
+  ngOnInit(){
+    console.log('Child ngOnInit() called');
+  }
+  
+  ngOnChanges(){
+    console.log('Child ngOnChanges() called');
+  }
+  
+  ngDoCheck(){
+    console.log('Child ngDoCheck() called');
+  }
+  
+  ngAfterViewChecked(){
+    console.log('Child ngAfterViewChecked() called');
+  } 
+  
+  ngAfterViewInit(){
+    console.log('Child ngAfterViewInit() called');
+  }
+  
+  ngAfterContentInit(){
+    console.log('Child ngAfterContentInit() called');
+  }
+  
+  ngAfterContentChecked(){
+    console.log('Child ngAfterContentChecked() called');
+  }
+  
+  ngOnDestroy(){
+    console.log('Child ngOnDestroy() called');
+  }
+  
+}
+ 
+#2. Fundamental Concepts of Angular 2
+
+Ref: https://vsavkin.com/the-core-concepts-of-angular-2-c3d6cbe04d04
+Components
+To build an Angular 2 application you define a set of components, for every UI element, screen, and route. An application will always have a root component that contains all other components. In other words, every Angular 2 application will have a component tree, which for this application may look 
+Application is the root component. The Filters component has the speaker input and the filter button. TalkList is the list you see at the bottom. And TalkCmp is an item in that list.
+To understand what constitutes a component in Angular 2, let’s look closer at TalkCmp.
+TalkCmp.ts
+----------
+@Component({ 
+  selector: 'talk-cmp', 
+  directives: [FormattedRating, WatchButton, RateButton], 
+  templateUrl: 'talk_cmp.html' 
+}) 
+class TalkCmp { 
+  @Input() talk: Talk; 
+  @Output() rate: EventEmitter; 
+  //... 
+}
+Input and Output Properties
+A component has input and output properties, which can be defined in the component decorator or using property decorators.
+Data flows into a component via input properties. Data flows out of a component via output properties.
+Input and output properties are the public API of a component. You use them when you instantiate a component in your application.
+You can set input properties using property bindings, through square brackets. You can subscribe to output properties using event bindings, through parenthesis.
+A component has a template, which describes how the component is rendered on the page.
+@Component({ 
+  selector: 'talk-cmp', 
+  directives: [FormattedRating, WatchButton, RateButton], 
+  templateUrl: 'talk_cmp.html' 
+})
+
+{{talk.title}} {{talk.speaker}} 
+<formatted-rating [rating]="talk.rating"></formatted-rating> 
+<watch-button [talk]="talk"></watch-button> 
+<rate-button [talk]="talk"></rate-button>
+Angular needs to know two things to render the template: the list of directives that can be used in its template, and the template itself. You can define the template externally, using the templateUrl, as in the example above, or inline.
+@Component({   
+  selector: 'talk-cmp',   
+  directives: [FormattedRating, WatchButton, RateButton],  
+  template: `     
+    {{talk.title}} {{talk.speaker}}     
+    <formatted-rating [rating]="talk.rating"></formatted-rating>     
+    <watch-button [talk]="talk"></watch-button>     
+    <rate-button [talk]="talk"></rate-button>   
+` })
+
+Lifecycle
+Components have a well-defined lifecycle, which you can tap into. The TalkCmp component does not subscribe to any lifecycle events, but some other components can. For instance, this component will be notified when its input properties change.
+@Component({
+  selector: 'cares-about-changes'
+}) 
+class CareAboutChanges { 
+  @Input() field1; 
+  @Input() field2; 
+
+  ngOnChanges(changes) { //.. } 
+}
+
+Providers
+A component can contain a list of providers the component and its children may inject.
+@Component({ 
+  selector: 'conf-app', 
+  providers: [ConfAppBackend, Logger] 
+}) 
+class TalksApp { //... } 
+class TalksCmp { 
+  constructor(backend:ConfAppBackend) { //... } 
+}
+In this example, we have the backend and the logger services declared in the root component, which makes them available in the whole application. The talks component injects the backend service. I will talk about dependency injection in detail in the second part of this article. For now, just remember that components configures dependency injection.
+Host Element
+To turn an Angular component into something rendered in the DOM you have to associate an Angular component with a DOM element. We call such elements host elements.
+A component can interact with its host DOM element in the following ways:
+It can listen to its events.
+It can update its properties.
+It can invoke methods on it.
+The component, for instance, listens to the input event using hostListeners, trims the value, and then stores it in a field. Angular will sync up the stored value with the DOM.
+@Component({
+  selector: 'trimmed-input'
+}) 
+class TrimmedInput { 
+  @HostBinding() value: string; 
+  @HostListener("input", "$event.target.value")
+  onChange(updatedValue: string) { 
+    this.value = updatedValue.trim(); 
+  } 
+}
+Note, I don’t actually interact with the DOM directly. Angular 2 aims to provide a higher-level API, so the native platform, the DOM, will just reflect the state of the Angular application.
+This is useful for a couple of reasons:
+It makes components easier to refactor.
+It allows unit testing most of the behavior of an application without touching the DOM. Such tests are easier to write and understand. In addition, they are significantly faster.
+It allows running Angular applications in a web worker.
+It allows running Angular applications outside of the browser completely, on other platforms, for instance using NativeScript.
+Sometimes you just need to interact with the DOM directly. Angular 2 provides such APIs, but our hope is that you will rarely need to use them.
+Components are Self-Describing
+What I have listed constitutes a component.
+
+A component knows how to interact with its host element.
+A component knows how to render itself.
+A component configures dependency injection.
+A component has a well-defined public API of input and output properties.
+All of these make components in Angular 2 self-describing, so they contain all the information needed to instantiate them. This is extremely important.
+
+This means that any component can be bootstrapped as an application. It does not have to be special in any way. Moreover, any component can be loaded into a router outlet. As a result, you can write a component that can be bootstrapped as an application, loaded as a route, or used in some other component directly. This results in less API to learn. And it also makes components more reusable.
+What About Directives?
+If you are familiar with Angular 1, you must be wondering “What happened to directives?”.
+
+Actually directives are still here in Angular 2. The component is just the most important type of a directive, but not the only one. A component is a directive with a template. But you can still write decorator-style directives, which do not have templates.
+Summary
+Components are fundamental building blocks of Angular 2 applications.
+
+They have well-defined inputs and outputs.
+They have well-defined lifecycle.
+They are self-describing.
+Dependency Injection
+Let’s switch gears and talk about another cornerstone of Angular — dependency injection.
+
+The idea behind dependency injection is very simple. If you have a component that depends on a service. You do not create that service yourself. Instead, you request one in the constructor, and the framework will provide you one. By doing so you can depend on interfaces rather than concrete types. This leads to more decoupled code, which enables testability, and other great things.
+Angular 2 comes with a dependency injection module. To see how it can be used, let’s look at the following component, which renders a list of talks using the for directive:
+
+Ans:2
+------
+https://blog.angular-university.io/introduction-to-angular-2-fundamentals-of-components-events-properties-and-actions/
+
+#3. New Features in Angular 2
+
+REf:
+https://www.htmlgoodies.com/html5/javascript/new-features-in-angularjs-2.html
+https://dzone.com/articles/typed-front-end-with-angular-2
+https://www.sitepoint.com/whats-new-in-angularjs-2/
+https://dzone.com/articles/angular-2-vs-angular-4-features-performance
+
+TypeScript: Angular 2 uses TypeScript heavily. Incidentally, TypeScript is a statically typed language like C# and is essentially a superset of JavaScript. This is one of the most striking changes in Angular 2 if you compare this with earlier versions. TypeScript has gained a lot of popularity primarily because of its simplicity and ease of use. As TypeScript is from Microsoft, Angular 2 has become widely popular amongst the Microsoft community as well. For your information, frameworks like ReactJS also uses TypeScript.
+
+Mobile development: Regardless of the fact that Angular 1.x was meant for responsive application development, there wasn't any mobile support. However, you could take advantage of some libraries to run Angular 1.x on mobile. On the other hand, Angular 2 has built-in support for mobile application development. Note that Angular 2 renders code differently for Web browsers and mobile browsers.
+
+Performance: Performance in Angular 2 is much improved — thanks to the support for offline compilation and fast change detection. The support for dynamic loading and asynchronous templating are features that help in improving the page load and response times considerably. Module loader is also much simplified in Angular 2. You can now use System.js as the universal loader to load the ES6 modules.
+
+Directives: Angular 2 provides support for three types of directives. These are component directives, decorator directives and template directives.
+
+Improved Dependency Injection: Dependency Injection is a software design principle that helps to abstract the dependencies of an object outside of it and make such objects loosely coupled with each other. Angular 2 has improved support for dependency injection. Modular development and component isolation are features that make dependency injection simple and easy to use and implement in Angular 2.
+
+Improved data binding: Data binding in Angular 2 is much improved. To bind data to a DOM element, all you have to do is just wrap the element inside a square bracket as shown in the code snippet below.
+
+<img [src]="test.gif">
+Support for a component-based architecture: Unlike its earlier versions, Angular 2 is completely component based. With Angular 2, you would just use components and directives — controllers and $scope are no longer used. Well, what are components anyway? A component is a controller class that is associated with a template. Here’s how a component in Angular 2 looks like.
+
+@Component({
+  selector: 'test-component',
+  template: `<div>Hi! This is just a test</div>`
+})
+class TestComponent {
+//Usual code
+}
+Cross-platform: You can build and run Angular 2 applications on desktops, Android and iOS systems.
+
+Browser support: Angular 2 supports most of the modern-day browsers. These include: IE 9, 10, 11, Firefox, Chrome, Safari, Android 4.1 and Microsoft Edge
+
+Improved routing: Routing in Angular 2 is much improved — thanks to URL resolver, location service, navigational model, etc.
+
+Ans:2
+-----
+Angular, or AngularJS as it's officially known, is a front-end structural framework for dynamic web app development. It utilizes HTML as a template language which it then extends to define an application's components. The Angular framework provides data binding and dependency injection that minimizes the amount of code you have to write yourself. Since Angular works within the browser, it may be employed with your server technology of choice.
+
+Versioning
+There have been a lot of complaints from developers who found Angular's Release Candidate labeling confusing. In response to these concerns, and to make it easier to manage dependencies in future releases, Angular 2.0.0 is the first release to use semantic versioning, based on the MAJOR.MINOR.PATCH scheme as described by semver. The semver versioning scheme asserts that:
+
+the MAJOR version gets incremented when incompatible API changes are made to stable APIs
+the MINOR version gets incremented when backwards-compatible functionality are added
+the PATCH version gets incremented when backwards-compatible bug are fixed
+New Features
+Angular 2 has been a long-time coming. Part of why the release took so long is that it is no longer just a web framework. Angular 2 is now a platform that encompasses a wide range of capabilities, including:
+
+universal server rendering: Runs on top of a Node.js back end, which produces a server rendered view. This greatly improves perceived performance for first-time users of your application, thereby improving their overall experience.
+a mobile toolkit: As the name implies, the mobile toolkit provides all the tools and techniques to build high-performance mobile apps using Angular CLI and Angular Mobile Toolkit. Web apps built using the mobile toolkit will load on any device, with or without an Internet connection and can take advantage of the searchability, shareability, and no-install-required features of the Web.
+a command line interface: The new Command Line Interface (CLI) can generate components, routes, services and pipes via commands. The CLI will also create simple test shells for all of these.
+Component-based Architecture
+Angular 2 is entirely component based, so that controllers and $scope are now obsolete. In the following Angular 1 code, the binding is prefixed with the controller alias (e.g., vm or $ctrl) because you have to be specific about the source of the binding. Using version 2 syntax, the context of the binding is implied and is always the associated component, so the reference variable is no longer required.
+
+//Angular 1
+My favorite band is: {{vm.favoriteBand}}
+ 
+//Angular 2
+My favorite band is: {{favoriteBand}}
+
+Just last month, Google HQ announced the final release version of Angular 2. Along with many new features, Angular has undergone quite a few changes that may give developers pause for thought. In an effort to smooth the transition, we'll cover the most important changes and get you on track to coding with the new Angular framework, starting with Components and Directives.
+
+HTML Goodies : Beyond HTML : Javascript
+Preparing for The Internet Of Things: What you need to know. Download your free eBook today!
+
+Post a comment
+Email Article
+Print Article
+ Share ArticlesShare articles
+What's New in Angular 2: Versioning, Features, and Components
+By Rob Gravelle
+
+WEBINAR:
+On-Demand
+Full Text Search: The Key to Better Natural Language Queries for NoSQL in Node.js
+Watch→
+
+ 
+Angular, or AngularJS as it's officially known, is a front-end structural framework for dynamic web app development. It utilizes HTML as a template language which it then extends to define an application's components. The Angular framework provides data binding and dependency injection that minimizes the amount of code you have to write yourself. Since Angular works within the browser, it may be employed with your server technology of choice.
+
+Just last month, Google HQ announced the final release version of Angular 2. Along with many new features, Angular has undergone quite a few changes that may give developers pause for thought. In an effort to smooth the transition, we'll cover the most important changes and get you on track to coding with the new Angular framework, starting with Components and Directives.
+
+
+ 
+Versioning
+There have been a lot of complaints from developers who found Angular's Release Candidate labeling confusing. In response to these concerns, and to make it easier to manage dependencies in future releases, Angular 2.0.0 is the first release to use semantic versioning, based on the MAJOR.MINOR.PATCH scheme as described by semver. The semver versioning scheme asserts that:
+
+the MAJOR version gets incremented when incompatible API changes are made to stable APIs
+the MINOR version gets incremented when backwards-compatible functionality are added
+the PATCH version gets incremented when backwards-compatible bug are fixed
+New Features
+Angular 2 has been a long-time coming. Part of why the release took so long is that it is no longer just a web framework. Angular 2 is now a platform that encompasses a wide range of capabilities, including:
+
+universal server rendering: Runs on top of a Node.js back end, which produces a server rendered view. This greatly improves perceived performance for first-time users of your application, thereby improving their overall experience.
+a mobile toolkit: As the name implies, the mobile toolkit provides all the tools and techniques to build high-performance mobile apps using Angular CLI and Angular Mobile Toolkit. Web apps built using the mobile toolkit will load on any device, with or without an Internet connection and can take advantage of the searchability, shareability, and no-install-required features of the Web.
+a command line interface: The new Command Line Interface (CLI) can generate components, routes, services and pipes via commands. The CLI will also create simple test shells for all of these.
+Component-based Architecture
+Angular 2 is entirely component based, so that controllers and $scope are now obsolete. In the following Angular 1 code, the binding is prefixed with the controller alias (e.g., vm or $ctrl) because you have to be specific about the source of the binding. Using version 2 syntax, the context of the binding is implied and is always the associated component, so the reference variable is no longer required.
+
+
+//Angular 1
+My favorite band is: {{vm.favoriteBand}}
+ 
+//Angular 2
+My favorite band is: {{favoriteBand}}
+12 Things You Should Know About Migrating to Microsoft Azure� with a Managed Cloud Service Provider Download Now
+Since controllers have now been replaced by components and directives, let's examine the role of each of these in more detail.
+A Component Example
+Components are controller classes that are associated with a template. Components mainly deal with a view of the application and logic on the page. The component contains two important things: a view and some logic.
+
+System.config({
+  //transpiler tool converts TypeScript to JavaScript
+  transpiler: 'typescript',
+ 
+  //emitDecoratorMetadata flag used by JavaScript
+  //output to create metadata from the decorators
+  typescriptOptions: { emitDecoratorMetadata: true },
+  packages: {'app': {defaultExtension: 'ts'}}
+});
+System.import('/angular2/src/app/component_main')
+  .then(null, console.error.bind(console));
+In the above code, "angular2" includes the packages from the app folder, from which Angular will load the main component file. Each Component and View is defined within a TypeScript(.ts) file. Here's an example:
+
+Directives
+Angular 2 defines two kinds of directives: Structural directives and Attribute directives.
+
+Structural Directives
+Structural directives alter the layout of the DOM by adding, replacing and removing its elements. Two examples of structural directive are:
+
+NgFor: a repeater directive that customizes data display. It can be used to display a list of items.
+NgIf: removes or recreates a part of DOM tree depending on an expression evaluation.
+Attribute Directives
+The attribute directive changes the appearance or behavior of a DOM element. These directives look like regular HTML attributes in templates. The ngModel directive which is used for two-way binding is an example of an attribute directive. Some of the other attribute directives are listed below:
+
+NgSwitch: It is used whenever you want to display an element tree consisting of many children. Angular places the selected element tree into the DOM based on some condition.
+NgStyle: Based on the component state, dynamic styles can be set by using NgStyle. Many inline styles can be set simultaneously by binding to NgStyle.
+NgClass: It controls the appearance of elements by adding and removing CSS classes dynamically
+
+
+// component's metadata can be accessed using this primary Angular library
+import {Component, View} from "angular2/core";
+ 
+//framework recognizes @Component annotation and
+//knows that we are trying to create a new component
+@Component({
+   //specifies selector for HTML element named 'app'
+   selector: 'app' 
+})
+ 
+@View({
+  //template property holds component's companion
+  //template that tells Angular how to render a view
+  template: '<h2>Welcome to {{name}}</h2>'
+})
+ 
+export class App {
+   name : 'My App'
+   }
+   
+Ans:3
+-----
+Angular 2 Features and Performance
+AtScript is a superset of ES6 and it was used to help develop Angular 2. It is processed from the Traceur compiler (combined with ES6) to generate ES5 code and utilizes TypeScript's syntax to create runtime type assertions rather than compile time tests. But, AtScript is not mandatory--you still have the ability to use plain JavaScript/ES5 code rather than AtScript to compose Angular apps.
+
+Improved Dependency Injection (DI):
+Dependency injection (a program design pattern where an item is passed its own dependencies, as opposed to producing them) was among the aspects that originally differentiated Angular from its competitors. Dependency Injection is very helpful when it comes to modular development and element isolation, yet its implementation has been plagued with issues since Angular 1.x. Angular 2 handled these problems, in addition to adding missing features like kid injectors along with lifetime/scope control.
+Annotation:
+AtScript supplies tools for linking metadata with functions. This eases the building of object instances by supplying the essential information into the DI library (that will check for related meta data if calling a function or creating the instance of a class). It'll also be simple to override parameter information by providing an Inject annotation.
+
+Child Injectors:
+A kid injector inherits all of the professional services of its parent together with the capacity to override them at the child level. According to demand, several kinds of objects could be called out and mechanically overridden in a variety of scopes.
+
+Instance Scope:
+The enhanced DI library is comprised of instance scope controllers, which are even stronger when used with child injectors along with your scope identifiers.
+
+Dynamic Loading:
+This is a feature which was not available in the previous version(s) of Angular. It was addressed by Angular 2, however, which allowed programmers to add new directives or controls on the fly.
+
+Templating:
+In Angular 2, the template compilation procedure is asynchronous. Since the code relies on the ES6 module, the module loader will load dependencies simply by referencing them at the part component.
+
+Directives:
+Three kinds of Directives were made available for Angular 2: 
+
+Component Directives: They made components reusable by encapsulating logic in HTML, CSS, and JavaScript.
+Decorator Directives: They can be used to decorate elements (for example, Hiding/Showing elements by ng-hide/ng-show or adding a tooltip).
+Template Directives: These can turn HTML into a reusable template. The instantiating of this template and its insertion into the DOM could be completely controlled by the directive writer. Examples include ng-repeat and ng-if.
+Child Router:
+The Child router will convert every part of the program to a more compact application by supplying it with its own router. It helps to encapsulate the entire feature collections of a program.
+
+Screen Activator:
+With Angular 2, developers were able to take finer control on the navigation life cycle, through a set of can* callbacks.
+
+canActivate: It will allow or prevent navigation to the new control.
+activate: It will respond to successful navigation to the new control.
+canDeactivate: It will prevent or allow navigation away from the old controller.
+deactivate: It will respond to successful navigation away from the old controller.
+
+Design:
+All this logic was built using a pipeline architecture that made it incredibly simple to add one's own actions into the pipeline or remove default ones. Moreover, its asynchronous character allowed developers to some make server requests to authenticate a user or load information for a control, while still in the pipeline.
+
+Logging:
+Angular 2.0 included a logging service known as diary.js--a very helpful attribute which measures where time is invested in your program (thus permitting you to identify bottlenecks in your code).
+
+Scope:
+$scope was removed from Angular 2.
+
+Angular 4 Features and Performance
+As compared to Angular 2, there are lots of new items added to this list. Not just new features but also some tweaks that improved old capabilities. So let's move on to see the list.
+
+Smaller and Faster:
+With Angular 4, programs will consume less space and run quicker than previous versions. And the staff is focused on continually making additional improvements.
+
+Animation Package:
+They've pulled animations from the Angular core and set them in their own package. This means that in case you don't use animations, this excess code won't end up on your creation packages.
+This feature will also enable you to easily find docs and to take advantage of auto-completion. You may add animations to the main NgModule by importing the Browser Animations Module out of @angular/platform-browser/animations.
+
+Improved *ngIf and *ngFor:
+The template binding syntax currently supports a few helpful alterations. Now you can utilize an if/else design syntax, and assign local variables like if to unroll an observable.
+
+Angular Universal:
+This release now contains the results of the external and internal work from the Universal team throughout the last few months. The vast majority of this Universal code is currently located in @angular/platform-server.
+
+To learn more about using Angular Universal, have a look at the new renderModuleFactory method in @angular/platform-server, or Rob Wormald's Demo Repository. More documentation and code samples will come.
+
+TypeScript 2.1 and 2.2 Compatibility:
+The group has upgraded Angular into a more recent version of TypeScript. This will enhance the rate of ngc and you'll receive far better type checking during your program.
+
+Source Maps for Templates:
+Now whenever there's an error caused by something in one of the templates, they create source maps that provide a meaningful context concerning the original template.
+
+View Engine:
+They have made adjustments under to hood to exactly what AOT created code looks like. These modifications decrease the size of the generated code for those parts by approximately 60 percent. The more complicated the templates are, the greater the savings.
+
+#4. Angular 2 Vs Angular 1.x
+----------------------------
+https://dzone.com/articles/typed-front-end-with-angular-2
+
+Improved Dependency Injection (DI)
+Dependency injection (a software design pattern in which an object is passed its dependencies, rather than creating them itself) was one of the factors that initially differentiated Angular from its competitors. It is particularly beneficial in terms of modular development and component isolation, yet its implementation was plagued with problems in Angular 1.x. Angular 2.0 will will address these issues, as well as adding missing features such as child injectors and lifetime/scope control.
+
+Annotations
+AtScript provides tools for associating metadata with functions. This facilitates the construction of object instances by providing the required information to the DI library (which will check for associated metadata when calling a function or creating an instance of a class). It will be also easy to override parameter data by supplying an Inject annotation.
+
+Child Injectors
+A child injector inherits all the services of its parent with the capability of overriding them at the child level. According to requirement, different types of objects can be called out and automatically overridden in various scopes.
+
+Instance Scope
+The improved DI library will feature instance scope control, which will become even more powerful when used with child injectors and your own scope identifiers.
+
+Templating and Data Binding
+Let’s take a look at templating and data binding as they go hand in hand when developing apps.
+
+Dynamic Loading
+This is a feature which is missing from the current version of Angular. It will be addressed by Angular 2.0, which will let developers add new directives or controllers on the fly.
+
+Templating
+In Angular 2.0, the template compilation process will be asynchronous. As the code is based on the ES6 module spec, the module loader will load dependencies by simply referencing them in the component definition.
+
+Directives
+In Angular 2.0 there will be three kinds of directives:
+
+Component Directives – These will create reusable components by encapsulating logic in JavaScript, HTML or an optional CSS style sheet.
+Decorator Directives – These directives will be used to decorate elements (for example adding a tooltip, or showing/hiding elements using ng-show/ng-hide).
+Template Directives – These will turn HTML into a reusable template. The instantiating of the template and its insertion into the DOM can be fully controlled by the directive author. Examples include ng-if and ng-repeat.
+Routing Solution
+The initial Angular router was designed to handle just a few simple cases, yet as the framework grew, more and more features were bolted on. The router in Angular 2.0 has been reworked to be simple, yet extensible. It will include the following basic features:
+
+Simple JSON-based Route Config
+Optional Convention over Configuration
+Static, Parameterized and Splat Route Patterns
+URL Resolver
+Query String Support
+Use Push State or Hashchange
+Navigation Model (For Generating a Navigation UI)
+Document Title Updates
+404 Route Handling
+Location Service
+History Manipulation
+Now, let’s check out the features which make the improved router a catalyst to take Angular 2.0 to new heights.
+
+Child Router
+The child router will convert each component of the application into a smaller application by providing it with its own router. It will help encapsulate entire feature sets of an application.
+
+Screen Activator
+This will give developers finer control over the navigation lifecycle, via a set of can* callbacks:
+
+canActivate – Allow/Prevent navigating to the new controller.
+activate – Respond to successful navigation to the new controller.
+canDeactivate – Allow/Prevent navigation away from the old controller.
+deactivate – Respond to successful navigation away from the old controller.
+These callbacks will allow the developer to return Boolean values, a Promise for that value, or a Navigation Command (for a lower level control).
+
+Design
+All of this logic is built using a pipeline architecture which makes it incredibly easy to add one’s own steps to the pipeline or remove default ones. Moreover, its asynchronous nature will allow developers to a make server request to authenticate a user or load data for a controller, while still in the pipeline.
+
+Logging
+Angular 2.0 will contain a logging service called diary.js—a super useful feature which measures where time is spent in your application (thus enabling you to identify bottlenecks in your own code).
+
+Scope
+$scope will be removed in Angular 2.0 in favor of ES6 classes.
+
+Conclusion
+There is a lot of excitement and buzz around Angular 2.0 at the moment and this will only heighten as its release date nears. The beginning of March will see the next ng-conf take place where it’s likely that more details of the next version will emerge.
+
+#4 Advantage and disadvantage of ng2
+PROS
+You can choose from different seeds and boilerplates: Angular CLI, Angular NgCLI, Angular seed.
+Great performances. Angular 2 has even much better performance than Angular 1. It doesn't do deep object comparison. If items are added/removed to/from an array, change detection won't detect it. The same for object properties as long as they are not directly bound from the view.
+Directives as the Way to Add Functionality
+Flexible when using Filters
+In-place DOM manipulations
+Relevant Service Providers
+Prepared Unit Testing. Angular 2 possesses easier APIs, lazy loading, simpler/faster debugging.
+Angular 2 is much more testable then Angular 1.
+Support for web components. Rather than having a closed system for modularising AngularJS applications, Angular 2’s foundations lie on the emerging Web Components standard. What this means is that AngularJS will be able to use directly, without any wrapper coding, any component written as a Web Component.
+Angular2 CLI. The Angular2 CLI makes it easy to create an application that already works, right out of the box. It already follows our best practices!
+Deployment: you can build you app and deploy on a linux hosting for example.To have NodeJS on your server can be great but it's not necessary to release your final app
+Angular 2 provides nested components
+Angular 2 makes it possible to execute more than 2 systems together
+Typescript:
+
+It is an improved set of JavaScript.
+Perfect support for inheritance and interfaces allows achieving higher OOP experience to JavaScript, which results into the improved code decoupling and reuse.
+The syntax is usually more convenient for C# or Java developers.
+AngularJs development company did not have the same opportunities as Angular 2 teams have today. By choosing Angular 2 with its Typescript, you will benefit from its model and tools to get the best experience.
+It is fair to admit, however, few of the Typecript’s cons.
+CONS
+Difficulty in learning. If you haven't used typescript before, you'll need to learn it and spend time for it.
+Some concepts like data binding are not so easy to understand and you can find a lot of difficulties working with a real world application
+Regular DOM. Angular manipulates actual DOM directly, which makes it quite slower and un-efficient in comparison with React.
+Difficulties in the server templating Angular 2 still maintains physical separation between the JavaScript driving your application, and the HTML being rendered.
+Ng-include is not possible! This is terrible: you cannot have partial views and you are forced to create a new component to include on your view. You can use the Viewchild directive but it's not the same thing. Creating a new component means to create a new class to maintain and it's not a good solution from many point of views.
+Confusion There are multiple ways to do the same thing with AngularJS. Sometimes, it can be hard for novices to say which way is better for a task. Hence, it is imperative for programmers to develop an understanding of the various components and how they help.
+Lagging UI If there are more than 2000 watchers, it can get the UI to severely lag. This means that the possible complexity of Angular Forms is limited. This includes big data grids and lists.
+Name Clashes With AngularJS, you don’t have the ability to compose many NG-apps on the same page. This can cause name clashes.
+Testing is difficult. End to end tests are simplified only with boilerplates projects like Angular CLI.
+CONCLUSIONS
+Angular 2 is great to build frontend applications. If you are building a new app from scratch you can use it and deploy your app even if you don't have NodeJS on your server,
+Angular 2 is not easy to learn and working with its templating system is complex because there is not an easy way to include views with their variables without creating a new component.
+
+#6. Ng1 Vs Ng2
+
+#7. convert Ng1 project to Ng2 project
+
+#8. AOT compilation - Pros and cons  with JIT
+The Angular Ahead-of-Time (AOT) compiler converts your Angular HTML and TypeScript code into efficient JavaScript code during the build phase before the browser downloads and runs that code.
+
+Angular compilation
+An Angular application consists largely of components and their HTML templates. Before the browser can render the application, the components and templates must be converted to executable JavaScript by an Angular compiler.
+
+Angular offers two ways to compile your application:
+
+Just-in-Time (JIT), which compiles your app in the browser at runtime
+Ahead-of-Time (AOT), which compiles your app at build time.
+JIT compilation is the default when you run the build-only or the build-and-serve-locally CLI commands:
+
+ng build
+ng serve
+For AOT compilation, append the --aot flags to the build-only or the build-and-serve-locally CLI commands:
+
+content_copy
+ng build --aot
+ng serve --aot
+The --prod meta-flag compiles with AOT by default.
+
+See the CLI documentation for details, especially the build topic.
+
+Why compile with AOT?
+Faster rendering
+With AOT, the browser downloads a pre-compiled version of the application. The browser loads executable code so it can render the application immediately, without waiting to compile the app first.
+
+Fewer asynchronous requests
+The compiler inlines external HTML templates and CSS style sheets within the application JavaScript, eliminating separate ajax requests for those source files.
+
+Smaller Angular framework download size
+There's no need to download the Angular compiler if the app is already compiled. The compiler is roughly half of Angular itself, so omitting it dramatically reduces the application payload.
+
+Detect template errors earlier
+The AOT compiler detects and reports template binding errors during the build step before users can see them.
+Better security
+AOT compiles HTML templates and components into JavaScript files long before they are served to the client. With no templates to read and no risky client-side HTML or JavaScript evaluation, there are fewer opportunities for injection attacks.
+This guide explains how to build with the AOT compiler using different compiler options and how to write Angular metadata that AOT can compile.
+
+How AOT works
+-------------
+https://angular.io/guide/aot-compiler
+
+Ans:2
+-----
+https://medium.com/spektrakel-blog/angular2-going-production-ready-with-ahead-of-time-compilation-aot-developer-experiences-aebaa0228909
+Ans:3
+http://blog.mgechev.com/2016/08/14/ahead-of-time-compilation-angular-offline-precompilation/
+
+#9 Lazy Laoding in Angular2 , How we can achecive in Angular 2,4-features-performance
+
+#10 How to optimize  the angular 2 project code for the better performance
+
+#11 Major changes in ng2
+
+#12 Can we write angular 1 and Angular 2 in same project
+
+#13 
+
+#q: Lazy Loading
+----------------
+Lazy loading is the act of only loading parts of our app when they are needed.  With lazy loading our application does not need to load everything at once, it only needs to load what the user expects to see when the app first loads. Lazy loading modules helps us decrease the startup time. Another advantage of using modules to group related pieces of functionality of our application is the ability to load those pieces on demand. Modules that are lazily loaded will only be loaded when the user navigates to their routes.
+To show this relationship, let's start by defining a simple module that will act as the root module of our example application.
+app/app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule  } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { EagerComponent } from './eager.component';
+import { routing } from './app.routing';
+@NgModule({
+  imports: [
+    BrowserModule,
+    routing
+  ],
+  declarations: [
+    AppComponent,
+    EagerComponent
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+So far this is a very common module that relies on the BrowserModule, has a routing mechanism and two components: AppComponent and EagerComponent. For now, let's focus on the root component of our application (AppComponent) where the navigation is defined.
+app/app.component.ts
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-root',
+  template: `
+    <h1>My App</h1>
+    <nav>
+      <a routerLink="eager">Eager</a>
+      <a routerLink="lazy">Lazy</a>
+    </nav>
+    <router-outlet></router-outlet>
+  `
+})
+export class AppComponent {}
+Our navigation system has only two paths: eager and lazy. To know what those paths are loading when clicking on them we need to take a look at the routing object that we passed to the root module.
+app/app.routing.ts
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { EagerComponent } from './eager.component';
+const routes: Routes = [
+  { path: '', redirectTo: 'eager', pathMatch: 'full' },
+  { path: 'eager', component: EagerComponent },
+  { path: 'lazy', loadChildren: 'lazy/lazy.module#LazyModule' }
+];
+export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
+Here we can see that the default path in our application is called eager which will load EagerComponent.
+app/eager.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  template: '<p>Eager Component</p>'
+})
+export class EagerComponent {}
+But more importantly, we can see that whenever we try to go to the path lazy, we are going to lazy load a module conveniently called LazyModule. Look closely at the definition of that route:
+{ path: 'lazy', loadChildren: 'lazy/lazy.module#LazyModule' }
+There's a few important things to notice here:
+We use the property loadChildren instead of component.
+We pass a string instead of a symbol to avoid loading the module eagerly.
+We define not only the path to the module but the name of the class as well.
+There's nothing special about LazyModule other than it has its own routing and a component called LazyComponent.
+app/lazy/lazy.module.ts
+import { NgModule } from '@angular/core';
+
+import { LazyComponent }   from './lazy.component';
+import { routing } from './lazy.routing';
+
+@NgModule({
+  imports: [routing],
+  declarations: [LazyComponent]
+})
+export class LazyModule {}
+If we define the class LazyModule as the default export of the file, we don't need to define the class name in the loadChildren property as shown above.
+The routing object is very simple and only defines the default component to load when navigating to the lazy path.
+app/lazy/lazy.routing.ts
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { LazyComponent } from './lazy.component';
+
+const routes: Routes = [
+  { path: '', component: LazyComponent }
+];
+
+export const routing: ModuleWithProviders = RouterModule.forChild(routes);
+Notice that we use the method call forChild instead of forRoot to create the routing object. We should always do that when creating a routing object for a feature module, no matter if the module is supposed to be eagerly or lazily loaded.
+Finally, our LazyComponent is very similar to EagerComponent and is just a placeholder for some text.
+app/lazy/lazy.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  template: '<p>Lazy Component</p>'
+})
+export class LazyComponent {}
+View Example
+When we load our application for the first time, the AppModule along the AppComponent will be loaded in the browser and we should see the navigation system and the text "Eager Component". Until this point, the LazyModule has not being downloaded, only when we click the link "Lazy" the needed code will be downloaded and we will see the message "Lazy Component" in the browser.
+We have effectively lazily loaded a module.
+
+The benefits are:
+------------------
+Keep the initial payload small
+Smaller payloads lead to faster download speeds
+Lower resource costs especially on mobile networks
+If a user doesn't visit a section of our app, they won't ever download those resources
+
+Short Ans:
+----------
+Lazy Loading - Lazy loading enables us to load only the module user is interacting and keep the rest to be loaded at run-time on demand.
+Lazy loading speeds up the application initial load time by splitting the code into multiple bundles and loading them on demand.
+1.         Each and every Angular2 application must have one main module that is called “AppModule” and your code should be splitted into various child modules based on your applications.
+2.         We do not require to import or declare lazily loading module in root module.
+3.         Add the route to top level routing and takes routes array and configures the router.
+4.         Import module specific routing in the child module.
+5.         And so on.
+
+https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html
+https://scotch.io/tutorials/lazy-loading-in-angular-v2
+https://angular.io/guide/lazy-loading-ngmodules
+https://angularfirebase.com/lessons/how-to-lazy-load-components-in-angular-4-in-three-steps/
+
+#q: What is the Best way to Declare and Access a Global Variable in Angular 2?
+
+This post helps us to learn “Declare and Access a Global Variable in Angular 2” using “Typescript” and also share the steps to create and use of this global variables.
+Stayed Informed - Angular 2 Tutorials and Examples
+Steps –
+1.     Create Global Variables.
+2.     Import and Use the Global Variables in the Component.
+3.     Result
+Create Global Variables :- “app.global.ts”
+import { Injectable } from '@angular/core';
+@Injectable()
+export class AppGlobals {
+    readonly baseAppUrl: string = 'http://localhost:57431/';
+    readonly baseAPIUrl: string = 'https://api.github.com/';
+}
+Import and Use the Global Variables in the Component:- “user.component.ts”
+import { Component, Injectable} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpModule, Http } from '@angular/http';
+import { UserService } from '../service/user.service';
+import { AppGlobals } from '../shared/app.globals';
+@Component({
+    selector: 'user',
+    templateUrl: './user.component.html',
+    styleUrls: ['./user.component.css'],
+    providers: [UserService, AppGlobals]
+})
+
+export class UserComponent {
+    //USERS DECLARATIONS.
+    users = [];
+    //HOME COMPONENT CONSTRUCTOR
+    constructor(private userService: UserService, private _global: AppGlobals) { }
+    //GET USERS SERVICE ON PAGE LOAD.
+    ngOnInit() {
+        this.userService.getAPIUsers(this._global.baseAPIUrl + 'users/hadley/orgs').subscribe(data => this.users = data);
+        this.userService.getAppUsers(this._global.baseAppUrl + 'api/User/GetUsers').subscribe(data => console.log(data));  
+    }
+}
+//END BEGIN – USERCOMPONENT
+“user.server.ts” :-
+import { Injectable, InjectionToken } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import 'rxjs/add/operator/map';
+//BEGIN-REGION - USERSERVICE
+@Injectable()
+export class UserService {
+    constructor(private _http: Http) {
+    }
+    getAPIUsers(apiUrl) {
+        return this._http.get(apiUrl).map((data: Response) => data.json());
+    }
+    getAppUsers(apiUrl) {
+        return this._http.get(apiUrl).map((data: Response) => data);
+    }
+}
+//END BEGIN – USERSERVICE
+
+#q: template variable in angular2
+----------------------------------
+quick and easy they allow you to access either a DOM element or an instance of a component or directive in your current template. They are defined by writing a hash sign (#) together with a name as an additional attribute of the DOM element. If this DOM element is just a plain one the variable contains a reference to it. In that case you can access any property of that DOM element through this variable:
+
+<input type="text" (change)="true" #variable>
+{{ variable.value }}
+In this example the entered value will be written out when you blur the input (the event listener for change is just for having the change detection run).
+If you have a component living on the DOM element the variable will contain the instance of that component (and not the DOM element):
+<my-component #variable [input]="'hello'"></my-component>
+{{ variable.input }}
+And if you want to access the instance of a directive you need to specify which one, because there could be more than one directive existing on that DOM element. The exportAs property of the directive's decorator defines the attribute's value to access that particular instance. For example, the FormsModule's directive for the form DOM element (NgForm) is exporting itself as ngForm. This enables you to e.g. disable a button until the form is valid:
+<form #variable="ngForm">
+  <!-- some more HTML ... -->
+  <button type="submit" [disabled]="variable.form.invalid">Submit!</button>
+</form>
+
+#q: what is component in angualr 2
+-------------------------------
+Ans:1
+-----
+In Angular 2, “everything is a component.” Components are the main way we build and specify elements and logic on the page, through both custom elements and attributes that add functionality to our existing components.
+
+Angular 2 Component Summary
+
+·         Angular 2 Component meta-data annotation is used to register the components.
+·         Angular 2 components are used to create UI widgets.
+·         Angular 2 components are used to split to application into smaller parts.
+·         Only one component is used per DOM element.
+·         In the Angular 2 components, @View, template and templateUrl are mandatory in the components.
+
+When building Angular components, we are able to configure the following options:
+
+selector - defines the name of the HTML tag where this component will live. In this case, our component will by shown through the <my-app></my-app> tags.
+providers - This is where we pass in any services that that want a component to access. We won't be getting into services in this article, however they are used to handle data and play the part of services, providers, and factories Angular 1.
+directives - We use the directive option when we want to access another component directive. Because this is the top-level component, we often see components being passed into this option, and we will see how this works shortly
+styles - The styles option is used to style a specific component. One of the advantages of using components is their ability to encapsulate their styles. We could have just as easily linked to an external stylesheet by using the styleUrls property. We should note that an array of stylesheets can be passed into this option.
+template - This is the portion of our component that holds our template. It is an integral part of the component as it allows us to tie logic from our component directly to a view. When defining a template, we can either write it inline, or we can opt to use templateUrl to link to an external template.
+
+#q: state management in Angular2
+Ref: https://blog.nrwl.io/managing-state-in-angular-applications-22b75ef5625f
+
+Types of State
+A typical web application has the following six types of state:
+
+Server state
+Persistent state
+The URL and router state
+Client state
+Transient client state
+Local UI state
